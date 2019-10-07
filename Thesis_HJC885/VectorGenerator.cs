@@ -9,7 +9,7 @@ namespace Thesis_HJC885
 {
     public static class VectorGenerator
     {
-        static Random r = new Random();
+        static readonly Random r = new Random();
 
         public static IEnumerable<Vector3> Generate_Multiple_Random_Vector3(int count, int from, int to)
         {

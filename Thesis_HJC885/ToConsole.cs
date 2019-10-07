@@ -15,8 +15,8 @@ namespace Thesis_HJC885
         {
             foreach (Vector3 item in vectors)
             {
-                Console.WriteLine(item.ToString());
-                Console.WriteLine("X: {0} \nY: {1} \nZ: {2}\n\n", item.X, item.Y, item.Z);
+                Console.WriteLine(item.ToString()+"\n");
+                //Console.WriteLine("X: {0} \nY: {1} \nZ: {2}\n\n", item.X, item.Y, item.Z);
             }
           
         }

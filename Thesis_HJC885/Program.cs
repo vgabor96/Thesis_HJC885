@@ -9,11 +9,11 @@ namespace Thesis_HJC885
 {
     class Program
     {
-        static void Main(string[] args)
+        static void Main()
         {
             Console.WriteLine("Random Generált Vektorok koordinátái: \n");
 
-            IEnumerable<Vector3> vs = VectorGenerator.Generate_Multiple_Random_Vector3(6,40,45);
+            IEnumerable<Vector3> vs = VectorGenerator.Generate_Multiple_Random_Vector3(6000,-45,45);
 
 
 
