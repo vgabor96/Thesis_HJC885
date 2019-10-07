@@ -11,13 +11,13 @@ namespace Thesis_HJC885
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Random Generált Vektor koordinátái: \n");
+            Console.WriteLine("Random Generált Vektorok koordinátái: \n");
 
-            Vector3 v = VectorGenerator.Generate_Random_Vector3(40,45);
+            IEnumerable<Vector3> vs = VectorGenerator.Generate_Multiple_Random_Vector3(6,40,45);
 
-            float[] vs = new float[] { v.X, v.Y, v.Z };
 
-            Console.WriteLine("X: {0} \nY: {1} \nZ: {2}",vs[0],vs[1],vs[2]);
+
+            ToConsole.Vectors_To_Console(vs);
 
             Console.ReadKey();
             
