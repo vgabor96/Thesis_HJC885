@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace _2D_version
 {
-    public class Robot
+    public class Robot : IMapObject
     {
 
 
@@ -27,6 +27,14 @@ namespace _2D_version
             return $"Position: [ {this.Current_Location[0]} , {this.Current_Location[1]} ]\nRange: {Range}";
         }
 
+        public bool IsHit()
+        {
+           
+            return false;
+        }
 
+        double[] IMapObject.Current_Location => this.Current_Location;
+
+        public bool IsHarmful => false;
     }
 }

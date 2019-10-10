@@ -17,7 +17,12 @@ namespace _2D_version
         public const double Default_Vector_from = -45;
         public const double Default_Vector_to = 45;
 
+
         public const int Default_Bullet_Count = 1;
+
+        public const double Default_Bullet_Location_x=150;
+        public const double Default_Bullet_Location_y=150;
+
         public const double Default_Bullet_Speed = 2;
         public const double Max_Bullet_Speed = 10;
         public const double Min_Bullet_Speed = 1;
@@ -29,7 +34,7 @@ namespace _2D_version
 
         public const double Robot_Start_Location_X = 50;
         public const double Robot_Start_Location_Y = 50;
-        public const double Robot_range = 3;
+        public const double Robot_range = 1;
 
     }
 }
