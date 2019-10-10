@@ -13,7 +13,7 @@ namespace _2D_version
         {
             Console.WriteLine("Random Generált Vektorok koordinátái: \n");
 
-            IEnumerable<Vector2> vs = VectorGenerator.Generate_Multiple_Random_Vector3(600, -45, 45);
+            IEnumerable<Vector2> vs = RandomGenerator.Generate_Multiple_Random_Vector2(600, -45, 45);
 
 
 

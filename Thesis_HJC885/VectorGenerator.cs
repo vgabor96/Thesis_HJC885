@@ -11,7 +11,7 @@ namespace Thesis_HJC885
     {
         static readonly Random r = new Random();
 
-        public static IEnumerable<Vector3> Generate_Multiple_Random_Vector3(int count, int from, int to)
+        public static IEnumerable<Vector3> Generate_Multiple_Random_Vector3(int count=1, int from=45, int to=45)
         {
             for (int i = 0; i < count; i++)
             {
