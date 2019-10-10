@@ -9,7 +9,8 @@ namespace _2D_version
     public static class Config
     {
         public const double DistanceRobotFromBuetStart = 200;
-        public static readonly double[] Map_size = new double[] { 200, 200 };
+        public const double Map_size_X = 200;
+        public const double Map_size_Y = 200;
 
 
         public const int Default_Vector_Count = 1;
@@ -26,7 +27,9 @@ namespace _2D_version
         public const double Min_Bullet_Size = 1;
 
 
-        public static readonly double[] Robot_Start_Location = new double[] { 50, 50 };
+        public const double Robot_Start_Location_X = 50;
+        public const double Robot_Start_Location_Y = 50;
+        public const double Robot_range = 3;
 
     }
 }

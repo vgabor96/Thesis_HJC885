@@ -17,7 +17,6 @@ namespace _2D_version
             foreach (Vector2 item in vectors)
             {
                 Console.WriteLine(item.ToString() + "\n");
-                //Console.WriteLine("X: {0} \nY: {1} \nZ: {2}\n\n", item.X, item.Y, item.Z);
             }
 
         }
@@ -28,7 +27,6 @@ namespace _2D_version
             foreach (Bullet item in bullets)
             {
                 Console.WriteLine(item.ToString() + "\n");
-                //Console.WriteLine("X: {0} \nY: {1} \nZ: {2}\n\n", item.X, item.Y, item.Z);
             }
 
         }

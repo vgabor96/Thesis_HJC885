@@ -11,7 +11,7 @@ namespace _2D_version
     {
         static readonly Random r = new Random();
 
-        public static IEnumerable<Vector2> Generate_Multiple_Random_Vector2(int count=Config.Default_Vector_Count, double from=Config.Default_Vector_from, double to=45)
+        public static IEnumerable<Vector2> Generate_Multiple_Random_Vector2(int count = Config.Default_Vector_Count, double from = Config.Default_Vector_from, double to = Config.Default_Vector_to)
         {
             for (int i = 0; i < count; i++)
             {
@@ -37,8 +37,8 @@ namespace _2D_version
                     yield return new Bullet(vectors[i]);
                 }
             }
-          
-           
+
+
 
         }
 
