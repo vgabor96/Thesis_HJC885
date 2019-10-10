@@ -11,30 +11,41 @@ namespace _2D_version
     {
 
 
-        double[] Current_Location = new double[2];
+        double[] Actual_Location = new double[2];
         double Range;
         //Vector2 Actualmovement;
 
         public Robot(double Default_Location_x = Config.Robot_Start_Location_X, double Default_Location_y = Config.Robot_Start_Location_Y,double Range = Config.Robot_range)
         {
-            this.Current_Location[0] = Default_Location_x;
-            this.Current_Location[1] = Default_Location_y;
+            this.Actual_Location[0] = Default_Location_x;
+            this.Actual_Location[1] = Default_Location_y;
             this.Range = Range;
         }
 
         public override string ToString()
         {
-            return $"Position: [ {this.Current_Location[0]} , {this.Current_Location[1]} ]\nRange: {Range}";
+            return $"Position: [ {this.Actual_Location[0]} , {this.Actual_Location[1]} ]\nRange: {Range}";
         }
 
-        public bool IsHit()
-        {
-           
-            return false;
-        }
+        //public bool IsHit()
+        //{
+        //    try
+        //    {
+        //        if (Map.this.Current_Location[0]-this.Range)
+        //        {
 
-        double[] IMapObject.Current_Location => this.Current_Location;
+        //        }
+        //    }
+        //    catch (NullReferenceException)
+        //    {
+
+        //        //throw;
+        //    }
+        //    return false;
+        //}
 
         public bool IsHarmful => false;
+
+        public double[] Current_Location => this.Actual_Location;
     }
 }
