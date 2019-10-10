@@ -11,24 +11,37 @@ namespace _2D_version
     {
         static readonly Random r = new Random();
 
-        public static IEnumerable<Vector2> Generate_Multiple_Random_Vector2(int count=Config.Default_Vector_Count, int from=45, int to=45)
+        public static IEnumerable<Vector2> Generate_Multiple_Random_Vector2(int count=Config.Default_Vector_Count, double from=Config.Default_Vector_from, double to=45)
         {
             for (int i = 0; i < count; i++)
             {
-                yield return new Vector2((float)r.Next(from, to), (float)r.Next(from, to));
+                yield return new Vector2((float)r.Next(Convert.ToInt32(from), Convert.ToInt32(to)), (float)r.Next(Convert.ToInt32(from), Convert.ToInt32(to)));
             }
 
         }
 
-        public static IEnumerable<Bullet> Generate_Multiple_Random_Bullet(int count = Config.Default_Bullet_Count)
+        public static IEnumerable<Bullet> Generate_Multiple_Random_Bullet(int count = Config.Default_Bullet_Count, bool randomsize_and_speed = false)
         {
             Vector2[] vectors = Generate_Multiple_Random_Vector2(count).ToArray();
-            for (int i = 0; i < count; i++)
+            if (randomsize_and_speed)
             {
-                yield return new Bullet(vectors[i]);
+                for (int i = 0; i < count; i++)
+                {
+                    yield return new Bullet(vectors[i], r.Next((int)Math.Round(Config.Min_Bullet_Speed), (int)Math.Round(Config.Max_Bullet_Speed)), r.Next((int)Math.Round(Config.Min_Bullet_Size), (int)Math.Round(Config.Max_Bullet_Size)));
+                }
             }
+            else
+            {
+                for (int i = 0; i < count; i++)
+                {
+                    yield return new Bullet(vectors[i]);
+                }
+            }
+          
+           
 
         }
+
 
     }
 }

@@ -13,11 +13,12 @@ namespace _2D_version
         {
             Console.WriteLine("Random Generált Vektorok koordinátái: \n");
 
-            IEnumerable<Vector2> vs = RandomGenerator.Generate_Multiple_Random_Vector2(600, -45, 45);
+           // IEnumerable<Vector2> vs = RandomGenerator.Generate_Multiple_Random_Vector2(600, -45, 45);
+
+            IEnumerable<Bullet> bs = RandomGenerator.Generate_Multiple_Random_Bullet(20);
 
 
-
-            ToConsole.Vectors_To_Console(vs);
+            ToConsole.Bullets_To_Console(bs);
 
             Console.ReadKey();
 
