@@ -12,10 +12,10 @@ namespace version_2D
 {
     public class Map
     {
-        My_Coordinates size;
-        Robot robot;
-        List<Bullet> bullets;
-        double[,] mapObjects;
+        public My_Coordinates size;
+        public Robot robot;
+        public List<Bullet> bullets;
+        public double[,] mapObjects;
 
         public Map(Robot robot = null,IEnumerable<Bullet> bullets = null)
         {

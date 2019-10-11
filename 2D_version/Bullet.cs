@@ -14,9 +14,9 @@ namespace version_2D
     {
         static int idCounter = 0;
         int id;
-        My_Coordinates current_Location;
-        double speed;
-        double size;
+        public My_Coordinates current_Location;
+        public double speed;
+        public double size;
         Vector2 destination;
         public Vector2 Destination { get => destination; set => destination = value; }
 

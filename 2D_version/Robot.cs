@@ -14,7 +14,7 @@ namespace version_2D
 
 
         My_Coordinates Actual_Location;
-        double Range;
+        public double Range;
         bool isHit => false;
         //Vector2 Actualmovement;
 
