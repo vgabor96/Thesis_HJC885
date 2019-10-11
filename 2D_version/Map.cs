@@ -60,7 +60,10 @@ namespace version_2D
 
         public void IsRobotHit()
         { 
+
+
         }
+
         public override string ToString()
         {
             return mapObjects.MapToString();

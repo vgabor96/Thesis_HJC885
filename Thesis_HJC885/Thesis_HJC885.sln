@@ -11,6 +11,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "version_2D", "..\2D_version
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UniversalHelpers", "..\UniversalHelpers\UniversalHelpers.csproj", "{7DCE85ED-D557-43E7-865D-D67E85917B17}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Version_2D_app", "Version_2D_app", "{DA84622D-E7EA-4A2C-BD6E-760D026626D3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Version_2D_Visualization", "..\Version_2D_Visualization\Version_2D_Visualization.csproj", "{815AE3FC-180E-41BE-ABBD-2F12F05934EE}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,9 +37,17 @@ Global
 		{7DCE85ED-D557-43E7-865D-D67E85917B17}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7DCE85ED-D557-43E7-865D-D67E85917B17}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7DCE85ED-D557-43E7-865D-D67E85917B17}.Release|Any CPU.Build.0 = Release|Any CPU
+		{815AE3FC-180E-41BE-ABBD-2F12F05934EE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{815AE3FC-180E-41BE-ABBD-2F12F05934EE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{815AE3FC-180E-41BE-ABBD-2F12F05934EE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{815AE3FC-180E-41BE-ABBD-2F12F05934EE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{C619F509-3278-40DB-8108-81D53BEEBA63} = {DA84622D-E7EA-4A2C-BD6E-760D026626D3}
+		{815AE3FC-180E-41BE-ABBD-2F12F05934EE} = {DA84622D-E7EA-4A2C-BD6E-760D026626D3}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {55075732-BA7F-4879-A856-B4A5E6CF19EE}
