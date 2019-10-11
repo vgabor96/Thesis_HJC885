@@ -45,8 +45,6 @@ namespace version_2D
                 this.bullets.Add(item);
                 mapObjects.Set_IMapObjectElement(item.Current_Location.X, item.Current_Location.Y, MapObjectType.Bullet);
             }
-
-            mapObjects.DoesContainsThisCoordinate(new My_Coordinates(0, 1));
          }
 
         public void OneTick()
@@ -58,6 +56,10 @@ namespace version_2D
                 item.OneStep();
                 mapObjects.Set_IMapObjectElement(item.Current_Location, MapObjectType.Bullet);
             }
+        }
+
+        public void IsRobotHit()
+        { 
         }
         public override string ToString()
         {
