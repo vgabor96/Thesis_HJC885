@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using UniversalHelpers.Classes2D;
+using UniversalHelpers.Extensions;
 
 namespace _2D_version
 {
@@ -28,8 +30,10 @@ namespace _2D_version
                     mapObjects[(int)current_location[0], (int)current_location[1]] = (double)Config.MapObjectType.Bullet;
                 }
             }
-            
-           
+
+            mapObjects.DoesContainsThisCoordinate(new My_Coordinates(0, 1));
+
+
          }
 
 
