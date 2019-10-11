@@ -22,12 +22,13 @@ namespace _2D_version
             if (robot != null)
             {
                 double[] current_location = robot.Current_Location;
-                mapObjects[(int)current_location[0], (int)current_location[1]] = (double)Config.MapObjectType.Robot;
+               // mapObjects[(int)current_location[0], (int)current_location[1]] = (double)Config.MapObjectType.Robot;
 
                 foreach (Bullet item in bullets)
                 {
                     current_location = item.Current_Location;
-                    mapObjects[(int)current_location[0], (int)current_location[1]] = (double)Config.MapObjectType.Bullet;
+                    //mapObjects[(int)current_location[0], (int)current_location[1]] = (double)MapObjectType.Bullet;
+                    mapObjects.Set_IMapObjectElement(current_location.x,current_location.y,)
                 }
             }
 
@@ -35,6 +36,11 @@ namespace _2D_version
 
 
          }
+
+        public override string ToString()
+        {
+            return base.ToString();
+        }
 
 
     }

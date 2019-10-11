@@ -6,19 +6,13 @@ using System.Threading.Tasks;
 
 namespace _2D_version
 {
+
     public static class Config
     {
-        public  enum MapObjectType
-        { 
-           Robot = 1,
-           Bullet = 2
-
-        }
-
-
+    
         public const double DistanceRobotFromBuetStart = 200;
-        public const double Default_Map_size_X = 200;
-        public const double Default_Map_size_Y = 200;
+        public const int Default_Map_size_X = 200;
+        public const int Default_Map_size_Y = 200;
 
 
         public const int Default_Vector_Count = 1;
@@ -28,8 +22,8 @@ namespace _2D_version
 
         public const int Default_Bullet_Count = 1;
 
-        public const double Default_Bullet_Location_x=150;
-        public const double Default_Bullet_Location_y=150;
+        public const int Default_Bullet_Location_x=150;
+        public const int Default_Bullet_Location_y=150;
 
         public const double Default_Bullet_Speed = 2;
         public const double Max_Bullet_Speed = 10;
@@ -40,8 +34,8 @@ namespace _2D_version
         public const double Min_Bullet_Size = 1;
 
 
-        public const double Robot_Start_Location_X = 50;
-        public const double Robot_Start_Location_Y = 50;
+        public const int Robot_Start_Location_X = 50;
+        public const int Robot_Start_Location_Y = 50;
         public const double Robot_range = 1;
 
     }

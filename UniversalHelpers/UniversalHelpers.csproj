@@ -41,7 +41,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Classes2D\Config.cs" />
     <Compile Include="Classes2D\My_Coordinates.cs" />
+    <Compile Include="Enumerators\MapObjectType.cs" />
     <Compile Include="Extensions\ArrayExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
