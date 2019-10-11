@@ -4,42 +4,47 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using UniversalHelpers.Classes2D;
+using UniversalHelpers.Configurations;
+using UniversalHelpers.Enumerators;
 using UniversalHelpers.Extensions;
 
-namespace _2D_version
+namespace version_2D
 {
     public class Map
     {
-        double[] Map_Size;
+        My_Coordinates size;
         double[,] mapObjects;
 
-        public Map(double map_size_x = Config.Default_Map_size_X, double map_size_y = Config.Default_Map_size_Y,Robot robot = null,IEnumerable<Bullet> bullets = null)
+        public Map(Robot robot = null,IEnumerable<Bullet> bullets = null)
         {
-            this.Map_Size[0] = map_size_x;
-            this.Map_Size[1] = map_size_y;
-
-            mapObjects = new double[(int)Map_Size[0],(int)Map_Size[1]];
+            this.size = new My_Coordinates(Config.Default_Map_size_X, Config.Default_Map_size_Y);
+            mapObjects = new double[this.size.X,this.size.Y];
+            
+            My_Coordinates current_location;
+            
             if (robot != null)
             {
-                double[] current_location = robot.Current_Location;
-               // mapObjects[(int)current_location[0], (int)current_location[1]] = (double)Config.MapObjectType.Robot;
+                current_location = robot.Current_Location;    
+            }
+            else
+            {
+                current_location = new My_Coordinates(Config.Robot_Start_Location_X,Config.Robot_Start_Location_Y);
+             
+            }
 
-                foreach (Bullet item in bullets)
-                {
-                    current_location = item.Current_Location;
-                    //mapObjects[(int)current_location[0], (int)current_location[1]] = (double)MapObjectType.Bullet;
-                    mapObjects.Set_IMapObjectElement(current_location.x,current_location.y,)
-                }
+            mapObjects.Set_IMapObjectElement(current_location.X, current_location.Y, MapObjectType.Robot);
+
+            foreach (Bullet item in bullets)
+            {
+                mapObjects.Set_IMapObjectElement(item.Current_Location.X, item.Current_Location.Y, MapObjectType.Bullet);
             }
 
             mapObjects.DoesContainsThisCoordinate(new My_Coordinates(0, 1));
-
-
          }
 
         public override string ToString()
         {
-            return base.ToString();
+            return mapObjects.MapToString();
         }
 
 

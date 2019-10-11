@@ -3,12 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using UniversalHelpers.Classes2D;
 
-namespace _2D_version
+namespace version_2D
 {
     interface IMapObject
     {
-        double[] Current_Location { get; }
+        My_Coordinates Current_Location { get; }
         bool IsHarmful { get; }
     }
 }

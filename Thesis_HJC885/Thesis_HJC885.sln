@@ -7,7 +7,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Main", "Main.csproj", "{360
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test", "..\Test\Test.csproj", "{412A72FC-7AD4-44F4-A294-DAA332A80DD4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "2D_version", "..\2D_version\2D_version.csproj", "{C619F509-3278-40DB-8108-81D53BEEBA63}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "version_2D", "..\2D_version\version_2D.csproj", "{C619F509-3278-40DB-8108-81D53BEEBA63}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UniversalHelpers", "..\UniversalHelpers\UniversalHelpers.csproj", "{7DCE85ED-D557-43E7-865D-D67E85917B17}"
 EndProject

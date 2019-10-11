@@ -4,8 +4,9 @@ using System.Linq;
 using System.Numerics;
 using System.Text;
 using System.Threading.Tasks;
+using UniversalHelpers.Interfaces;
 
-namespace _2D_version
+namespace UniversalHelpers.Extensions
 {
     public static class ToConsole
     {
@@ -21,10 +22,10 @@ namespace _2D_version
 
         }
 
-        public static void Bullets_To_Console(IEnumerable<Bullet> bullets)
+        public static void Bullets_To_Console(IEnumerable<IBullet> bullets)
         {
             Console.WriteLine("Bullets:\n");
-            foreach (Bullet item in bullets)
+            foreach (IBullet item in bullets)
             {
                 Console.WriteLine(item.ToString() + "\n");
             }

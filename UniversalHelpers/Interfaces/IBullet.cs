@@ -4,9 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace version_2D
+namespace UniversalHelpers.Interfaces
 {
-    class Shooting
+    public interface IBullet
     {
+        string ToString();
     }
 }

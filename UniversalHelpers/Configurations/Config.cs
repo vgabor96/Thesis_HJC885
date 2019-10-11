@@ -4,15 +4,15 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace _2D_version
+namespace UniversalHelpers.Configurations
 {
 
     public static class Config
     {
     
         public const double DistanceRobotFromBuetStart = 200;
-        public const int Default_Map_size_X = 200;
-        public const int Default_Map_size_Y = 200;
+        public const int Default_Map_size_X = 25;
+        public const int Default_Map_size_Y = 25;
 
 
         public const int Default_Vector_Count = 1;
@@ -34,8 +34,8 @@ namespace _2D_version
         public const double Min_Bullet_Size = 1;
 
 
-        public const int Robot_Start_Location_X = 50;
-        public const int Robot_Start_Location_Y = 50;
+        public const int Robot_Start_Location_X = 20;
+        public const int Robot_Start_Location_Y = 20;
         public const double Robot_range = 1;
 
     }

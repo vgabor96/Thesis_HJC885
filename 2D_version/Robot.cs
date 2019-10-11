@@ -4,27 +4,29 @@ using System.Linq;
 using System.Numerics;
 using System.Text;
 using System.Threading.Tasks;
+using UniversalHelpers.Classes2D;
+using UniversalHelpers.Configurations;
 
-namespace _2D_version
+namespace version_2D
 {
     public class Robot : IMapObject
     {
 
 
-        double[] Actual_Location = new double[2];
+        My_Coordinates Actual_Location;
         double Range;
         //Vector2 Actualmovement;
 
-        public Robot(double Default_Location_x = Config.Robot_Start_Location_X, double Default_Location_y = Config.Robot_Start_Location_Y,double Range = Config.Robot_range)
+        public Robot(int Default_Location_x = Config.Robot_Start_Location_X, int Default_Location_y = Config.Robot_Start_Location_Y,double Range = Config.Robot_range)
         {
-            this.Actual_Location[0] = Default_Location_x;
-            this.Actual_Location[1] = Default_Location_y;
+            Actual_Location = new My_Coordinates(Default_Location_x, Default_Location_y);
+
             this.Range = Range;
         }
 
         public override string ToString()
         {
-            return $"Position: [ {this.Actual_Location[0]} , {this.Actual_Location[1]} ]\nRange: {Range}";
+            return $"Position: [ {this.Actual_Location.X} , {this.Actual_Location.Y} ]\nRange: {Range}";
         }
 
         //public bool IsHit()
@@ -46,6 +48,6 @@ namespace _2D_version
 
         public bool IsHarmful => false;
 
-        public double[] Current_Location => this.Actual_Location;
+        public My_Coordinates Current_Location => this.Actual_Location;
     }
 }
