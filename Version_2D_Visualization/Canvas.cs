@@ -17,7 +17,7 @@ namespace Version_2D_Visualization
         public void LogicSetup(Version_2D_Logic logic)
         {
             this.logic = logic;
-        }
+        asdsad}
 
         protected override void OnRender(DrawingContext drawingContext)
         {
