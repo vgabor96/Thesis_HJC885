@@ -34,9 +34,10 @@ namespace Version_2D_Visualization
             this.logic = new Version_2D_Logic();
             this.canvas.LogicSetup(this.logic);
 
-            this.dt.Interval = TimeSpan.FromMilliseconds(0.001);
+            this.dt.Interval = TimeSpan.FromMilliseconds(10);
             this.dt.Tick += Dt_Tick;
             this.dt.Start();
+  
         }
 
         private void Dt_Tick(object sender, EventArgs e)
@@ -44,7 +45,11 @@ namespace Version_2D_Visualization
             if (!this.logic.endgame)
             {
                 this.logic.map.OneTick();
+                this.canvas.InvalidateVisual();
+            
             }
+
+            //this.dt.Stop();
         }
     }
 }

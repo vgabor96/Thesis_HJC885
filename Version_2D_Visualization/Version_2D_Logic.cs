@@ -41,7 +41,7 @@ namespace Version_2D_Visualization
             }
 
 
-            this.Robot_rect = new Rect(map.robot.Current_Location.X, map.robot.Current_Location.Y, 20+map.robot.Range, 20+map.robot.Range);
+            this.Robot_rect = new Rect(map.robot.Current_Location.X, map.robot.Current_Location.Y, 10+map.robot.Range, 10+map.robot.Range);
         
         }
 

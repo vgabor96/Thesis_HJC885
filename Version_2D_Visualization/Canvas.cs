@@ -21,19 +21,31 @@ namespace Version_2D_Visualization
 
         protected override void OnRender(DrawingContext drawingContext)
         {
+            
 
-           if (this.logic != null)
+            if (this.logic != null)
             {
-                drawingContext.DrawRectangle(Brushes.Gray, null, new Rect(0, 0, this.ActualWidth, this.ActualHeight));
+                Bullet item;
+              drawingContext.DrawRectangle(Brushes.Gray, null, new Rect(0, 0, this.ActualWidth, this.ActualHeight));
 
-                foreach (Rect item in logic.bullet_rects)
+                //foreach (Rect item in logic.bullet_rects)
+                //{
+
+                //    drawingContext.DrawRectangle(Brushes.Red, null, item);
+                //}
+
+                for (int i = 0; i < logic.map.bullets.Count(); i++)
                 {
-                    drawingContext.DrawRectangle(Brushes.Red, null, item);
+                    item = logic.map.bullets[i];
+                    drawingContext.DrawRectangle(Brushes.Red, null, new Rect(item.Current_Location.X, item.Current_Location.Y, logic.bullet_rects[i].Width, logic.bullet_rects[i].Height)); ;
                 }
 
                 drawingContext.DrawRectangle(Brushes.Blue, null, logic.Robot_rect);
-
+              
             }
+            base.OnRender(drawingContext);
+
+
         }
     }
 

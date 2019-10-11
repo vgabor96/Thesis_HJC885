@@ -41,7 +41,10 @@ namespace UniversalHelpers.Extensions
 
         private static void Set_MapO(double[,] array, int x, int y, MapObjectType value)
         {
-            array[array.GetLength(0) - (y+1), x] = (double)value;
+
+            //array[array.GetLength(0) - (y+1), x] = (double)value;
+            array[array.GetLength(0) - (x + 1), y] = (double)value;
+
         }
 
         public static string MapToString(this double[,] array)
