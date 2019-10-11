@@ -11,13 +11,28 @@ namespace Version_2D_Visualization
 {
     class Version_2D_Logic
     {
-        Map map;
+        public Map map;
+        public bool endgame;
         public Rect Robot_rect;
         public ObservableCollection<Rect> bullet_rects;
 
         public Version_2D_Logic()
         {
-            map = new Map();
+            endgame = false;
+
+            //JAVÍTSAD MAJD!!!!!!!EZ CSAK TESZTNEK
+
+            List<Bullet> bs = new List<Bullet>();
+            for (int i = 0; i < 6; i++)
+            {
+                Bullet b = new Bullet();
+                b.GenerateRandomBullet();
+                bs.Add(b);
+            }
+
+            //JAVÍTSAD MAJD!!!!!!!EZ CSAK TESZTNEK
+
+            map = new Map(null,bs);
             bullet_rects = new ObservableCollection<Rect>();
 
             foreach (Bullet item in map.bullets)

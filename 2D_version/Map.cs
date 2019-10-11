@@ -40,11 +40,16 @@ namespace version_2D
 
             mapObjects.Set_IMapObjectElement(current_location.X, current_location.Y, MapObjectType.Robot);
 
-            foreach (Bullet item in bullets)
+            if (bullets != null)
             {
-                this.bullets.Add(item);
-                mapObjects.Set_IMapObjectElement(item.Current_Location.X, item.Current_Location.Y, MapObjectType.Bullet);
+                foreach (Bullet item in bullets)
+                {
+                    this.bullets.Add(item);
+                    mapObjects.Set_IMapObjectElement(item.Current_Location.X, item.Current_Location.Y, MapObjectType.Bullet);
+                }
             }
+
+          
          }
 
         public void OneTick()
