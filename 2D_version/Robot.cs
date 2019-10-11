@@ -15,6 +15,7 @@ namespace version_2D
 
         My_Coordinates Actual_Location;
         double Range;
+        bool isHit => false;
         //Vector2 Actualmovement;
 
         public Robot(int Default_Location_x = Config.Robot_Start_Location_X, int Default_Location_y = Config.Robot_Start_Location_Y,double Range = Config.Robot_range)
@@ -33,7 +34,7 @@ namespace version_2D
         //{
         //    try
         //    {
-        //        if (Map.this.Current_Location[0]-this.Range)
+        //        if (Map.this.Current_Location[0] - this.Range)
         //        {
 
         //        }

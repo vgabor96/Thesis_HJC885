@@ -13,10 +13,15 @@ namespace version_2D
     public class Map
     {
         My_Coordinates size;
+        Robot robot;
+        List<Bullet> bullets;
         double[,] mapObjects;
 
         public Map(Robot robot = null,IEnumerable<Bullet> bullets = null)
         {
+            this.robot = robot;
+            this.bullets = new List<Bullet>();
+            
             this.size = new My_Coordinates(Config.Default_Map_size_X, Config.Default_Map_size_Y);
             mapObjects = new double[this.size.X,this.size.Y];
             
@@ -28,7 +33,8 @@ namespace version_2D
             }
             else
             {
-                current_location = new My_Coordinates(Config.Robot_Start_Location_X,Config.Robot_Start_Location_Y);
+                this.robot = new Robot();
+                current_location = new My_Coordinates(this.robot.Current_Location.X,this.robot.Current_Location.Y);
              
             }
 
@@ -36,12 +42,23 @@ namespace version_2D
 
             foreach (Bullet item in bullets)
             {
+                this.bullets.Add(item);
                 mapObjects.Set_IMapObjectElement(item.Current_Location.X, item.Current_Location.Y, MapObjectType.Bullet);
             }
 
             mapObjects.DoesContainsThisCoordinate(new My_Coordinates(0, 1));
          }
 
+        public void OneTick()
+        {
+            mapObjects.Set_IMapObjectElement(robot.Current_Location, MapObjectType.Robot);
+            foreach (Bullet item in this.bullets)
+            {
+                mapObjects.Set_IMapObjectElement(item.Current_Location, 0);
+                item.OneStep();
+                mapObjects.Set_IMapObjectElement(item.Current_Location, MapObjectType.Bullet);
+            }
+        }
         public override string ToString()
         {
             return mapObjects.MapToString();

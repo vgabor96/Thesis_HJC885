@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using UniversalHelpers.Configurations;
 
 namespace UniversalHelpers.Classes2D
 {
@@ -18,6 +19,13 @@ namespace UniversalHelpers.Classes2D
         {
             this.x = x;
             this.y = y;
+        }
+
+        public void GenerateRandomCoordinate()
+        {
+            
+            this.x = RandomGenerator.r.Next(0, Config.Default_Map_size_X);
+            this.y = RandomGenerator.r.Next(0, Config.Default_Map_size_Y);
         }
     }
 }

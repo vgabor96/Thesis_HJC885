@@ -16,8 +16,8 @@ namespace UniversalHelpers.Configurations
 
 
         public const int Default_Vector_Count = 1;
-        public const double Default_Vector_from = -45;
-        public const double Default_Vector_to = 45;
+        public const double Default_Vector_from = -2;
+        public const double Default_Vector_to = 2;
 
 
         public const int Default_Bullet_Count = 1;
