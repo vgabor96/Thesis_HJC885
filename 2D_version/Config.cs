@@ -8,6 +8,14 @@ namespace _2D_version
 {
     public static class Config
     {
+        public  enum MapObjectType
+        { 
+           Robot = 1,
+           Bullet = 2
+
+        }
+
+
         public const double DistanceRobotFromBuetStart = 200;
         public const double Default_Map_size_X = 200;
         public const double Default_Map_size_Y = 200;
