@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Numerics;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -22,6 +23,15 @@ namespace Version_2D_Visualization
 
             //JAVÍTSAD MAJD!!!!!!!EZ CSAK TESZTNEK
 
+
+            Initialize();
+            //JAVÍTSAD MAJD!!!!!!!EZ CSAK TESZTNEK
+
+        
+        }
+
+        private void Initialize()
+        {
             List<Bullet> bs = new List<Bullet>();
             for (int i = 0; i < 6; i++)
             {
@@ -29,10 +39,7 @@ namespace Version_2D_Visualization
                 b.GenerateRandomBullet();
                 bs.Add(b);
             }
-
-            //JAVÍTSAD MAJD!!!!!!!EZ CSAK TESZTNEK
-
-            map = new Map(null,bs);
+            map = new Map(null, bs);
             bullet_rects = new ObservableCollection<Rect>();
 
             foreach (Bullet item in map.bullets)
@@ -41,9 +48,10 @@ namespace Version_2D_Visualization
             }
 
 
-            this.Robot_rect = new Rect(map.robot.Current_Location.X, map.robot.Current_Location.Y, 10+map.robot.Range, 10+map.robot.Range);
-        
+            this.Robot_rect = new Rect(map.robot.Current_Location.X, map.robot.Current_Location.Y, 10 + map.robot.Range, 10 + map.robot.Range);
         }
+
+      
 
     }
 }

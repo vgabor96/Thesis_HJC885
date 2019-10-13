@@ -11,8 +11,8 @@ namespace UniversalHelpers.Configurations
     {
     
         public const double DistanceRobotFromBuetStart = 200;
-        public const int Default_Map_size_X = 600;
-        public const int Default_Map_size_Y = 800;
+        public const int Default_Map_size_X = 800;
+        public const int Default_Map_size_Y = 600;
 
 
         public const int Default_Vector_Count = 1;

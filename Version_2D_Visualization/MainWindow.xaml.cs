@@ -44,9 +44,14 @@ namespace Version_2D_Visualization
         {
             if (!this.logic.endgame)
             {
-                this.logic.map.OneTick();
+                this.logic.endgame = this.logic.map.OneTick();
                 this.canvas.InvalidateVisual();
             
+            }
+            else
+            {
+                this.dt.Stop();
+                MessageBox.Show("Game Over");
             }
 
             //this.dt.Stop();

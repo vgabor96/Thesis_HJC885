@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Media;
+using UniversalHelpers.Enumerators;
 using version_2D;
 
 namespace Version_2D_Visualization
@@ -26,7 +27,8 @@ namespace Version_2D_Visualization
             if (this.logic != null)
             {
                 Bullet item;
-              drawingContext.DrawRectangle(Brushes.Gray, null, new Rect(0, 0, this.ActualWidth, this.ActualHeight));
+
+                drawingContext.DrawRectangle(Brushes.Gray, null, new Rect(0, 0, this.ActualWidth, this.ActualHeight));
 
                 //foreach (Rect item in logic.bullet_rects)
                 //{
@@ -41,7 +43,30 @@ namespace Version_2D_Visualization
                 }
 
                 drawingContext.DrawRectangle(Brushes.Blue, null, logic.Robot_rect);
-              
+
+                //Bullet item;
+
+                //drawingContext.DrawRectangle(Brushes.Gray, null, new Rect(0, 0, this.ActualWidth, this.ActualHeight));
+
+                //for (int i = 0; i < logic.map.mapObjects.GetLength(0); i++)
+                //{
+                //    for (int j = 0; j < logic.map.mapObjects.GetLength(1); j++)
+                //    {
+                //        switch (logic.map.mapObjects[i,j])
+                //        {
+                //            case (double)MapObjectType.Bullet:
+                //                drawingContext.DrawRectangle(Brushes.Red, null, new Rect(logic.map.mapObjects[i, j].Current_Location.X, item.Current_Location.Y, logic.bullet_rects[i].Width, logic.bullet_rects[i].Height)); 
+                //                break;
+                //            case (double)MapObjectType.Robot:
+                //                drawingContext.DrawRectangle(Brushes.Blue, null, logic.Robot_rect);
+                //                break;
+                //            default:
+                //                break;
+
+                //        }
+                //    }
+                //}
+
             }
             base.OnRender(drawingContext);
 

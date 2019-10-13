@@ -52,7 +52,7 @@ namespace version_2D
           
          }
 
-        public void OneTick()
+        public bool OneTick()
         {
             mapObjects.Set_IMapObjectElement(robot.Current_Location, MapObjectType.Robot);
             foreach (Bullet item in this.bullets)
@@ -61,11 +61,23 @@ namespace version_2D
                 item.OneStep();
                 mapObjects.Set_IMapObjectElement(item.Current_Location, MapObjectType.Bullet);
             }
+            return RobotIshit();
         }
 
-        public void IsRobotHit()
-        { 
+        public bool RobotIshit()
+        {
+            Robot robot = this.robot;
 
+            double result = 1;
+            for (int i = 0; i < this.mapObjects.GetLength(0); i++)
+            {
+                for (int j = 0; j < this.mapObjects.GetLength(1); j++)
+                {
+                    result = Math.Sqrt(Math.Pow(robot.Current_Location.X - i, 2) + Math.Pow(robot.Current_Location.Y - j, 2));
+                    return result == 0;
+                }
+            }
+            return false;
 
         }
 
