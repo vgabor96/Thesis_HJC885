@@ -15,9 +15,14 @@ namespace version_2D
         static int idCounter = 0;
         int id;
         public My_Coordinates current_Location;
-        public double speed;
         public double size;
         Vector2 destination;
+
+        public My_Coordinates Current_Location => this.current_Location;
+
+        public bool IsHarmful => true;
+
+        public double Speed { get => this.destination.Length();}
         public Vector2 Destination { get => destination; set => destination = value; }
 
 
@@ -28,7 +33,7 @@ namespace version_2D
 
         public Bullet(Vector2 destination, int start_Location_x = Config.Default_Bullet_Location_x, int start_Location_y= Config.Default_Bullet_Location_y, double speed = Config.Default_Bullet_Speed, double size = Config.Default_Bullet_Size)
         {
-            this.Ctor_helper(destination, start_Location_x, start_Location_y, speed, size);
+            this.Ctor_helper(destination, start_Location_x, start_Location_y, size);
         }
 
         public void GenerateRandomBullet()
@@ -39,14 +44,13 @@ namespace version_2D
             Vector2 destination = RandomGenerator.Generate_Multiple_Random_Vector2().FirstOrDefault();
             int speed = RandomGenerator.r.Next(1,(int)Config.Default_Bullet_Speed*2);
             double size = RandomGenerator.r.Next(1, (int)Config.Default_Bullet_Size * 2);
-            this.Ctor_helper(destination, current_LocationX, current_LocationY, speed, size);
+            this.Ctor_helper(destination, current_LocationX, current_LocationY, size);
         }
 
-        private void Ctor_helper(Vector2 destination, int start_Location_x = Config.Default_Bullet_Location_x, int start_Location_y = Config.Default_Bullet_Location_y, double speed = Config.Default_Bullet_Speed, double size = Config.Default_Bullet_Size)
+        private void Ctor_helper(Vector2 destination, int start_Location_x = Config.Default_Bullet_Location_x, int start_Location_y = Config.Default_Bullet_Location_y, double size = Config.Default_Bullet_Size)
         {
             this.current_Location = new My_Coordinates(start_Location_x, start_Location_y);
             this.Destination = destination;
-            this.speed = speed;
             this.size = size;
             this.id = idCounter;
             idCounter++;
@@ -55,11 +59,7 @@ namespace version_2D
 
         }
 
-        public My_Coordinates Current_Location => this.current_Location;
 
-        public bool IsHarmful => true;
-
-       
 
         public void OneStep()
         {
@@ -79,7 +79,7 @@ namespace version_2D
 
         public override string ToString()
         {
-            return $"ID: {id}\nDestination: {Destination}\nSpeed: {speed}\nSize: {size}" ;
+            return $"ID: {id}\nDestination: {Destination}\nSpeed: {Speed}\nSize: {size}" ;
         }
 
 
