@@ -12,7 +12,7 @@ namespace version_2D
 {
     public class Bullet : IMapObject, IBullet
     {
-        static int idCounter = 0;
+        static int idCounter = Config.RobotID+1;
         int id;
         public My_Coordinates current_Location;
         public double size;
@@ -24,7 +24,7 @@ namespace version_2D
 
         public double Speed { get => this.destination.Length();}
         public Vector2 Destination { get => destination; set => destination = value; }
-
+        public int ID { get => id; set => id = value; }
 
         public Bullet()
         {
@@ -52,7 +52,7 @@ namespace version_2D
             this.current_Location = new My_Coordinates(start_Location_x, start_Location_y);
             this.Destination = destination;
             this.size = size;
-            this.id = idCounter;
+            this.ID = idCounter;
             idCounter++;
 
  
@@ -79,7 +79,7 @@ namespace version_2D
 
         public override string ToString()
         {
-            return $"ID: {id}\nDestination: {Destination}\nSpeed: {Speed}\nSize: {size}" ;
+            return $"ID: {ID}\nDestination: {Destination}\nSpeed: {Speed}\nSize: {size}" ;
         }
 
 

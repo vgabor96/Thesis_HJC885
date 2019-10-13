@@ -12,7 +12,7 @@ namespace version_2D
     public class Robot : IMapObject
     {
 
-
+        private int iD;
         My_Coordinates Actual_Location;
         public double Range;
         bool isHit => false;
@@ -20,6 +20,7 @@ namespace version_2D
 
         public Robot(int Default_Location_x = Config.Robot_Start_Location_X, int Default_Location_y = Config.Robot_Start_Location_Y,double Range = Config.Robot_range)
         {
+            this.ID = Config.RobotID;
             Actual_Location = new My_Coordinates(Default_Location_x, Default_Location_y);
 
             this.Range = Range;
@@ -50,5 +51,7 @@ namespace version_2D
         public bool IsHarmful => false;
 
         public My_Coordinates Current_Location => this.Actual_Location;
+
+        public int ID { get => iD; set => iD = value; }
     }
 }

@@ -44,7 +44,8 @@ namespace Version_2D_Visualization
         {
             if (!this.logic.endgame)
             {
-                this.logic.endgame = this.logic.map.OneTick();
+                /*this.logic.endgame = */this.logic.map.OneTick();
+                this.logic.endgame = this.logic.RobotIsHit_CollisionDetection();
                 this.canvas.InvalidateVisual();
             
             }

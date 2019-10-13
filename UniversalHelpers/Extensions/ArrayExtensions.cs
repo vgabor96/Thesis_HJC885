@@ -27,23 +27,23 @@ namespace UniversalHelpers.Extensions
 
        
 
-        public static void Set_IMapObjectElement(this double[,] array, double x, double y, MapObjectType value)
+        public static void Set_IMapObjectElement(this double[,] array, double x, double y, double ID)
         {
             //array[array.GetLength(0) - y, x] = (double)value;
-            Set_MapO(array, (int)Math.Round(x), (int)Math.Round(y), value);
+            Set_MapO(array, (int)Math.Round(x), (int)Math.Round(y), ID);
         }
 
-        public static void Set_IMapObjectElement(this double[,] array, My_Coordinates myCoord, MapObjectType value)
+        public static void Set_IMapObjectElement(this double[,] array, My_Coordinates myCoord, double ID)
         {
             //array[array.GetLength(0) - myCoord.Y, myCoord.X] = (double)value;
-            Set_MapO(array,myCoord.X, myCoord.Y, value);
+            Set_MapO(array,myCoord.X, myCoord.Y, ID);
         }
 
-        private static void Set_MapO(double[,] array, int x, int y, MapObjectType value)
+        private static void Set_MapO(double[,] array, int x, int y, double ID)
         {
 
             //array[array.GetLength(0) - (y+1), x] = (double)value;
-            array[array.GetLength(0) - (x + 1), y] = (double)value;
+            array[array.GetLength(0) - (x + 1), y] = ID;
 
         }
 

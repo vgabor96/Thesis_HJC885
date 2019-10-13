@@ -29,15 +29,14 @@ namespace UniversalHelpers.Configurations
         public const double Max_Bullet_Speed = 10;
         public const double Min_Bullet_Speed = 1;
 
-        public const double Default_Bullet_Size = 6;
-        public const double Max_Bullet_Size = 10;
-        public const double Min_Bullet_Size = 1;
+        public const double Default_Bullet_Size = 60;
+
 
         // ROBOT
-        public const int ID = 1;
+        public const int RobotID = 1;
         public const int Robot_Start_Location_X = 20;
         public const int Robot_Start_Location_Y = 20;
-        public const double Robot_range = 1;
+        public const double Robot_range = 40;
 
     }
 }

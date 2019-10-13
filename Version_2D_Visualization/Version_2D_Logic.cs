@@ -46,12 +46,22 @@ namespace Version_2D_Visualization
             {
                 this.bullet_rects.Add(new Rect(item.Current_Location.X, item.Current_Location.Y, item.size, item.size));
             }
-
+            
 
             this.Robot_rect = new Rect(map.robot.Current_Location.X, map.robot.Current_Location.Y, 10 + map.robot.Range, 10 + map.robot.Range);
         }
+        public bool RobotIsHit_CollisionDetection()
+        {
+            foreach (Rect item in this.bullet_rects)
+            {
+                if (item.IntersectsWith(this.Robot_rect))
+                {
 
-      
+                } 
+            }
+            return false;
+        }
+
 
     }
 }

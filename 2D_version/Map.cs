@@ -38,14 +38,14 @@ namespace version_2D
              
             }
 
-            mapObjects.Set_IMapObjectElement(current_location.X, current_location.Y, MapObjectType.Robot);
+            mapObjects.Set_IMapObjectElement(current_location.X, current_location.Y, this.robot.ID);
 
             if (bullets != null)
             {
                 foreach (Bullet item in bullets)
                 {
                     this.bullets.Add(item);
-                    mapObjects.Set_IMapObjectElement(item.Current_Location.X, item.Current_Location.Y, MapObjectType.Bullet);
+                    mapObjects.Set_IMapObjectElement(item.Current_Location.X, item.Current_Location.Y, item.ID);
                 }
             }
 
@@ -54,12 +54,12 @@ namespace version_2D
 
         public bool OneTick()
         {
-            mapObjects.Set_IMapObjectElement(robot.Current_Location, MapObjectType.Robot);
+            mapObjects.Set_IMapObjectElement(robot.Current_Location, this.robot.ID);
             foreach (Bullet item in this.bullets)
             {
                 mapObjects.Set_IMapObjectElement(item.Current_Location, 0);
                 item.OneStep();
-                mapObjects.Set_IMapObjectElement(item.Current_Location, MapObjectType.Bullet);
+                mapObjects.Set_IMapObjectElement(item.Current_Location, item.ID);
             }
             return RobotIshit();
         }
@@ -80,6 +80,8 @@ namespace version_2D
             return false;
 
         }
+
+
 
         public override string ToString()
         {
