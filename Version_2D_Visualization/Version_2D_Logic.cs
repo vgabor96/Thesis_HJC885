@@ -94,7 +94,7 @@ namespace Version_2D_Visualization
             }
         }
 
-        
+        //TODO: Do SMoething
          public static bool LineIntersectsRect(System.Drawing.Point p1, System.Drawing.Point p2, Rectangle r) 
     {
         return LineIntersectsLine(p1, p2, new System.Drawing.Point(r.X, r.Y), new System.Drawing.Point(r.X + r.Width, r.Y)) ||
