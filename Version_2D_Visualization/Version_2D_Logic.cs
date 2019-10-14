@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Drawing;
 using System.Linq;
 using System.Numerics;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using UniversalHelpers.Classes2D;
 using version_2D;
 
 namespace Version_2D_Visualization
@@ -16,6 +18,7 @@ namespace Version_2D_Visualization
         public bool endgame;
         public Rect Robot_rect;
         public ObservableCollection<Rect> bullet_rects;
+        public ObservableCollection<Rectangle> bullet_lines;
 
         public Version_2D_Logic()
         {
@@ -56,6 +59,20 @@ namespace Version_2D_Visualization
             foreach (Rect item in this.bullet_rects)
             { 
                 if (item.IntersectsWith(this.Robot_rect))
+                {
+                    return true;
+                } 
+            }
+            return false;
+        }
+        public bool RobotIsHit_CollisionDetection_withLine()
+        {
+            My_Coordinates robot_middlepos = new My_Coordinates(this.map.robot.Current_Location.X
+                + (int)Math.Round(this.map.robot.Range / 2), this.map.robot.Current_Location.Y
+                + (int)Math.Round(this.map.robot.Range / 2));
+            foreach (Bullet item in this.map.bullets)
+            {
+                if (My_Coordinates.DoesLineContainPoint(item.line, robot_middlepos))
                 {
                     return true;
                 } 

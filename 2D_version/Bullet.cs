@@ -1,9 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Numerics;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Shapes;
 using UniversalHelpers.Classes2D;
 using UniversalHelpers.Configurations;
 using UniversalHelpers.Interfaces;
@@ -15,6 +18,8 @@ namespace version_2D
         static int idCounter = Config.RobotID+1;
         int id;
         public My_Coordinates current_Location;
+        public My_Coordinates next_location;
+        public Line line;
         public double size;
         Vector2 destination;
 
@@ -49,6 +54,7 @@ namespace version_2D
 
         private void Ctor_helper(Vector2 destination, int start_Location_x = Config.Default_Bullet_Location_x, int start_Location_y = Config.Default_Bullet_Location_y, double size = Config.Default_Bullet_Size)
         {
+            this.line = new Line();
             this.current_Location = new My_Coordinates(start_Location_x, start_Location_y);
             this.Destination = destination;
             this.size = size;
@@ -63,7 +69,10 @@ namespace version_2D
 
         public void OneStep()
         {
-            My_Coordinates next_location = new My_Coordinates(this.current_Location.X + (int)destination.X, this.current_Location.Y + (int)destination.Y);
+            this.next_location = new My_Coordinates(this.current_Location.X + (int)destination.X, this.current_Location.Y + (int)destination.Y);
+
+            this.line = My_Coordinates.LineFromTwoPoints(this.current_Location, this.next_location);
+
 
             if (next_location.X< Config.Default_Map_size_X && next_location.X>=0 && next_location.Y < Config.Default_Map_size_Y && next_location.Y>=0)
             {

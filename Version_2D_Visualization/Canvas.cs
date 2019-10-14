@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -7,6 +8,7 @@ using System.Windows;
 using System.Windows.Media;
 using UniversalHelpers.Enumerators;
 using version_2D;
+using Brushes = System.Windows.Media.Brushes;
 
 namespace Version_2D_Visualization
 {
@@ -45,7 +47,8 @@ namespace Version_2D_Visualization
                 foreach (Rect item in logic.bullet_rects)
                 {
                     
-                    drawingContext.DrawRectangle(Brushes.Red, null,item) ;
+                    drawingContext.DrawRectangle(Brushes.Red, null,item);
+                 
 
                 }
 
