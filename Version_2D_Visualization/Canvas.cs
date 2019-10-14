@@ -26,7 +26,7 @@ namespace Version_2D_Visualization
 
             if (this.logic != null)
             {
-                Bullet item;
+                
 
                 drawingContext.DrawRectangle(Brushes.Gray, null, new Rect(0, 0, this.ActualWidth, this.ActualHeight));
 
@@ -36,11 +36,19 @@ namespace Version_2D_Visualization
                 //    drawingContext.DrawRectangle(Brushes.Red, null, item);
                 //}
 
-                for (int i = 0; i < logic.map.bullets.Count(); i++)
+                //for (int i = 0; i < logic.map.bullets.Count(); i++)
+                //{
+                //    item = logic.map.bullets[i];
+                //    drawingContext.DrawRectangle(Brushes.Red, null, new Rect(item.Current_Location.X, item.Current_Location.Y, logic.bullet_rects[i].Width, logic.bullet_rects[i].Height)); ;
+                //}
+
+                foreach (Rect item in logic.bullet_rects)
                 {
-                    item = logic.map.bullets[i];
-                    drawingContext.DrawRectangle(Brushes.Red, null, new Rect(item.Current_Location.X, item.Current_Location.Y, logic.bullet_rects[i].Width, logic.bullet_rects[i].Height)); ;
+                    
+                    drawingContext.DrawRectangle(Brushes.Red, null,item) ;
+
                 }
+
 
                 drawingContext.DrawRectangle(Brushes.Blue, null, logic.Robot_rect);
 

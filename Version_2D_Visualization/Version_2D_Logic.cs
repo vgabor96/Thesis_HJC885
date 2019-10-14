@@ -52,14 +52,23 @@ namespace Version_2D_Visualization
         }
         public bool RobotIsHit_CollisionDetection()
         {
+            
             foreach (Rect item in this.bullet_rects)
-            {
+            { 
                 if (item.IntersectsWith(this.Robot_rect))
                 {
-
+                    return true;
                 } 
             }
             return false;
+        }
+
+        public void UpdateBulletsToRects()
+        {
+            for (int i = 0; i < this.map.bullets.Count; i++)
+            {
+                this.bullet_rects[i] = new Rect(this.map.bullets[i].current_Location.X, this.map.bullets[i].current_Location.Y, this.bullet_rects[i].Width, this.bullet_rects[i].Height);
+            }
         }
 
 
