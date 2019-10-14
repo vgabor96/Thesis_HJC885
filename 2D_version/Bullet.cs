@@ -60,6 +60,7 @@ namespace version_2D
             this.size = size;
             this.ID = idCounter;
             idCounter++;
+            NextLocationCalculator();
 
  
 
@@ -69,7 +70,7 @@ namespace version_2D
 
         public void OneStep()
         {
-            this.next_location = new My_Coordinates(this.current_Location.X + (int)destination.X, this.current_Location.Y + (int)destination.Y);
+            
 
             this.line = My_Coordinates.LineFromTwoPoints(this.current_Location, this.next_location);
 
@@ -82,7 +83,12 @@ namespace version_2D
             {
                 this.current_Location.GenerateRandomCoordinate();
             }
+            NextLocationCalculator();
         
+        }
+        private void NextLocationCalculator()
+        {
+            this.next_location = new My_Coordinates(this.current_Location.X + (int)destination.X, this.current_Location.Y + (int)destination.Y);
         }
 
 

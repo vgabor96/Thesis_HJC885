@@ -72,7 +72,9 @@ namespace Version_2D_Visualization
                 + (int)Math.Round(this.map.robot.Range / 2));
             foreach (Bullet item in this.map.bullets)
             {
-                if (My_Coordinates.DoesLineContainPoint(item.line, robot_middlepos))
+
+                if (LineIntersectsRect(new System.Drawing.Point(item.Current_Location.X, item.Current_Location.Y),
+                    new System.Drawing.Point(item.next_location.X, item.next_location.Y), new Rectangle((int)this.Robot_rect.X, (int)this.Robot_rect.Y, (int)this.Robot_rect.Width, (int)this.Robot_rect.Height)))
                 {
                     return true;
                 } 
@@ -87,6 +89,39 @@ namespace Version_2D_Visualization
                 this.bullet_rects[i] = new Rect(this.map.bullets[i].current_Location.X, this.map.bullets[i].current_Location.Y, this.bullet_rects[i].Width, this.bullet_rects[i].Height);
             }
         }
+
+        
+         public static bool LineIntersectsRect(System.Drawing.Point p1, System.Drawing.Point p2, Rectangle r) 
+    {
+        return LineIntersectsLine(p1, p2, new System.Drawing.Point(r.X, r.Y), new System.Drawing.Point(r.X + r.Width, r.Y)) ||
+               LineIntersectsLine(p1, p2, new System.Drawing.Point(r.X + r.Width, r.Y), new System.Drawing.Point(r.X + r.Width, r.Y + r.Height)) ||
+               LineIntersectsLine(p1, p2, new System.Drawing.Point(r.X + r.Width, r.Y + r.Height), new System.Drawing.Point(r.X, r.Y + r.Height)) ||
+               LineIntersectsLine(p1, p2, new System.Drawing.Point(r.X, r.Y + r.Height), new System.Drawing.Point(r.X, r.Y)) ||
+               (r.Contains(p1) && r.Contains(p2));
+    }
+
+    private static bool LineIntersectsLine(System.Drawing.Point l1p1, System.Drawing.Point l1p2, System.Drawing.Point l2p1, System.Drawing.Point l2p2)
+    {
+        float q = (l1p1.Y - l2p1.Y) * (l2p2.X - l2p1.X) - (l1p1.X - l2p1.X) * (l2p2.Y - l2p1.Y);
+        float d = (l1p2.X - l1p1.X) * (l2p2.Y - l2p1.Y) - (l1p2.Y - l1p1.Y) * (l2p2.X - l2p1.X);
+
+        if( d == 0 )
+        {
+            return false;
+        }
+
+        float r = q / d;
+
+        q = (l1p1.Y - l2p1.Y) * (l1p2.X - l1p1.X) - (l1p1.X - l2p1.X) * (l1p2.Y - l1p1.Y);
+        float s = q / d;
+
+        if( r < 0 || r > 1 || s < 0 || s > 1 )
+        {
+            return false;
+        }
+
+        return true;
+    }
 
 
     }
