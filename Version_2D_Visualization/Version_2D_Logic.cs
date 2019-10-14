@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using UniversalHelpers.Classes2D;
+using UniversalHelpers.Configurations;
 using version_2D;
 
 namespace Version_2D_Visualization
@@ -36,7 +37,7 @@ namespace Version_2D_Visualization
         private void Initialize()
         {
             List<Bullet> bs = new List<Bullet>();
-            for (int i = 0; i < 6; i++)
+            for (int i = 0; i < Config.Default_Bullet_Count; i++)
             {
                 Bullet b = new Bullet();
                 b.GenerateRandomBullet();

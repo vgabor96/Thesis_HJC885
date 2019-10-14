@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Numerics;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Shapes;
@@ -27,6 +28,11 @@ namespace UniversalHelpers.Classes2D
             
             this.x = RandomGenerator.r.Next(0, Config.Default_Map_size_X);
             this.y = RandomGenerator.r.Next(0, Config.Default_Map_size_Y);
+        }
+
+        public static Vector2 GenerateRandomVector2()
+        {
+            return new Vector2((float)RandomGenerator.r.Next(Convert.ToInt32(Config.Default_Vector_from), Convert.ToInt32(Config.Default_Vector_to)), (float)RandomGenerator.r.Next(Convert.ToInt32(Config.Default_Vector_from), Convert.ToInt32(Config.Default_Vector_to)));
         }
 
         public static Line LineFromTwoPoints(My_Coordinates first, My_Coordinates second)

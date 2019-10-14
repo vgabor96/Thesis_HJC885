@@ -18,7 +18,7 @@ namespace version_2D
         bool isHit => false;
         //Vector2 Actualmovement;
 
-        public Robot(int Default_Location_x = Config.Robot_Start_Location_X, int Default_Location_y = Config.Robot_Start_Location_Y,double Range = Config.Robot_range)
+        public Robot(int Default_Location_x = Config.Robot_Start_Location_X, int Default_Location_y = Config.Robot_Start_Location_Y,double Range = Config.Robot_size)
         {
             this.ID = Config.RobotID;
             Actual_Location = new My_Coordinates(Default_Location_x, Default_Location_y);
