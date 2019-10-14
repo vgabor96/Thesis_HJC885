@@ -39,5 +39,9 @@ namespace UniversalHelpers.Configurations
         public const int Robot_Start_Location_Y = 300; //300
         public const double Robot_size = 20; //40
 
+
+        //RULES
+        public const int Default_HitPoints = 3;
+
     }
 }

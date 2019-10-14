@@ -46,11 +46,15 @@ namespace Version_2D_Visualization
             {
                 //this.logic.endgame = this.logic.RobotIsHit_CollisionDetection();
                 /*this.logic.endgame = */
-                this.logic.endgame = this.logic.RobotIsHit_CollisionDetection_withLine();
+                if (this.logic.RobotIsHit_CollisionDetection_withLine())
+                {
+                    this.logic.endgame = this.logic.LoseLife();
+                }
+
                 this.logic.map.OneTick();
                 this.logic.UpdateBulletsToRects();
                 this.canvas.InvalidateVisual();
-            
+
             }
             else
             {

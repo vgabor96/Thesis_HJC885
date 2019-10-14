@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -32,6 +33,7 @@ namespace Version_2D_Visualization
 
                 drawingContext.DrawRectangle(Brushes.Gray, null, new Rect(0, 0, this.ActualWidth, this.ActualHeight));
 
+                drawingContext.DrawText(new FormattedText("Lives: "+this.logic.life,CultureInfo.CurrentCulture,FlowDirection.LeftToRight,new Typeface("Arial"),20,Brushes.Green),new System.Windows.Point(20,20));
                 //foreach (Rect item in logic.bullet_rects)
                 //{
 

@@ -17,6 +17,7 @@ namespace Version_2D_Visualization
     {
         public Map map;
         public bool endgame;
+        public  int life = Config.Default_HitPoints;
         public Rect Robot_rect;
         public ObservableCollection<Rect> bullet_rects;
         public ObservableCollection<Rectangle> bullet_lines;
@@ -61,7 +62,9 @@ namespace Version_2D_Visualization
             { 
                 if (item.IntersectsWith(this.Robot_rect))
                 {
+
                     return true;
+                  
                 } 
             }
             return false;
@@ -121,9 +124,17 @@ namespace Version_2D_Visualization
             return false;
         }
 
-        return true;
-    }
+            return true;
+        }
 
-
+        public bool LoseLife()
+        {
+            if (this.life >0)
+            {
+                this.life--;
+                return false;
+            }
+            return true;
+        }
     }
 }
