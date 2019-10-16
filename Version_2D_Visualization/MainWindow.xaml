@@ -7,10 +7,10 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="720" Width="1366">
     <StackPanel Orientation="Horizontal" >
-        <StackPanel Height="600" Width="560" Grid.Column="0">
+        <!--<StackPanel Height="600" Width="560" Grid.Column="0">
            
-        </StackPanel>
-        <StackPanel Height="600" Width="800" Grid.Column="1">
+        </StackPanel>-->
+        <StackPanel Height="600" Width="800" Grid.Column="1" HorizontalAlignment="Center">
             <local:Canvas x:Name="canvas"/>
 
         </StackPanel>

@@ -77,14 +77,13 @@ namespace Version_2D_Visualization
             foreach (Bullet item in this.map.bullets)
             {
 
-                if (LineIntersectsRect(new System.Drawing.Point(item.Current_Location.X, item.Current_Location.Y),
+                if (item.IsHarmful && LineIntersectsRect(new System.Drawing.Point(item.Current_Location.X, item.Current_Location.Y),
                     new System.Drawing.Point(item.next_location.X, item.next_location.Y), new Rectangle((int)this.Robot_rect.X, (int)this.Robot_rect.Y, (int)this.Robot_rect.Width, (int)this.Robot_rect.Height)))
                 {
-                    if (item.IsHarmful)
-                    {
+                    
                         item.IsHarmful = false;
                         return true;
-                    }
+                    
                     
                 } 
             }
