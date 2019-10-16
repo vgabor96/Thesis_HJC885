@@ -80,7 +80,12 @@ namespace Version_2D_Visualization
                 if (LineIntersectsRect(new System.Drawing.Point(item.Current_Location.X, item.Current_Location.Y),
                     new System.Drawing.Point(item.next_location.X, item.next_location.Y), new Rectangle((int)this.Robot_rect.X, (int)this.Robot_rect.Y, (int)this.Robot_rect.Width, (int)this.Robot_rect.Height)))
                 {
-                    return true;
+                    if (item.IsHarmful)
+                    {
+                        item.IsHarmful = false;
+                        return true;
+                    }
+                    
                 } 
             }
             return false;
@@ -129,7 +134,7 @@ namespace Version_2D_Visualization
 
         public bool LoseLife()
         {
-            if (this.life >0)
+            if (this.life >1)
             {
                 this.life--;
                 return false;

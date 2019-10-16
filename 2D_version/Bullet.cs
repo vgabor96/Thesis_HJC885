@@ -25,7 +25,7 @@ namespace version_2D
 
         public My_Coordinates Current_Location => this.current_Location;
 
-        public bool IsHarmful => true;
+        public bool IsHarmful { get; set; }
 
         public double Speed { get => this.destination.Length();}
         public Vector2 Destination { get => destination; set => destination = value; }
@@ -54,6 +54,7 @@ namespace version_2D
 
         private void Ctor_helper(Vector2 destination, int start_Location_x = Config.Default_Bullet_Location_x, int start_Location_y = Config.Default_Bullet_Location_y, double size = Config.Default_Bullet_Size_MAX)
         {
+            this.IsHarmful = true;
             this.line = new Line();
             this.current_Location = new My_Coordinates(start_Location_x, start_Location_y);
             this.Destination = destination;
@@ -81,8 +82,7 @@ namespace version_2D
             }
             else
             {
-                this.current_Location.GenerateRandomCoordinate();
-                this.destination = My_Coordinates.GenerateRandomVector2();
+                BulletreRandomregeneration();
             }
             NextLocationCalculator();
         
@@ -96,6 +96,14 @@ namespace version_2D
         public override string ToString()
         {
             return $"ID: {ID}\nDestination: {Destination}\nSpeed: {Speed}\nSize: {size}" ;
+        }
+
+        private void BulletreRandomregeneration()
+        {
+            
+            this.current_Location.GenerateRandomCoordinate();
+            this.destination = My_Coordinates.GenerateRandomVector2();
+            this.IsHarmful = true;
         }
 
 

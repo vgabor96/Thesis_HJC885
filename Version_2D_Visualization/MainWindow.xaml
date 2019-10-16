@@ -5,9 +5,15 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Version_2D_Visualization"
         mc:Ignorable="d"
-        Title="MainWindow" Height="600" Width="800">
-    <Grid>
-        <local:Canvas x:Name="canvas"/>
+        Title="MainWindow" Height="720" Width="1366">
+    <StackPanel Orientation="Horizontal" >
+        <StackPanel Height="600" Width="560" Grid.Column="0">
+           
+        </StackPanel>
+        <StackPanel Height="600" Width="800" Grid.Column="1">
+            <local:Canvas x:Name="canvas"/>
 
-    </Grid>
+        </StackPanel>
+    </StackPanel>
+   
 </Window>
