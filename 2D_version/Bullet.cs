@@ -55,7 +55,7 @@ namespace version_2D
         private void Ctor_helper(Vector2 destination, int start_Location_x = Config.Default_Bullet_Location_x, int start_Location_y = Config.Default_Bullet_Location_y, double size = Config.Default_Bullet_Size_MAX)
         {
             this.IsHarmful = true;
-            this.line = new Line();
+ //           this.line = new Line();
             this.current_Location = new My_Coordinates(start_Location_x, start_Location_y);
             this.Destination = destination;
             this.size = size;

@@ -81,7 +81,7 @@ namespace Version_2D_Visualization
                     new System.Drawing.Point(item.next_location.X, item.next_location.Y), new Rectangle((int)this.Robot_rect.X, (int)this.Robot_rect.Y, (int)this.Robot_rect.Width, (int)this.Robot_rect.Height)))
                 {
                     
-                        item.IsHarmful = false;
+                        item.IsHarmful = false; // FALSE!!!
                         return true;
                     
                     
