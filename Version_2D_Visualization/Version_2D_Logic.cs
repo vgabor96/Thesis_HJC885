@@ -44,6 +44,7 @@ namespace Version_2D_Visualization
                 b.GenerateRandomBullet();
                 bs.Add(b);
             }
+            bs.Add(new Bullet(new Vector2(1, 1), 0, 0, 1, 50)); //Coordinate Check
             map = new Map(null, bs);
             bullet_rects = new ObservableCollection<Rect>();
 
