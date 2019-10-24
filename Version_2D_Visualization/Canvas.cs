@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Media;
+using System.Windows.Shapes;
 using UniversalHelpers.Enumerators;
 using version_2D;
 using Brushes = System.Windows.Media.Brushes;
@@ -49,6 +50,7 @@ namespace Version_2D_Visualization
                 {
                     
                     drawingContext.DrawRectangle(Brushes.Red, null,item);
+                    
                  
 
                 }

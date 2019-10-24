@@ -19,7 +19,7 @@ namespace version_2D
         int id;
         public My_Coordinates current_Location;
         public My_Coordinates next_location;
-        public List<Line> lines;
+        public  Line[] lines;
         public double size;
         Vector2 destination;
 
@@ -55,7 +55,7 @@ namespace version_2D
         private void Ctor_helper(Vector2 destination, int start_Location_x = Config.Default_Bullet_Location_x, int start_Location_y = Config.Default_Bullet_Location_y, double size = Config.Default_Bullet_Size_MAX)
         {
             this.IsHarmful = true;
-            this.lines = new List<Line>();
+            this.lines = new Line[3];
             this.current_Location = new My_Coordinates(start_Location_x, start_Location_y);
             this.Destination = destination;
             this.size = size;
@@ -71,9 +71,9 @@ namespace version_2D
 
         public void OneStep()
         {
-            
 
-            this.lines.Add(My_Coordinates.LineFromTwoPoints(this.current_Location, this.next_location));
+            NextLocationLinesCalculator();
+           
 
 
             if (next_location.X< Config.Default_Map_size_X && next_location.X>=0 && next_location.Y < Config.Default_Map_size_Y && next_location.Y>=0)
@@ -86,6 +86,13 @@ namespace version_2D
             }
             NextLocationCalculator();
         
+        }
+
+        private void NextLocationLinesCalculator()
+        {
+            this.lines[0] = (My_Coordinates.LineFromTwoPoints(this.current_Location, this.next_location));
+            this.lines[1] = (My_Coordinates.LineFromTwoPoints(new My_Coordinates(this.Current_Location.X + (int)this.size,this.current_Location.Y), new My_Coordinates(this.next_location.X + (int)this.size, this.next_location.Y)));
+            this.lines[2] = (My_Coordinates.LineFromTwoPoints(new My_Coordinates(this.Current_Location.X, this.current_Location.Y - this.current_Location.Y- (int)this.size), new My_Coordinates(this.next_location.X, this.next_location.Y - (int)this.size)));
         }
         private void NextLocationCalculator()
         {

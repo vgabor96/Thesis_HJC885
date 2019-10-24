@@ -26,8 +26,14 @@ namespace _2D_version
 
         public bool IsRobotHit(Robot robot, Bullet bullet)
         {
-
-            return LineIntersectsRect(new Point(bullet.Current_Location.X,bullet.Current_Location.Y),new Point(bullet.next_location.X,bullet.next_location.Y), robot.robotbody);
+            for (int i = 0; i < bullet.lines.Length; i++)
+            {
+                if (LineIntersectsRect(new Point((int)bullet.lines[i].X1, (int)bullet.lines[i].Y1), new Point((int)bullet.lines[i].X2, (int)bullet.lines[i].Y2), robot.robotbody))
+                {
+                    return true;
+                }
+            }
+            return false;
 
 
         }
