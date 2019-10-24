@@ -78,11 +78,13 @@ namespace Version_2D_Visualization
             foreach (Bullet item in this.map.bullets)
             {
 
-                if (item.IsHarmful && LineIntersectsRect(new System.Drawing.Point(item.Current_Location.X, item.Current_Location.Y),
-                    new System.Drawing.Point(item.next_location.X, item.next_location.Y), new Rectangle((int)this.Robot_rect.X, (int)this.Robot_rect.Y, (int)this.Robot_rect.Width, (int)this.Robot_rect.Height)))
+                //if (item.IsHarmful && LineIntersectsRect(new System.Drawing.Point(item.Current_Location.X, item.Current_Location.Y),
+                //    new System.Drawing.Point(item.next_location.X, item.next_location.Y), new Rectangle((int)this.Robot_rect.X, (int)this.Robot_rect.Y, (int)this.Robot_rect.Width, (int)this.Robot_rect.Height)))
+                //{
+                if (item.IsHarmful && IsRobotHit(this.map.robot,item))
                 {
-                    
-                        item.IsHarmful = false; // FALSE!!!
+
+                    item.IsHarmful = false; // FALSE!!!
                         return true;
                     
                     
@@ -99,8 +101,23 @@ namespace Version_2D_Visualization
             }
         }
 
+
+        public bool IsRobotHit(Robot robot, Bullet bullet)
+        {
+            for (int i = 0; i < bullet.lines.Length; i++)
+            {
+                if (LineIntersectsRect(new System.Drawing.Point((int)bullet.lines[i].X1, (int)bullet.lines[i].Y1), new System.Drawing.Point((int)bullet.lines[i].X2, (int)bullet.lines[i].Y2), robot.robotbody))
+                {
+                    return true;
+                }
+            }
+            return false;
+
+
+        }
+
         //TODO: Do SMoething
-         public static bool LineIntersectsRect(System.Drawing.Point p1, System.Drawing.Point p2, Rectangle r) 
+        public static bool LineIntersectsRect(System.Drawing.Point p1, System.Drawing.Point p2, Rectangle r) 
     {
         return LineIntersectsLine(p1, p2, new System.Drawing.Point(r.X, r.Y), new System.Drawing.Point(r.X + r.Width, r.Y)) ||
                LineIntersectsLine(p1, p2, new System.Drawing.Point(r.X + r.Width, r.Y), new System.Drawing.Point(r.X + r.Width, r.Y + r.Height)) ||
