@@ -33,6 +33,7 @@ namespace version_2D
             for (int i = 0; i < 100000; i++)
             {
                 Bullet b = new Bullet();
+                //TODO excpetion!!
                 b.GenerateRandomBullet();
                 bs.Add(b);
             }
