@@ -32,7 +32,20 @@ namespace UniversalHelpers.Classes2D
 
         public static Vector2 GenerateRandomVector2()
         {
-            return new Vector2((float)RandomGenerator.r.Next(Convert.ToInt32(Config.Default_Vector_from), Convert.ToInt32(Config.Default_Vector_to)), (float)RandomGenerator.r.Next(Convert.ToInt32(Config.Default_Vector_from), Convert.ToInt32(Config.Default_Vector_to)));
+            float v1 = 0;
+            float v2 = 0;
+
+            v1 = (float)RandomGenerator.r.Next(Convert.ToInt32(Config.Default_Vector_from), Convert.ToInt32(Config.Default_Vector_to));
+           
+            //Vectors should moving => both of them cannot be 0.
+            while (v1 == 0)
+            {
+                v1 = (float)RandomGenerator.r.Next(Convert.ToInt32(Config.Default_Vector_from), Convert.ToInt32(Config.Default_Vector_to));
+
+            }
+            v2 = (float)RandomGenerator.r.Next(Convert.ToInt32(Config.Default_Vector_from), Convert.ToInt32(Config.Default_Vector_to));
+
+                return new Vector2(v1, v2); 
         }
 
         public static Line LineFromTwoPoints(My_Coordinates first, My_Coordinates second)

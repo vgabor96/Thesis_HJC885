@@ -5,6 +5,7 @@ using System.Linq;
 using System.Numerics;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using UniversalHelpers.Classes2D;
 using UniversalHelpers.Configurations;
 
@@ -19,10 +20,10 @@ namespace version_2D
         bool isHit => false;
         //Vector2 Actualmovement;
 
-        public Rectangle robotbody;
+        public Rect robotbody;
         public Robot(int Default_Location_x = Config.Robot_Start_Location_X, int Default_Location_y = Config.Robot_Start_Location_Y,double range = Config.Robot_size)
         {
-            this.robotbody = new Rectangle(Default_Location_x, Default_Location_y, (int)range, (int)range);
+            this.robotbody = new Rect(Default_Location_x, Default_Location_y, (int)range, (int)range);
             this.ID = Config.RobotID;
             Actual_Location = new My_Coordinates(Default_Location_x, Default_Location_y);
 

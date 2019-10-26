@@ -13,6 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Windows.Threading;
+using UniversalHelpers.Configurations;
 using version_2D;
 
 namespace Version_2D_Visualization
@@ -34,7 +35,7 @@ namespace Version_2D_Visualization
             this.logic = new Version_2D_Logic();
             this.canvas.LogicSetup(this.logic);
 
-            this.dt.Interval = TimeSpan.FromMilliseconds(10);
+            this.dt.Interval = TimeSpan.FromMilliseconds(Config.Game_Speed);
             this.dt.Tick += Dt_Tick;
             this.dt.Start();
   

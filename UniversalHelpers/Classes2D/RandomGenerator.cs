@@ -14,9 +14,20 @@ namespace UniversalHelpers.Classes2D
 
         public static IEnumerable<Vector2> Generate_Multiple_Random_Vector2(int count = Config.Default_Vector_Count, double from = Config.Default_Vector_from, double to = Config.Default_Vector_to)
         {
+            float v1 = 0;
+            float v2 = 0;
             for (int i = 0; i < count; i++)
             {
-                yield return new Vector2((float)r.Next(Convert.ToInt32(from), Convert.ToInt32(to)), (float)r.Next(Convert.ToInt32(from), Convert.ToInt32(to)));
+               
+               
+               
+                    v1 = (float)r.Next(Convert.ToInt32(from), Convert.ToInt32(to));
+                   
+                
+                
+                    v2 = (float)r.Next(Convert.ToInt32(from), Convert.ToInt32(to));
+                
+                yield return new Vector2(v1,v2);
             }
 
         }

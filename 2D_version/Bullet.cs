@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Drawing;
 using System.Linq;
 using System.Numerics;
 using System.Text;
@@ -43,11 +42,11 @@ namespace version_2D
 
         public void GenerateRandomBullet()
         {
-  
-            int current_LocationX = RandomGenerator.r.Next(0, Config.Default_Map_size_X);
-            int current_LocationY = RandomGenerator.r.Next(0, Config.Default_Map_size_Y);
-            Vector2 destination = RandomGenerator.Generate_Multiple_Random_Vector2().FirstOrDefault();
-            int speed = RandomGenerator.r.Next(1,(int)Config.Default_Bullet_Speed*2);
+
+            int current_LocationX = Config.Default_Bullet_Location_x;//RandomGenerator.r.Next(0, Config.Default_Map_size_X);
+            int current_LocationY = Config.Default_Bullet_Location_y;//RandomGenerator.r.Next(0, Config.Default_Map_size_Y);
+            Vector2 destination = My_Coordinates.GenerateRandomVector2();
+            //int speed = RandomGenerator.r.Next(1,(int)Config.Default_Bullet_Speed*2);
             double size = RandomGenerator.r.Next((int)Config.Default_Bullet_Size_MIN, (int)Config.Default_Bullet_Size_MAX);
             this.Ctor_helper(destination, current_LocationX, current_LocationY, size);
         }
@@ -118,8 +117,8 @@ namespace version_2D
 
         private void BulletreRandomregeneration()
         {
-            
-            this.current_Location.GenerateRandomCoordinate();
+
+            this.current_Location = new My_Coordinates(Config.Default_Bullet_Location_x, Config.Default_Bullet_Location_y);//.GenerateRandomCoordinate();
             this.destination = My_Coordinates.GenerateRandomVector2();
             this.IsHarmful = true;
         }
