@@ -45,6 +45,8 @@
   <ItemGroup>
     <Compile Include="Classes2D\My_Coordinates.cs" />
     <Compile Include="Classes2D\RandomGenerator.cs" />
+    <Compile Include="Classes3D\My_Coordinates3D.cs" />
+    <Compile Include="Classes3D\RandomGenerator3D.cs" />
     <Compile Include="Configurations\Config.cs" />
     <Compile Include="Enumerators\MapObjectType.cs" />
     <Compile Include="Extensions\ArrayExtensions.cs" />
