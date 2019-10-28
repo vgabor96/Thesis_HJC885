@@ -6,7 +6,13 @@
         xmlns:local="clr-namespace:version_3D_Visualization"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
-    <Grid>
-        
-    </Grid>
+    <StackPanel Orientation="Horizontal" >
+        <!--<StackPanel Height="600" Width="560" Grid.Column="0">
+           
+        </StackPanel>-->
+        <StackPanel Height="600"  Width="800" Grid.Column="1" HorizontalAlignment="Center">
+            <local:Canvas x:Name="canvas"/>
+
+        </StackPanel>
+    </StackPanel>
 </Window>
