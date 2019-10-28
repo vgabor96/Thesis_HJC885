@@ -25,7 +25,7 @@ namespace _2D_version
         {
             for (int i = 0; i < bullet.next_location_lines.Length; i++)
             {
-                if (LineIntersectsRect(new Point((int)bullet.next_location_lines[i].X1, (int)bullet.next_location_lines[i].Y1), new Point((int)bullet.next_location_lines[i].X2, (int)bullet.next_location_lines[i].Y2), robot.robotbody))
+                if (LineIntersects_AllRects(new Point((int)bullet.next_location_lines[i].X1, (int)bullet.next_location_lines[i].Y1), new Point((int)bullet.next_location_lines[i].X2, (int)bullet.next_location_lines[i].Y2), robot.robotbody))
                 {
                     return true;
                 }
@@ -39,7 +39,7 @@ namespace _2D_version
         {
             for (int i = 0; i < bullet.destination_lines.Length; i++)
             {
-                if (LineIntersectsRect(new Point((int)bullet.destination_lines[i].X1, (int)bullet.destination_lines[i].Y1), new Point((int)bullet.destination_lines[i].X2, (int)bullet.destination_lines[i].Y2), robot.robotbody))
+                if (LineIntersects_AllRects(new Point((int)bullet.destination_lines[i].X1, (int)bullet.destination_lines[i].Y1), new Point((int)bullet.destination_lines[i].X2, (int)bullet.destination_lines[i].Y2), robot.robotbody))
                 {
                     return true;
                 }
@@ -49,6 +49,18 @@ namespace _2D_version
 
         }
 
+        public static bool LineIntersects_AllRects(System.Windows.Point p1, System.Windows.Point p2, List<Rect> r)
+        {
+            foreach (Rect item in r)
+            {
+                if (LineIntersectsRect(p1, p2, item))
+                {
+                    return true;
+                }
+               
+            }
+            return false;
+        }
 
         public static bool LineIntersectsRect(System.Windows.Point p1, System.Windows.Point p2, Rect r)
         {

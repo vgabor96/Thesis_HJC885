@@ -39,7 +39,7 @@ namespace UniversalHelpers.Configurations
         public const int RobotID = 1; //1
         public const int Robot_Start_Location_X = Default_Map_size_X/2; //400
         public const int Robot_Start_Location_Y = Default_Map_size_Y/2; //300
-        public const double Robot_size = 40; //40
+        public const double Robot_size = 10; //40
 
 
         //RULES

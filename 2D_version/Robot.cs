@@ -20,14 +20,15 @@ namespace version_2D
         bool isHit => false;
         //Vector2 Actualmovement;
 
-        public Rect robotbody;
+        public List<Rect> robotbody;
         public Robot(int Default_Location_x = Config.Robot_Start_Location_X, int Default_Location_y = Config.Robot_Start_Location_Y,double range = Config.Robot_size)
         {
-            this.robotbody = new Rect(Default_Location_x, Default_Location_y, (int)range, (int)range);
+           
             this.ID = Config.RobotID;
             Actual_Location = new My_Coordinates(Default_Location_x, Default_Location_y);
 
             this.Range = range;
+            BodyInitialization();
         }
 
         public override string ToString()
@@ -57,5 +58,19 @@ namespace version_2D
         public My_Coordinates Current_Location => this.Actual_Location;
 
         public int ID { get => iD; set => iD = value; }
+
+        private void BodyInitialization()
+        {
+
+            this.robotbody = new List<Rect>();
+            //Head
+            this.robotbody.Add(new Rect(this.Actual_Location.X, this.Actual_Location.Y, (int)this.Range, (int)this.Range));
+            //Body
+            this.robotbody.Add(new Rect(this.Actual_Location.X - this.Range/2, this.Actual_Location.Y + (int)this.Range, (int)this.Range * 2, (int)this.Range * 2));
+            //LegLeft
+            this.robotbody.Add(new Rect(this.Actual_Location.X - this.Range / 5, this.Actual_Location.Y + (int)this.Range * 3, (int)this.Range / 2, (int)this.Range));
+            //LegRIght
+            this.robotbody.Add(new Rect(this.Actual_Location.X+ this.Range/3*2, this.Actual_Location.Y + (int)this.Range*3, (int)this.Range/2, (int)this.Range));
+        }
     }
 }

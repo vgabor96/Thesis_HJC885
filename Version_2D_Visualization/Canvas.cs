@@ -73,9 +73,12 @@ namespace Version_2D_Visualization
                     }
                 }
 
+                foreach (Rect item in this.logic.Robot_rects)
+                {
+                    drawingContext.DrawRectangle(Brushes.Blue, null, item);
+                }
 
-
-                drawingContext.DrawRectangle(Brushes.Blue, null, logic.Robot_rect);
+               
 
                 //Bullet item;
 
