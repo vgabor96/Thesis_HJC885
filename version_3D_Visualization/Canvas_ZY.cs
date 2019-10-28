@@ -28,7 +28,7 @@ namespace version_3D_Visualization
             {
 
 
-                drawingContext.DrawRectangle(Brushes.Gray, null, new Rect(0, 0, this.ActualWidth, this.ActualHeight));
+                drawingContext.DrawRectangle(null, new Pen(Brushes.Black, 2), new Rect(0, 0, Config.Default_Map_size_X, Config.Default_Map_size_Y));
 
                 //foreach (Rect item in logic.bullet_rects)
                 //{

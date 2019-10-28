@@ -11,7 +11,7 @@ namespace UniversalHelpers.Configurations
     {
         //MAP
         public const double DistanceRobotFromBuetStart = 200;
-        public const int Default_Map_size_X = 800; // 800
+        public const int Default_Map_size_X = 400; // 800
         public const int Default_Map_size_Y = 600; // 600
         public const int Default_Map_size_Z = 600; // 600
 
@@ -49,7 +49,7 @@ namespace UniversalHelpers.Configurations
         public const int Default_HitPoints = 100;
 
         //GAMESPEED
-        public const double Game_Speed = 0.10; //10
+        public const double Game_Speed = 10; //10
 
     }
 }

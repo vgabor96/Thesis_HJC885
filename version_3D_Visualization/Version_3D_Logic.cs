@@ -20,8 +20,8 @@ namespace version_3D_Visualization
         public int life = Config.Default_HitPoints;
         public ObservableCollection<Rect> Robot_rects;
         public ObservableCollection<Rect> bullet_rects;
-        public double window_width = Config.Default_Map_size_X;
-        public double window_height = Config.Default_Map_size_Y;
+        //public double window_width = Config.Default_Map_size_X;
+        //public double window_height = Config.Default_Map_size_Y;
         public UltimateVectorLogic3D uvl;
 
         public Version_3D_Logic()

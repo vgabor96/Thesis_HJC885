@@ -29,9 +29,11 @@ namespace version_3D_Visualization
         {
             InitializeComponent();
             this.logic = new Version_3D_Logic();
-            this.Height = logic.window_height;
-            this.Width = logic.window_width;
-            this.canvas.LogicSetup(this.logic);
+            //this.Height = logic.window_height;
+            //this.Width = logic.window_width;
+            this.canvas_xy.LogicSetup(this.logic);
+            this.canvas_xz.LogicSetup(this.logic);
+            this.canvas_zy.LogicSetup(this.logic);
 
             this.dt.Interval = TimeSpan.FromMilliseconds(Config.Game_Speed);
             this.dt.Tick += Dt_Tick;
@@ -52,7 +54,9 @@ namespace version_3D_Visualization
 
                 this.logic.OneTick();
                 this.logic.UpdateBulletsToRects();
-                this.canvas.InvalidateVisual();
+                this.canvas_xy.InvalidateVisual();
+                this.canvas_xz.InvalidateVisual();
+                this.canvas_zy.InvalidateVisual();
 
             }
             else
