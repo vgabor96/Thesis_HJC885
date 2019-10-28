@@ -32,7 +32,7 @@ namespace version_2D
 
         public Bullet()
         {
-
+         
         }
 
         public Bullet(Vector2 destination, int start_Location_x = Config.Default_Bullet_Location_x, int start_Location_y= Config.Default_Bullet_Location_y, double speed = Config.Default_Bullet_Speed, double size = Config.Default_Bullet_Size_MAX)

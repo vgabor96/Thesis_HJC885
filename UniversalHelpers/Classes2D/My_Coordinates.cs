@@ -49,14 +49,16 @@ namespace UniversalHelpers.Classes2D
         }
 
         public static Line LineFromTwoPoints(My_Coordinates first, My_Coordinates second)
-        { 
-        return  new Line()
         {
-            X1 = first.X,
-            X2 = second.X,
-            Y1 = first.Y,
-            Y2 = second.Y
-        };
+            Line line = new Line()
+            {
+                X1 = first.X,
+                X2 = second.X,
+                Y1 = first.Y,
+                Y2 = second.Y
+            };
+            return line;
+      
         }
         public static bool DoesLineContainPoint(Line line, My_Coordinates point, double linewidth = 0)
         {
