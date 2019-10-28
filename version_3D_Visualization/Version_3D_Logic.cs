@@ -67,20 +67,18 @@ namespace version_3D_Visualization
 
 
         }
-        //public bool RobotIsHit_CollisionDetection()
-        //{
+        public void OneTick()
+        {
+          
+            foreach (Bullet3D item in this.bullets)
+            {
+               
+                item.OneStep();
+             
+            }
+         
+        }
 
-        //    foreach (Rect item in this.bullet_rects)
-        //    { 
-        //        if (item.IntersectsWith(this.Robot_rect))
-        //        {
-
-        //            return true;
-
-        //        } 
-        //    }
-        //    return false;
-        //}
         public bool RobotIsHit_CollisionDetection_withLine()
         {
 

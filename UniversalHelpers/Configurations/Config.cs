@@ -13,7 +13,7 @@ namespace UniversalHelpers.Configurations
         public const double DistanceRobotFromBuetStart = 200;
         public const int Default_Map_size_X = 800; // 800
         public const int Default_Map_size_Y = 600; // 600
-        public const int Default_Map_size_Z = 600;
+        public const int Default_Map_size_Z = 600; // 600
 
         //VECTORS
         public const int Default_Vector_Count = 1; //1
@@ -21,7 +21,7 @@ namespace UniversalHelpers.Configurations
         public const double Default_Vector_to = Robot_size;  //+6
 
         //BULLET
-        public const int Default_Bullet_Count = 10; //1
+        public const int Default_Bullet_Count = 3; //1
 
         public const int Default_Bullet_Location_x = Default_Map_size_X / 3;
         public const int Default_Bullet_Location_y = Default_Map_size_Y / 3;
@@ -35,7 +35,7 @@ namespace UniversalHelpers.Configurations
         public const double Default_Bullet_Size_MIN = 10; //10
 
         //BULLETHELPER
-        public static bool Is_Line_Helper_On = false;
+        public static bool Is_Line_Helper_On = true;
 
         // ROBOT
         public const int RobotID = 1; //1

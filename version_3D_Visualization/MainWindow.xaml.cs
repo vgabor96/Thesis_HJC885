@@ -12,6 +12,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Windows.Threading;
+using UniversalHelpers.Configurations;
 
 namespace version_3D_Visualization
 {
@@ -20,9 +22,46 @@ namespace version_3D_Visualization
     /// </summary>
     public partial class MainWindow : Window
     {
+        private DispatcherTimer dt = new DispatcherTimer();
+        private Version_3D_Logic logic;
+
         public MainWindow()
         {
             InitializeComponent();
+            this.logic = new Version_3D_Logic();
+            this.Height = logic.window_height;
+            this.Width = logic.window_width;
+            this.canvas.LogicSetup(this.logic);
+
+            this.dt.Interval = TimeSpan.FromMilliseconds(Config.Game_Speed);
+            this.dt.Tick += Dt_Tick;
+            this.dt.Start();
+
+        }
+
+        private void Dt_Tick(object sender, EventArgs e)
+        {
+            if (!this.logic.endgame)
+            {
+                //this.logic.endgame = this.logic.RobotIsHit_CollisionDetection();
+                /*this.logic.endgame = */
+                if (this.logic.RobotIsHit_CollisionDetection_withLine())
+                {
+                    this.logic.endgame = this.logic.LoseLife();
+                }
+
+                this.logic.OneTick();
+                this.logic.UpdateBulletsToRects();
+                this.canvas.InvalidateVisual();
+
+            }
+            else
+            {
+                this.dt.Stop();
+                MessageBox.Show("Game Over");
+            }
+
+            //this.dt.Stop();
         }
     }
 }

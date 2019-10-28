@@ -11,7 +11,7 @@
            
         </StackPanel>-->
         <StackPanel Height="600"  Width="800" Grid.Column="1" HorizontalAlignment="Center">
-            <local:Canvas x:Name="canvas"/>
+            <local:Canvas_XY x:Name="canvas"/>
 
         </StackPanel>
     </StackPanel>
