@@ -10,7 +10,7 @@
         <!--<StackPanel Height="600" Width="560" Grid.Column="0">
            
         </StackPanel>-->
-        <StackPanel Height="600" Width="800" Grid.Column="1" HorizontalAlignment="Center">
+        <StackPanel Height="600"  Width="800" Grid.Column="1" HorizontalAlignment="Center">
             <local:Canvas x:Name="canvas"/>
 
         </StackPanel>

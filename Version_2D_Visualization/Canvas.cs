@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Media;
 using System.Windows.Shapes;
+using UniversalHelpers.Configurations;
 using UniversalHelpers.Enumerators;
 using version_2D;
 using Brushes = System.Windows.Media.Brushes;
@@ -17,7 +18,6 @@ namespace Version_2D_Visualization
     class Canvas : FrameworkElement
     {
         private Version_2D_Logic logic;
-
 
         public void LogicSetup(Version_2D_Logic logic)
         {
@@ -54,21 +54,25 @@ namespace Version_2D_Visualization
                  
 
                 }
-                for (int i = 0; i < logic.map.bullets.Count; i++)
+                if (Config.Is_Line_Helper_On)
                 {
-                    Bullet b = logic.map.bullets[i];
-
-                    for (int j = 0; j < b.destination_lines.Length; j++)
+                    for (int i = 0; i < logic.map.bullets.Count; i++)
                     {
-                        drawingContext.DrawLine(new System.Windows.Media.Pen(Brushes.Purple, 2), new System.Windows.Point((int)b.destination_lines[j].X1, (int)b.destination_lines[j].Y1), new System.Windows.Point((int)b.destination_lines[j].X2, (int)b.destination_lines[j].Y2));
-                    }
+                        Bullet b = logic.map.bullets[i];
 
-                    for (int j = 0; j < b.next_location_lines.Length; j++)
-                    {
-                        drawingContext.DrawLine(new System.Windows.Media.Pen(Brushes.Black, 2), new System.Windows.Point((int)b.next_location_lines[j].X1, (int)b.next_location_lines[j].Y1), new System.Windows.Point((int)b.next_location_lines[j].X2, (int)b.next_location_lines[j].Y2));
-                    }
+                        for (int j = 0; j < b.destination_lines.Length; j++)
+                        {
+                            drawingContext.DrawLine(new System.Windows.Media.Pen(Brushes.Purple, 2), new System.Windows.Point((int)b.destination_lines[j].X1, (int)b.destination_lines[j].Y1), new System.Windows.Point((int)b.destination_lines[j].X2, (int)b.destination_lines[j].Y2));
+                        }
 
+                        for (int j = 0; j < b.next_location_lines.Length; j++)
+                        {
+                            drawingContext.DrawLine(new System.Windows.Media.Pen(Brushes.Black, 2), new System.Windows.Point((int)b.next_location_lines[j].X1, (int)b.next_location_lines[j].Y1), new System.Windows.Point((int)b.next_location_lines[j].X2, (int)b.next_location_lines[j].Y2));
+                        }
+
+                    }
                 }
+
 
 
                 drawingContext.DrawRectangle(Brushes.Blue, null, logic.Robot_rect);

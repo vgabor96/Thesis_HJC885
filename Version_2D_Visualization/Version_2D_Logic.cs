@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Drawing;
 using System.Linq;
 using System.Numerics;
 using System.Text;
@@ -20,6 +19,8 @@ namespace Version_2D_Visualization
         public  int life = Config.Default_HitPoints;
         public Rect Robot_rect;
         public ObservableCollection<Rect> bullet_rects;
+        public double window_width = Config.Default_Map_size_X;
+        public double window_height = Config.Default_Map_size_Y;
 
         public Version_2D_Logic()
         {
@@ -51,9 +52,9 @@ namespace Version_2D_Visualization
             {
                 this.bullet_rects.Add(new Rect(item.Current_Location.X, item.Current_Location.Y, item.size, item.size));
             }
-            
 
-            this.Robot_rect = new Rect(map.robot.Current_Location.X, map.robot.Current_Location.Y, 10 + map.robot.Range, 10 + map.robot.Range);
+
+            this.Robot_rect = this.map.robot.robotbody;
         }
         public bool RobotIsHit_CollisionDetection()
         {
@@ -114,7 +115,6 @@ namespace Version_2D_Visualization
 
 
         }
-
         //TODO: Do SMoething
         public static bool LineIntersectsRect(System.Windows.Point p1, System.Windows.Point p2, Rect r) 
     {

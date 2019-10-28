@@ -33,6 +33,8 @@ namespace Version_2D_Visualization
         {
             InitializeComponent();
             this.logic = new Version_2D_Logic();
+            this.Height = logic.window_height;
+            this.Width = logic.window_width;
             this.canvas.LogicSetup(this.logic);
 
             this.dt.Interval = TimeSpan.FromMilliseconds(Config.Game_Speed);

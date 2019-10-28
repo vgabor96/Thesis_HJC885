@@ -46,6 +46,7 @@ namespace version_2D
                 }
 
                 UltimateVectorLogic logic = new UltimateVectorLogic();
+            bs.Add(new Bullet(new Vector2(1, 1), 666, 666, 20, 11));
                 int db = 0;
                 string ishit;
 
@@ -61,7 +62,7 @@ namespace version_2D
                         ishit = "False";
                     }
 
-                    Console.WriteLine($"ID:{item.ID}\t Vector: {item.Destination} \t WillHit?: {ishit}");
+                    Console.WriteLine($"ID:{item.ID}\t Size: {item.size} \t Vector: {item.Destination}\t\t WillHit?: {ishit}");
                 }
                 Console.WriteLine("Eltalálta:" + db);
 
