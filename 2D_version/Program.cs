@@ -35,7 +35,7 @@ namespace version_2D
 
                 List<Bullet> bs = new List<Bullet>();
 
-                for (int i = 0; i < 100000; i++)
+                for (int i = 0; i < 10000; i++)
                 {
                     Bullet b = new Bullet();
                     //TODO excpetion!!
@@ -49,9 +49,9 @@ namespace version_2D
                 int db = 0;
                 string ishit;
 
-                foreach (var item in bs)
+                foreach (Bullet item in bs)
                 {
-                    if (logic.IsRobotHit(robot, item))
+                    if (logic.IsRobotHit_Console(robot, item))
                     {
                         ishit = "True";
                         db++;

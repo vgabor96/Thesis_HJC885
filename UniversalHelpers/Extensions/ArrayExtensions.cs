@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Shapes;
 using UniversalHelpers.Classes2D;
 using UniversalHelpers.Enumerators;
 
@@ -69,5 +70,34 @@ namespace UniversalHelpers.Extensions
 
             return s;
         }
+
+        public static Line[] GetDeepCopy(this Line[] lines)
+        {
+            Line[] result = new Line[lines.Length];
+            for (int i = 0; i < lines.Length; i++)
+            {
+                result[i] = new Line()
+                {
+                    X1 = lines[i].X1,
+                    X2 = lines[i].X1,
+                    Y1 = lines[i].Y1,
+                    Y2 = lines[i].Y2
+                };
+            }
+
+            return result;
+        }
+
+        public static Line GetDeepCopy_Line(this Line line)
+        {
+            return new Line()
+            {
+                X1 = line.X1,
+                X2 = line.X1,
+                Y1 = line.Y1,
+                Y2 = line.Y2
+            };
+        }
+
     }
 }

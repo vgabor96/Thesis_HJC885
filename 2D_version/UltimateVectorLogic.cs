@@ -12,23 +12,20 @@ namespace _2D_version
 {
   public  class UltimateVectorLogic
     {
-        Vector2 bullet_vector;
+
         Robot robot;
-        Bullet bullet;
 
         public UltimateVectorLogic()
         {
-            this.bullet_vector = new Vector2();
             this.robot = new Robot();
-            this.bullet = new Bullet();
 
         }
 
         public bool IsRobotHit(Robot robot, Bullet bullet)
         {
-            for (int i = 0; i < bullet.lines.Length; i++)
+            for (int i = 0; i < bullet.next_location_lines.Length; i++)
             {
-                if (LineIntersectsRect(new Point((int)bullet.lines[i].X1, (int)bullet.lines[i].Y1), new Point((int)bullet.lines[i].X2, (int)bullet.lines[i].Y2), robot.robotbody))
+                if (LineIntersectsRect(new Point((int)bullet.next_location_lines[i].X1, (int)bullet.next_location_lines[i].Y1), new Point((int)bullet.next_location_lines[i].X2, (int)bullet.next_location_lines[i].Y2), robot.robotbody))
                 {
                     return true;
                 }
@@ -37,6 +34,21 @@ namespace _2D_version
 
 
         }
+
+        public bool IsRobotHit_Console(Robot robot, Bullet bullet)
+        {
+            for (int i = 0; i < bullet.destination_lines.Length; i++)
+            {
+                if (LineIntersectsRect(new Point((int)bullet.destination_lines[i].X1, (int)bullet.destination_lines[i].Y1), new Point((int)bullet.destination_lines[i].X2, (int)bullet.destination_lines[i].Y2), robot.robotbody))
+                {
+                    return true;
+                }
+            }
+            return false;
+
+
+        }
+
 
         public static bool LineIntersectsRect(System.Windows.Point p1, System.Windows.Point p2, Rect r)
         {

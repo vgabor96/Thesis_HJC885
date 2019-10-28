@@ -20,7 +20,6 @@ namespace Version_2D_Visualization
         public  int life = Config.Default_HitPoints;
         public Rect Robot_rect;
         public ObservableCollection<Rect> bullet_rects;
-        public ObservableCollection<Rectangle> bullet_lines;
 
         public Version_2D_Logic()
         {
@@ -104,9 +103,9 @@ namespace Version_2D_Visualization
 
         public bool IsRobotHit(Robot robot, Bullet bullet)
         {
-            for (int i = 0; i < bullet.lines.Length; i++)
+            for (int i = 0; i < bullet.next_location_lines.Length; i++)
             {
-                if (LineIntersectsRect(new System.Windows.Point((int)bullet.lines[i].X1, (int)bullet.lines[i].Y1), new System.Windows.Point((int)bullet.lines[i].X2, (int)bullet.lines[i].Y2), robot.robotbody))
+                if (LineIntersectsRect(new System.Windows.Point((int)bullet.next_location_lines[i].X1, (int)bullet.next_location_lines[i].Y1), new System.Windows.Point((int)bullet.next_location_lines[i].X2, (int)bullet.next_location_lines[i].Y2), robot.robotbody))
                 {
                     return true;
                 }
