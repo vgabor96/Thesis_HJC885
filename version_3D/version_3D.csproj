@@ -50,8 +50,8 @@
     <Compile Include="Map.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Robot.cs" />
-    <Compile Include="UltimateVectorLogic.cs" />
+    <Compile Include="Robot3D.cs" />
+    <Compile Include="UltimateVectorLogic3D.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

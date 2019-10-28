@@ -7,12 +7,12 @@ using System.Windows;
 
 namespace version_3D
 {
-    public class UltimateVectorLogic
+    public class UltimateVectorLogic3D
     {
 
         Robot3D robot;
 
-        public UltimateVectorLogic()
+        public UltimateVectorLogic3D()
         {
             this.robot = new Robot3D();
 

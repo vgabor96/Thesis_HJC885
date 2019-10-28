@@ -39,7 +39,7 @@ namespace version_3D
                 bs.Add(b);
             }
 
-            UltimateVectorLogic logic = new UltimateVectorLogic();
+            UltimateVectorLogic3D logic = new UltimateVectorLogic3D();
             bs.Add(new Bullet(new Vector2(1, 1), 666, 666, 20, 11));
             int db = 0;
             string ishit;
