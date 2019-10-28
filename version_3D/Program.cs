@@ -25,7 +25,7 @@ namespace version_3D
 
 
 
-            Robot robot = new Robot();
+            Robot3D robot = new Robot3D();
 
             List<Bullet> bs = new List<Bullet>();
 

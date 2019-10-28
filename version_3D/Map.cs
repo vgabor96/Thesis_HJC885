@@ -12,11 +12,11 @@ namespace version_3D
     public class Map
     {
         public My_Coordinates size;
-        public Robot robot;
+        public Robot3D robot;
         public List<Bullet> bullets;
         public double[,] mapObjects;
 
-        public Map(Robot robot = null, IEnumerable<Bullet> bullets = null)
+        public Map(Robot3D robot = null, IEnumerable<Bullet> bullets = null)
         {
             this.robot = robot;
             this.bullets = new List<Bullet>();
@@ -32,7 +32,7 @@ namespace version_3D
             }
             else
             {
-                this.robot = new Robot();
+                this.robot = new Robot3D();
                 current_location = new My_Coordinates(this.robot.Current_Location.X, this.robot.Current_Location.Y);
 
             }
@@ -65,7 +65,7 @@ namespace version_3D
 
         public bool RobotIshit()
         {
-            Robot robot = this.robot;
+            Robot3D robot = this.robot;
 
             double result = 1;
             for (int i = 0; i < this.mapObjects.GetLength(0); i++)

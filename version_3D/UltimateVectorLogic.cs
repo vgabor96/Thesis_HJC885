@@ -10,15 +10,15 @@ namespace version_3D
     public class UltimateVectorLogic
     {
 
-        Robot robot;
+        Robot3D robot;
 
         public UltimateVectorLogic()
         {
-            this.robot = new Robot();
+            this.robot = new Robot3D();
 
         }
 
-        public bool IsRobotHit(Robot robot, Bullet bullet)
+        public bool IsRobotHit(Robot3D robot, Bullet bullet)
         {
             for (int i = 0; i < bullet.next_location_lines.Length; i++)
             {
@@ -32,7 +32,7 @@ namespace version_3D
 
         }
 
-        public bool IsRobotHit_Console(Robot robot, Bullet bullet)
+        public bool IsRobotHit_Console(Robot3D robot, Bullet bullet)
         {
             for (int i = 0; i < bullet.destination_lines.Length; i++)
             {

@@ -14,13 +14,13 @@ namespace UniversalHelpers.Classes3D
        
             private int x;
             private int y;
-        private int z;
+            private int z;
 
             public int X { get => this.x; set => this.x = value; }
             public int Y { get => this.y; set => this.y = value; }
             public int Z { get => this.z; set => this.z = value; }
 
-        public My_Coordinates3D(int x, int y, int z)
+            public My_Coordinates3D(int x, int y, int z)
             {
                 this.x = x;
                 this.y = y;
@@ -49,14 +49,16 @@ namespace UniversalHelpers.Classes3D
             return new Vector3(v1, v2, v3);
             }
 
-            public static Line LineFromTwoPoints(My_Coordinates3D first, My_Coordinates3D second)
+            public static Line3D LineFromTwoPoints(My_Coordinates3D first, My_Coordinates3D second)
             {
-                Line line = new Line()
+                Line3D line = new Line3D()
                 {
                     X1 = first.X,
                     X2 = second.X,
                     Y1 = first.Y,
                     Y2 = second.Y,
+                    Z1 = first.Z,
+                    Z2 = second.Z
                     
                 };
                 return line;

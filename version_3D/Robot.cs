@@ -9,7 +9,7 @@ using UniversalHelpers.Configurations;
 
 namespace version_3D
 {
-    public class Robot
+    public class Robot3D
     {
 
         private int iD;
@@ -19,7 +19,7 @@ namespace version_3D
         //Vector2 Actualmovement;
 
         public List<Rect> robotbody;
-        public Robot(int Default_Location_x = Config.Robot_Start_Location_X, int Default_Location_y = Config.Robot_Start_Location_Y, double range = Config.Robot_size)
+        public Robot3D(int Default_Location_x = Config.Robot_Start_Location_X, int Default_Location_y = Config.Robot_Start_Location_Y, double range = Config.Robot_size)
         {
 
             this.ID = Config.RobotID;
