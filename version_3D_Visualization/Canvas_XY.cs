@@ -56,10 +56,10 @@ namespace version_3D_Visualization
                     {
                         Bullet3D b = logic.bullets[i];
 
-                        //for (int j = 0; j < b.destination_lines.Length; j++)
-                        //{
-                        //    drawingContext.DrawLine(new System.Windows.Media.Pen(Brushes.Purple, 2), new System.Windows.Point((int)b.destination_lines[j].X1, (int)b.destination_lines[j].Y1), new System.Windows.Point((int)b.destination_lines[j].X2, (int)b.destination_lines[j].Y2));
-                        //}
+                        for (int j = 0; j < b.destination_lines.Length; j++)
+                        {
+                            drawingContext.DrawLine(new System.Windows.Media.Pen(Brushes.Purple, 2), new System.Windows.Point((int)b.destination_lines[j].X1, (int)b.destination_lines[j].Y1), new System.Windows.Point((int)b.destination_lines[j].X2, (int)b.destination_lines[j].Y2));
+                        }
 
                         for (int j = 0; j < b.next_location_lines.Length; j++)
                         {

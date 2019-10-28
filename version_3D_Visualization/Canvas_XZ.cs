@@ -28,7 +28,7 @@ namespace version_3D_Visualization
             {
 
 
-                drawingContext.DrawRectangle(null, new Pen(Brushes.Black, 2), new Rect(0, 0, Config.Default_Map_size_X, Config.Default_Map_size_Y));
+              drawingContext.DrawRectangle(null,new Pen(Brushes.Black,2), new Rect(0, 0, Config.Default_Map_size_X, Config.Default_Map_size_Y));
 
                 //foreach (Rect item in logic.bullet_rects)
                 //{
@@ -42,6 +42,15 @@ namespace version_3D_Visualization
                 //    drawingContext.DrawRectangle(Brushes.Red, null, new Rect(item.Current_Location.X, item.Current_Location.Y, logic.bullet_rects[i].Width, logic.bullet_rects[i].Height)); ;
                 //}
 
+                //foreach (Rect item in logic.bullet_rects)
+                //{
+
+                //    drawingContext.DrawRectangle(Brushes.Red, null, item);
+
+
+
+                //}
+
                 foreach (Rect item in logic.bullet_rects)
                 {
 
@@ -50,16 +59,17 @@ namespace version_3D_Visualization
 
 
                 }
+
                 if (Config.Is_Line_Helper_On)
                 {
                     for (int i = 0; i < logic.bullets.Count; i++)
                     {
                         Bullet3D b = logic.bullets[i];
 
-                        //for (int j = 0; j < b.destination_lines.Length; j++)
-                        //{
-                        //    drawingContext.DrawLine(new System.Windows.Media.Pen(Brushes.Purple, 2), new System.Windows.Point((int)b.destination_lines[j].X1, (int)b.destination_lines[j].Y1), new System.Windows.Point((int)b.destination_lines[j].X2, (int)b.destination_lines[j].Y2));
-                        //}
+                        for (int j = 0; j < b.destination_lines.Length; j++)
+                        {
+                            drawingContext.DrawLine(new System.Windows.Media.Pen(Brushes.Purple, 2), new System.Windows.Point((int)b.destination_lines[j].X1, (int)b.destination_lines[j].Y1), new System.Windows.Point((int)b.destination_lines[j].X2, (int)b.destination_lines[j].Y2));
+                        }
 
                         for (int j = 0; j < b.next_location_lines.Length; j++)
                         {

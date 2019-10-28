@@ -60,6 +60,7 @@
     <Compile Include="Canvas_XZ.cs" />
     <Compile Include="Canvas_ZY.cs" />
     <Compile Include="Version_3D_Logic.cs" />
+    <Compile Include="Version_3D_ZY_Logic.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

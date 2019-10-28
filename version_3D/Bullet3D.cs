@@ -77,7 +77,7 @@ namespace version_3D
         public void OneStep()
         {
 
-            if (next_location.X < Config.Default_Map_size_X && next_location.X >= 0 && next_location.Y < Config.Default_Map_size_Y && next_location.Y >= 0)
+            if (next_location.X < Config.Default_Map_size_X && next_location.X >= 0 && next_location.Y < Config.Default_Map_size_Y && next_location.Y >= 0 && next_location.Z <Config.Default_Map_size_Z && next_location.Z>=0)
             {
                 this.current_Location = next_location;
             }
