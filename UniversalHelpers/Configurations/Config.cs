@@ -17,8 +17,8 @@ namespace UniversalHelpers.Configurations
 
         //VECTORS
         public const int Default_Vector_Count = 1; //1
-        public const double Default_Vector_from = -6; //-6
-        public const double Default_Vector_to = 6;  //+6
+        public const double Default_Vector_from = -Robot_size; //-6
+        public const double Default_Vector_to = Robot_size;  //+6
 
         //BULLET
         public const int Default_Bullet_Count = 10; //1
@@ -35,7 +35,7 @@ namespace UniversalHelpers.Configurations
         public const double Default_Bullet_Size_MIN = 10; //10
 
         //BULLETHELPER
-        public static bool Is_Line_Helper_On = true;
+        public static bool Is_Line_Helper_On = false;
 
         // ROBOT
         public const int RobotID = 1; //1
@@ -46,10 +46,10 @@ namespace UniversalHelpers.Configurations
 
 
         //RULES
-        public const int Default_HitPoints = 10;
+        public const int Default_HitPoints = 100;
 
         //GAMESPEED
-        public const double Game_Speed = 10; //10
+        public const double Game_Speed = 0.10; //10
 
     }
 }

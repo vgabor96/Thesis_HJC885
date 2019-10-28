@@ -28,7 +28,7 @@ namespace UniversalHelpers.Classes3D
             }
 
 
-            public static Vector3 GenerateRandomVector2()
+            public static Vector3 GenerateRandomVector3()
             {
                 float v1 = 0;
                 float v2 = 0;

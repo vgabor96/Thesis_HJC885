@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
-using UniversalHelpers.Classes2D;
+using UniversalHelpers.Classes3D;
 using UniversalHelpers.Configurations;
 
 namespace version_3D
@@ -13,17 +13,17 @@ namespace version_3D
     {
 
         private int iD;
-        My_Coordinates Actual_Location;
+        My_Coordinates3D Actual_Location;
         public double Range;
         bool isHit => false;
         //Vector2 Actualmovement;
 
         public List<Rect> robotbody;
-        public Robot3D(int Default_Location_x = Config.Robot_Start_Location_X, int Default_Location_y = Config.Robot_Start_Location_Y, double range = Config.Robot_size)
+        public Robot3D(int Default_Location_x = Config.Robot_Start_Location_X, int Default_Location_y = Config.Robot_Start_Location_Y, int Default_Location_z = Config.Robot_Start_Location_Z, double range = Config.Robot_size)
         {
 
             this.ID = Config.RobotID;
-            Actual_Location = new My_Coordinates(Default_Location_x, Default_Location_y);
+            Actual_Location = new My_Coordinates3D(Default_Location_x, Default_Location_y,Default_Location_z);
 
             this.Range = range;
             BodyInitialization();
@@ -53,7 +53,7 @@ namespace version_3D
 
         public bool IsHarmful => false;
 
-        public My_Coordinates Current_Location => this.Actual_Location;
+        public My_Coordinates3D Current_Location => this.Actual_Location;
 
         public int ID { get => iD; set => iD = value; }
 
