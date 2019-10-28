@@ -27,11 +27,11 @@ namespace version_3D
 
             Robot3D robot = new Robot3D();
 
-            List<Bullet> bs = new List<Bullet>();
+            List<Bullet3D> bs = new List<Bullet3D>();
 
             for (int i = 0; i < 10000; i++)
             {
-                Bullet b = new Bullet();
+                Bullet3D b = new Bullet3D();
                 //TODO excpetion!!
 
                 b.GenerateRandomBullet();
@@ -40,11 +40,11 @@ namespace version_3D
             }
 
             UltimateVectorLogic3D logic = new UltimateVectorLogic3D();
-            bs.Add(new Bullet(new Vector2(1, 1), 666, 666, 20, 11));
+            bs.Add(new Bullet3D(new Vector2(1, 1), 666, 666, 20, 11));
             int db = 0;
             string ishit;
 
-            foreach (Bullet item in bs)
+            foreach (Bullet3D item in bs)
             {
                 if (logic.IsRobotHit_Console(robot, item))
                 {

@@ -13,13 +13,13 @@ namespace version_3D
     {
         public My_Coordinates size;
         public Robot3D robot;
-        public List<Bullet> bullets;
+        public List<Bullet3D> bullets;
         public double[,] mapObjects;
 
-        public Map(Robot3D robot = null, IEnumerable<Bullet> bullets = null)
+        public Map(Robot3D robot = null, IEnumerable<Bullet3D> bullets = null)
         {
             this.robot = robot;
-            this.bullets = new List<Bullet>();
+            this.bullets = new List<Bullet3D>();
 
             this.size = new My_Coordinates(Config.Default_Map_size_X, Config.Default_Map_size_Y);
             mapObjects = new double[this.size.X, this.size.Y];
@@ -41,7 +41,7 @@ namespace version_3D
 
             if (bullets != null)
             {
-                foreach (Bullet item in bullets)
+                foreach (Bullet3D item in bullets)
                 {
                     this.bullets.Add(item);
                     mapObjects.Set_IMapObjectElement(item.Current_Location.X, item.Current_Location.Y, item.ID);
@@ -54,7 +54,7 @@ namespace version_3D
         public bool OneTick()
         {
             mapObjects.Set_IMapObjectElement(robot.Current_Location, this.robot.ID);
-            foreach (Bullet item in this.bullets)
+            foreach (Bullet3D item in this.bullets)
             {
                 mapObjects.Set_IMapObjectElement(item.Current_Location, 0);
                 item.OneStep();

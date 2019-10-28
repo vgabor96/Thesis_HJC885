@@ -10,7 +10,7 @@ using UniversalHelpers.Configurations;
 
 namespace version_3D
 {
-    public class Bullet
+    public class Bullet3D
     {
         static int idCounter = Config.RobotID + 1;
         int id;
@@ -29,12 +29,12 @@ namespace version_3D
         public Vector2 Destination { get => destination; set => destination = value; }
         public int ID { get => id; set => id = value; }
 
-        public Bullet()
+        public Bullet3D()
         {
 
         }
 
-        public Bullet(Vector2 destination, int start_Location_x = Config.Default_Bullet_Location_x, int start_Location_y = Config.Default_Bullet_Location_y, double speed = Config.Default_Bullet_Speed, double size = Config.Default_Bullet_Size_MAX)
+        public Bullet3D(Vector2 destination, int start_Location_x = Config.Default_Bullet_Location_x, int start_Location_y = Config.Default_Bullet_Location_y, double speed = Config.Default_Bullet_Speed, double size = Config.Default_Bullet_Size_MAX)
         {
             this.Ctor_helper(destination, start_Location_x, start_Location_y, size);
         }

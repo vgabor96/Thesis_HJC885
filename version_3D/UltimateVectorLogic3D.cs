@@ -18,7 +18,7 @@ namespace version_3D
 
         }
 
-        public bool IsRobotHit(Robot3D robot, Bullet bullet)
+        public bool IsRobotHit(Robot3D robot, Bullet3D bullet)
         {
             for (int i = 0; i < bullet.next_location_lines.Length; i++)
             {
@@ -32,7 +32,7 @@ namespace version_3D
 
         }
 
-        public bool IsRobotHit_Console(Robot3D robot, Bullet bullet)
+        public bool IsRobotHit_Console(Robot3D robot, Bullet3D bullet)
         {
             for (int i = 0; i < bullet.destination_lines.Length; i++)
             {
