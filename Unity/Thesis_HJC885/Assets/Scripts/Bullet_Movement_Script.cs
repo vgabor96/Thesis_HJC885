@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using EZCameraShake;
 
 public class Bullet_Movement_Script : MonoBehaviour
 {
@@ -9,6 +10,8 @@ public class Bullet_Movement_Script : MonoBehaviour
     public float ResetDistance = 1000.0f;
     public float mSpeed = 100.0f;
     private bool ishit = true;
+
+    //public ParticleSystem explosion;
 
     public Vector3 min = new Vector3(-5,-1,-1);
     public Vector3 max = new Vector3(5, 1, 1);
@@ -40,12 +43,16 @@ public class Bullet_Movement_Script : MonoBehaviour
             {
                 if (hits[i].collider.gameObject.name =="Robot_Body")
                 {
-                    ishit = false;
+                  
                     Debug.Log(hits[i].collider.gameObject.name);
+                    //GameObject.Find("BulletShooter_Camera").SendMessage("DoShake");
+                   // explosion.Play();
+                    CameraShaker.Instance.ShakeOnce(4f, 4f, .1f, .1f);
+                    ishit = false;
                 }
                
             }
-          
+            
         }
 
         // Debug.DrawLine(transform.position, mPrevPos);
