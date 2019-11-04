@@ -43,5 +43,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b7b855f00cf703d45a4d70211127f685, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  numberOfBullets: 10
+  delay: 0.5
+  numberOfBullets: 2
   Bullet: {fileID: 8935242260004609831, guid: 38d7160e6ee28ef44b2a66ce2946227b, type: 3}
