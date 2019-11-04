@@ -455,5 +455,11 @@ PrefabInstance:
       propertyPath: m_IsTrigger
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    - target: {fileID: 1868352198232967231, guid: 3288c04319ee56d41afb3950df2046ce,
+        type: 3}
+      propertyPath: m_DynamicOccludee
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents:
+    - {fileID: 1868352198232967200, guid: 3288c04319ee56d41afb3950df2046ce, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 3288c04319ee56d41afb3950df2046ce, type: 3}
