@@ -52,7 +52,7 @@ MeshRenderer:
   m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
-  m_DynamicOccludee: 1
+  m_DynamicOccludee: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
@@ -100,17 +100,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 2989247873272443177}
     m_Modifications:
-    - target: {fileID: -2134223630963607892, guid: 8ee64c13b62982a4f8c55cc08a7c06a3,
-        type: 3}
-      propertyPath: bullets.Array.size
-      value: 10
-      objectReference: {fileID: 0}
-    - target: {fileID: -2134223630963607892, guid: 8ee64c13b62982a4f8c55cc08a7c06a3,
-        type: 3}
-      propertyPath: Bullet
-      value: 
-      objectReference: {fileID: 6649371345172614367, guid: df1bb12b0ff030d498740c1d479e8f5d,
-        type: 3}
     - target: {fileID: 5773162765896915636, guid: 8ee64c13b62982a4f8c55cc08a7c06a3,
         type: 3}
       propertyPath: m_Name
@@ -171,6 +160,17 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -2134223630963607892, guid: 8ee64c13b62982a4f8c55cc08a7c06a3,
+        type: 3}
+      propertyPath: bullets.Array.size
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: -2134223630963607892, guid: 8ee64c13b62982a4f8c55cc08a7c06a3,
+        type: 3}
+      propertyPath: Bullet
+      value: 
+      objectReference: {fileID: 6649371345172614367, guid: df1bb12b0ff030d498740c1d479e8f5d,
+        type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8ee64c13b62982a4f8c55cc08a7c06a3, type: 3}
 --- !u!4 &6074858363894653611 stripped

@@ -16,6 +16,7 @@ public class Bullet_Movement_Script : MonoBehaviour
 
         mPrevPos = transform.position;
         startingPos = mPrevPos;
+        //transform.localPosition = new Vector3(0, 0, 0);
 
     }
 
@@ -24,7 +25,8 @@ public class Bullet_Movement_Script : MonoBehaviour
     {
 
         mPrevPos = transform.position;
-        transform.Translate(0.0f, 0.0f, mSpeed * Time.deltaTime);
+ 
+        transform.Translate(mSpeed * Time.deltaTime,0.0f, 0.0f);
         RaycastHit[] hits = Physics.SphereCastAll(new Ray(mPrevPos, (transform.position - mPrevPos).normalized), GetComponent<SphereCollider>().radius, (transform.position - mPrevPos).magnitude);
         if (ishit)
         {
@@ -32,11 +34,12 @@ public class Bullet_Movement_Script : MonoBehaviour
             {
                 if (hits[i].collider.gameObject.name =="Robot")
                 {
+                    ishit = false;
                     Debug.Log(hits[i].collider.gameObject.name);
                 }
                
             }
-            //ishit = false;
+          
         }
 
         // Debug.DrawLine(transform.position, mPrevPos);
