@@ -5,6 +5,7 @@ using UnityEngine;
 public class Bullet_Movement_Script : MonoBehaviour
 {
     public Vector3 startingPos;
+    private Vector3 destination;
     public float ResetDistance = 1000.0f;
     public float mSpeed = 100.0f;
     private bool ishit = true;
@@ -26,7 +27,7 @@ public class Bullet_Movement_Script : MonoBehaviour
 
         mPrevPos = transform.position;
  
-        transform.Translate(mSpeed * Time.deltaTime,0.0f, 0.0f);
+        transform.Translate(mSpeed * Time.deltaTime,0.0f, 0.0f); 
         RaycastHit[] hits = Physics.SphereCastAll(new Ray(mPrevPos, (transform.position - mPrevPos).normalized), GetComponent<SphereCollider>().radius, (transform.position - mPrevPos).magnitude);
         if (ishit)
         {
@@ -54,6 +55,11 @@ public class Bullet_Movement_Script : MonoBehaviour
     {
         transform.position = startingPos;
         ishit = true;
+    }
+
+    private Vector3 RandomDestinationGenerator(Vector3 min, Vector3 max)
+    {
+        return new Vector3(UnityEngine.Random.Range(min.x, max.x)*mSpeed, UnityEngine.Random.Range(min.y, max.y)) * mSpeed, UnityEngine.Random.Range(min.z, max.z)*mSpeed);
     }
 
     //private void OnTriggerEnter(Collider other)
