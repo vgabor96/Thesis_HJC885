@@ -16,31 +16,37 @@ public class Bullet_Movement_Script : MonoBehaviour
 
         mPrevPos = transform.position;
         startingPos = mPrevPos;
-    
+
     }
 
     // Update is called once per frame
     void Update()
     {
-      
+
         mPrevPos = transform.position;
         transform.Translate(0.0f, 0.0f, mSpeed * Time.deltaTime);
-        RaycastHit[] hits = Physics.SphereCastAll(new Ray(mPrevPos, (transform.position - mPrevPos).normalized), GetComponent<SphereCollider>().radius,(transform.position - mPrevPos).magnitude);
+        RaycastHit[] hits = Physics.SphereCastAll(new Ray(mPrevPos, (transform.position - mPrevPos).normalized), GetComponent<SphereCollider>().radius, (transform.position - mPrevPos).magnitude);
         if (ishit)
         {
             for (int i = 0; i < hits.Length; i++)
             {
                 Debug.Log(hits[i].collider.gameObject.name);
             }
-            ishit = false;
+            //ishit = false;
         }
 
-        Debug.DrawLine(transform.position, mPrevPos);
+        // Debug.DrawLine(transform.position, mPrevPos);
 
         if (Vector3.Distance(startingPos, mPrevPos) >= ResetDistance)
         {
-            transform.position = startingPos;
+            ReGenerate();
         }
+    }
+
+    private void ReGenerate()
+    {
+        transform.position = startingPos;
+        ishit = true;
     }
 
     //private void OnTriggerEnter(Collider other)
