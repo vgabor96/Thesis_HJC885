@@ -30,7 +30,11 @@ public class Bullet_Movement_Script : MonoBehaviour
         {
             for (int i = 0; i < hits.Length; i++)
             {
-                Debug.Log(hits[i].collider.gameObject.name);
+                if (hits[i].collider.gameObject.name =="Robot")
+                {
+                    Debug.Log(hits[i].collider.gameObject.name);
+                }
+               
             }
             //ishit = false;
         }
