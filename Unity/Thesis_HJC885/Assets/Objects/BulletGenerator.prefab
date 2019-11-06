@@ -45,4 +45,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   delay: 1
   numberOfBullets: 8
-  Bullet: {fileID: 6649371345172614367, guid: df1bb12b0ff030d498740c1d479e8f5d, type: 3}
+  Bullet: {fileID: 8028067841505303104, guid: 575f2ac066f144148b04c4011b1c5e8c, type: 3}

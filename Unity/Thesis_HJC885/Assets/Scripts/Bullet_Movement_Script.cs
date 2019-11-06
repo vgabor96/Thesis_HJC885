@@ -30,6 +30,7 @@ public class Bullet_Movement_Script : MonoBehaviour
         //transform.localPosition = new Vector3(0, 0, 0);
          destination = RandomDestinationGenerator(min,max);
         this.this_ID = Bullet_ID++;
+        GetComponent<SphereCollider>().radius *= transform.localScale.x ;
        
     }
 
@@ -55,7 +56,7 @@ public class Bullet_Movement_Script : MonoBehaviour
                     //Debug.Log(GetComponent<SphereCollider>().radius);
                     Debug.Log(this_ID);
                     Debug.Log($"{mPrevPos} {(transform.position - mPrevPos).normalized} {GetComponent<SphereCollider>().radius} {(transform.position - mPrevPos).magnitude}");
-                    Debug.Break();
+                    //Debug.Break();
                     //GameObject.Find("BulletShooter_Camera").SendMessage("DoShake");
                    // explosion.Play();
                     CameraShaker.Instance.ShakeOnce(4f, 4f, .1f, .1f);
@@ -66,6 +67,7 @@ public class Bullet_Movement_Script : MonoBehaviour
             
         }
         Debug.DrawRay(startingPos, ray.direction * ((transform.position - mPrevPos).magnitude) * 1000, Color.red);
+       
 
         // Debug.DrawLine(transform.position, mPrevPos);
 
@@ -98,13 +100,16 @@ public class Bullet_Movement_Script : MonoBehaviour
         float z = 1;
         return new Vector3(x * mSpeed, y * mSpeed, z * mSpeed);
     }
-  
+
     //private void OnTriggerEnter(Collider other)
     //{
     //    Debug.Log(other.gameObject.name);
     //}
+    private void OnDrawGizmos()
+    {
 
-
+        Gizmos.DrawWireSphere(transform.position, transform.GetComponent<SphereCollider>().radius);
+    }
 
 
 }
