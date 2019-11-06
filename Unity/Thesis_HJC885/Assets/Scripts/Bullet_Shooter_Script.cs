@@ -5,9 +5,9 @@ using UnityEngine;
 public class Bullet_Shooter_Script : MonoBehaviour
 {
     // Start is called before the first frame update
-    public float delay = 0.5f;
+    public float delay =1f;
     private int currentBullets = 0;
-    public int numberOfBullets = 10;
+    public int numberOfBullets = 8;
     public GameObject Bullet;
     
     void Start()
@@ -27,7 +27,7 @@ public class Bullet_Shooter_Script : MonoBehaviour
 
     private void InstianteBullet()
     {
-        if (currentBullets <= numberOfBullets)
+        if (currentBullets < numberOfBullets)
         {
             Instantiate(Bullet, transform.position, transform.rotation);
             currentBullets++;
