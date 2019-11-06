@@ -6,7 +6,8 @@ using EZCameraShake;
 
 public class Bullet_Movement_Script : MonoBehaviour
 {
-    public static int Bullet_ID = 0;
+    public GameObject robot;
+    private static int Bullet_ID = 0;
     public int this_ID;
     private Vector3 startingPos;
     private Vector3 destination;
@@ -14,6 +15,7 @@ public class Bullet_Movement_Script : MonoBehaviour
     public float mSpeed = 100.0f;
     private bool ishit = true;
     private Ray ray;
+
 
     //public ParticleSystem explosion;
 
@@ -28,7 +30,8 @@ public class Bullet_Movement_Script : MonoBehaviour
         mPrevPos = transform.position;
         startingPos = mPrevPos;
         //transform.localPosition = new Vector3(0, 0, 0);
-         destination = RandomDestinationGenerator(min,max);
+        destination = Modify();
+        //RandomDestinationGenerator(min,max);
         this.this_ID = Bullet_ID++;
         GetComponent<SphereCollider>().radius *= transform.localScale.x ;
        
@@ -56,7 +59,7 @@ public class Bullet_Movement_Script : MonoBehaviour
                     //Debug.Log(GetComponent<SphereCollider>().radius);
                     Debug.Log(this_ID);
                     Debug.Log($"{mPrevPos} {(transform.position - mPrevPos).normalized} {GetComponent<SphereCollider>().radius} {(transform.position - mPrevPos).magnitude}");
-                    //Debug.Break();
+                    Debug.Break();
                     //GameObject.Find("BulletShooter_Camera").SendMessage("DoShake");
                    // explosion.Play();
                     CameraShaker.Instance.ShakeOnce(4f, 4f, .1f, .1f);
@@ -86,11 +89,19 @@ public class Bullet_Movement_Script : MonoBehaviour
 
     private Vector3 RandomDestinationGenerator(Vector3 min, Vector3 max)
     {
+       
 
         float x = UnityEngine.Random.Range(min.x, max.x);
         float y = UnityEngine.Random.Range(min.y, max.y);
         float z = UnityEngine.Random.Range(min.z, max.z);
         return new Vector3(x*mSpeed, y* mSpeed,z*mSpeed);
+    }
+
+    public void Modify()
+    {
+
+        destination = robot.transform.position - startingPos;
+        destination += Quaternion.Euler(5, 5, 5).eulerAngles;
     }
 
     private Vector3 FixDestinationGenerator()
