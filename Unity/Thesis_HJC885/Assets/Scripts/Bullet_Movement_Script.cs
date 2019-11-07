@@ -11,6 +11,7 @@ public class Bullet_Movement_Script : MonoBehaviour
     public int this_ID;
     private Vector3 startingPos;
     private Vector3 destination;
+    private Vector3 robot_startpos_Vector;
     public float ResetDistance = 1000.0f;
     public float mSpeed = 100.0f;
     private bool ishit = true;
@@ -19,8 +20,10 @@ public class Bullet_Movement_Script : MonoBehaviour
 
     //public ParticleSystem explosion;
 
-    public Vector3 min = new Vector3(-5,-1,-1);
-    public Vector3 max = new Vector3(5, 1, 1);
+    public Vector3 min_dif = new Vector3(-5,-5,-5);
+    public Vector3 max_dif = new Vector3(5,5, 5);
+    private Vector3 min;
+    private Vector3 max;
 
     Vector3 mPrevPos;
     // Start is called before the first frame update
@@ -30,10 +33,13 @@ public class Bullet_Movement_Script : MonoBehaviour
         mPrevPos = transform.position;
         startingPos = mPrevPos;
         //transform.localPosition = new Vector3(0, 0, 0);
-        destination = Modify();
-        //RandomDestinationGenerator(min,max);
+        //destination = RandomDestinationGenerator(min,max);
+        this.robot_startpos_Vector = robot.transform.position - startingPos;
+        this.Modify_Destination();
         this.this_ID = Bullet_ID++;
         GetComponent<SphereCollider>().radius *= transform.localScale.x ;
+        //TODO min max according to robot distance!!
+        
        
     }
 
@@ -46,7 +52,6 @@ public class Bullet_Movement_Script : MonoBehaviour
         //transform.Translate(mSpeed * Time.deltaTime,0.0f, 0.0f); 
         transform.Translate(destination*Time.deltaTime*mSpeed);
         ray = new Ray(mPrevPos, (transform.position - mPrevPos).normalized);
-        
         RaycastHit[] hits = Physics.SphereCastAll(ray, GetComponent<SphereCollider>().radius, (transform.position - mPrevPos).magnitude);
         if (ishit)
         {
@@ -69,10 +74,10 @@ public class Bullet_Movement_Script : MonoBehaviour
             }
             
         }
-        Debug.DrawRay(startingPos, ray.direction * ((transform.position - mPrevPos).magnitude) * 1000, Color.red);
-       
 
-        // Debug.DrawLine(transform.position, mPrevPos);
+        Debug.DrawRay(startingPos, ray.direction * ((transform.position - mPrevPos).magnitude) * 1000, Color.red);
+
+        Debug.DrawLine(startingPos, robot.transform.position,Color.green);
 
         if (Vector3.Distance(startingPos, mPrevPos) >= ResetDistance)
         {
@@ -84,7 +89,8 @@ public class Bullet_Movement_Script : MonoBehaviour
     {
         transform.position = startingPos;
         ishit = true;
-        destination = RandomDestinationGenerator(min,max);
+       // destination = RandomDestinationGenerator(min, max);
+        this.Modify_Destination();
     }
 
     private Vector3 RandomDestinationGenerator(Vector3 min, Vector3 max)
@@ -94,14 +100,24 @@ public class Bullet_Movement_Script : MonoBehaviour
         float x = UnityEngine.Random.Range(min.x, max.x);
         float y = UnityEngine.Random.Range(min.y, max.y);
         float z = UnityEngine.Random.Range(min.z, max.z);
-        return new Vector3(x*mSpeed, y* mSpeed,z*mSpeed);
+        return new Vector3(x/**mSpeed*/, y/** mSpeed*/,z/**mSpeed*/);
     }
 
-    public void Modify()
+    public void Modify_Destination()
     {
+        Vector3 random = RandomDestinationGenerator(min,max);
+        destination =this.robot_startpos_Vector;
 
-        destination = robot.transform.position - startingPos;
-        destination += Quaternion.Euler(5, 5, 5).eulerAngles;
+        if (Random.Range(0,2) == 0)
+        {
+            destination += Quaternion.Euler(random.x, random.y, random.z).eulerAngles;
+        }
+        else
+        {
+            destination -= Quaternion.Euler(random.x, random.y, random.z).eulerAngles;
+
+        }
+
     }
 
     private Vector3 FixDestinationGenerator()
