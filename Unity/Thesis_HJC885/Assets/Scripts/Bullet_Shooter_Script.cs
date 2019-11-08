@@ -57,7 +57,7 @@ public class Bullet_Shooter_Script : MonoBehaviour
             {
                 if (item != null && Vector3.Distance(item.startingPos, item.mPrevPos) >= ResetDistance)
                 {
-                    ReGenerate(item,true);
+                    ReGenerate(item,false);
 
                 }
             }        
@@ -79,7 +79,7 @@ public class Bullet_Shooter_Script : MonoBehaviour
             Bullets[currentBullets].transform.localScale = body.GetChild(0).GetComponent<BoxCollider>().size *0.1f;
             Bullets[currentBullets].transform.rotation = this.transform.rotation;
           
-            ReGenerate(Bullets[currentBullets],true);
+            ReGenerate(Bullets[currentBullets],false);
             Bullets[currentBullets].mSpeed = mSpeed;
             Bullets[currentBullets].ResetDistance = ResetDistance;
 
