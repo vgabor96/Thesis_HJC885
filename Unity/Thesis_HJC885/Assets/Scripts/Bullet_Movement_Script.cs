@@ -62,7 +62,7 @@ public class Bullet_Movement_Script : MonoBehaviour
                 if (IsRobothittedandLog(hitname))
                 {
 
-                    Debug.Log($"{this_ID} Hit => {hitname}");
+                    Debug.Log($"BUllet ID: {this_ID} Hit => {hitname}");
                     //Debug.Log(hits[i].collider.gameObject.name);
                     //Debug.Log(GetComponent<SphereCollider>().radius);
                     //Debug.Log(this_ID);

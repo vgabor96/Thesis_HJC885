@@ -383,7 +383,27 @@ PrefabInstance:
     - target: {fileID: 3708887370843355392, guid: 74807d21bee8dc54ea89ee8ef182c121,
         type: 3}
       propertyPath: mSpeed
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 3708887370843355392, guid: 74807d21bee8dc54ea89ee8ef182c121,
+        type: 3}
+      propertyPath: numberOfBullets
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 6074858363894653611, guid: 74807d21bee8dc54ea89ee8ef182c121,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6074858363894653611, guid: 74807d21bee8dc54ea89ee8ef182c121,
+        type: 3}
+      propertyPath: m_LocalRotation.w
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6074858363894653611, guid: 74807d21bee8dc54ea89ee8ef182c121,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3743905937675046070, guid: 74807d21bee8dc54ea89ee8ef182c121,
         type: 3}
