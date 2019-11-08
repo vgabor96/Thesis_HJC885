@@ -147,6 +147,15 @@ public class Bullet_Movement_Script : MonoBehaviour
 
     //}
 
+    //private Vector3 RandomSpherePoints()
+    //{
+
+    //    float x = UnityEngine.Random.Range(-shootradius, shootradius);
+    //    float y = UnityEngine.Random.Range(-shootradius, shootradius);
+    //    float z = UnityEngine.Random.Range(-shootradius, shootradius);
+
+    //    return new Vector3(x/**mSpeed*/, y/** mSpeed*/, z/**mSpeed*/);
+    //}
     private Vector3 FixDestinationGenerator()
     {
         float x = 0;

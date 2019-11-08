@@ -10,9 +10,15 @@ public class Bullet_Shooter_Script : MonoBehaviour
     public int numberOfBullets = 8;
     public float shootradius = 5f;
     private Vector3 gen_robot_vector;
-    public GameObject Bullet;
+    public float mSpeed;
+    public float Resetdistance;
+
+    public Bullet_Movement_Script Bullet;
     public GameObject robot;
-    private GameObject[] Bullets;
+    //public float maxdistancereset;
+    //public float mSpeed;
+
+    private Bullet_Movement_Script[] Bullets;
 
 
     
@@ -22,7 +28,12 @@ public class Bullet_Shooter_Script : MonoBehaviour
         //Move the object to the same position as the parent:
         //transform.localPosition = new Vector3(0, 0, 0);
         this.gen_robot_vector = robot.transform.position - this.transform.position;
-        this.Bullets = new GameObject[numberOfBullets];
+        this.Bullets = new Bullet_Movement_Script[numberOfBullets];
+        //for (int i = 0; i < numberOfBullets; i++)
+        //{
+        //    this.Bullets.Add(Bullet.GetComponent<Bullet_Movement_Script>());
+        //    Debug.Log(this.Bullets[i].this_ID);
+        //}
         
         GenerateBullets();
 
@@ -38,9 +49,15 @@ public class Bullet_Shooter_Script : MonoBehaviour
     {
         if (currentBullets < numberOfBullets)
         {
-            Instantiate(Bullet, transform.position,RandomRotation()/*Quaternion.Euler(new Vector3(45,0,0))*/);
+           
+            this.Bullets[currentBullets] = Instantiate(Bullet, transform.position, transform.rotation/*Quaternion.Euler(new Vector3(45,0,0))*/);
+            Bullets[currentBullets].mSpeed = mSpeed;
+            Bullets[currentBullets].ResetDistance = Resetdistance;
+          
             currentBullets++;
         }
+
+      
 
 
     }
