@@ -6,12 +6,10 @@ using EZCameraShake;
 
 public class Bullet_Movement_Script : MonoBehaviour
 {
-    public GameObject robot;
     private static int Bullet_ID = 0;
     public int this_ID;
     private Vector3 startingPos;
     private Vector3 destination;
-    private Vector3 robot_startpos_Vector;
     public float ResetDistance = 1000.0f;
     public float mSpeed = 100.0f;
     private bool ishit = true;
@@ -20,26 +18,27 @@ public class Bullet_Movement_Script : MonoBehaviour
 
     //public ParticleSystem explosion;
 
-    public Vector3 min_dif = new Vector3(-5,-5,-5);
-    public Vector3 max_dif = new Vector3(5,5, 5);
-    private Vector3 min;
-    private Vector3 max;
+    //public Vector3 min;
+    //public Vector3 max;
+  
 
     Vector3 mPrevPos;
     // Start is called before the first frame update
     void Start()
     {
+       
 
         mPrevPos = transform.position;
         startingPos = mPrevPos;
         //transform.localPosition = new Vector3(0, 0, 0);
         //destination = RandomDestinationGenerator(min,max);
-        this.robot_startpos_Vector = robot.transform.position - startingPos;
-        this.Modify_Destination();
+        this.destination = transform.position;
+        //this.RandomDestinationGenerator();
         this.this_ID = Bullet_ID++;
+        //setting the bullet's hitbox!!
         GetComponent<SphereCollider>().radius *= transform.localScale.x ;
         //TODO min max according to robot distance!!
-        
+        //this.destination = RandoMDestinationGeneratorbasedonRobotdistance();
        
     }
 
@@ -77,11 +76,12 @@ public class Bullet_Movement_Script : MonoBehaviour
 
         Debug.DrawRay(startingPos, ray.direction * ((transform.position - mPrevPos).magnitude) * 1000, Color.red);
 
-        Debug.DrawLine(startingPos, robot.transform.position,Color.green);
+        //Debug.DrawLine(startingPos, robot.transform.position, Color.green);
 
         if (Vector3.Distance(startingPos, mPrevPos) >= ResetDistance)
         {
             ReGenerate();
+           
         }
     }
 
@@ -89,36 +89,63 @@ public class Bullet_Movement_Script : MonoBehaviour
     {
         transform.position = startingPos;
         ishit = true;
-       // destination = RandomDestinationGenerator(min, max);
-        this.Modify_Destination();
+        //destination = RandomDestinationGenerator(min, max);
+        //this.RandomDestinationGenerator();
     }
 
-    private Vector3 RandomDestinationGenerator(Vector3 min, Vector3 max)
-    {
-       
+    //private void RandomDestinationGenerator()
+    //{
+    //    Vector3 movement = Random.insideUnitSphere * 5;/*robot.transform.position - startingPos;*/
+    //    Vector3 newPos = transform.position + movement;
 
-        float x = UnityEngine.Random.Range(min.x, max.x);
-        float y = UnityEngine.Random.Range(min.y, max.y);
-        float z = UnityEngine.Random.Range(min.z, max.z);
-        return new Vector3(x/**mSpeed*/, y/** mSpeed*/,z/**mSpeed*/);
-    }
+    //    // Calculate the distance of the new position from the center point. Keep the direction
+    //    // the same but clamp the length to the specified radius.
+    //    Vector3 offset = newPos - robot.transform.position;
+    //    this.destination = robot.transform.position + Vector3.ClampMagnitude(offset, shootradius);
+    //}
 
-    public void Modify_Destination()
-    {
-        Vector3 random = RandomDestinationGenerator(min,max);
-        destination =this.robot_startpos_Vector;
+    //private Vector3 RandomDestinationVectorGenerator()
+    //{
 
-        if (Random.Range(0,2) == 0)
-        {
-            destination += Quaternion.Euler(random.x, random.y, random.z).eulerAngles;
-        }
-        else
-        {
-            destination -= Quaternion.Euler(random.x, random.y, random.z).eulerAngles;
+    //    float x = UnityEngine.Random.Range(-shootradius, shootradius);
+    //    float y = UnityEngine.Random.Range(-shootradius, shootradius);
+    //    float z = UnityEngine.Random.Range(-shootradius, shootradius);
 
-        }
+    //    return new Vector3(x/**mSpeed*/, y/** mSpeed*/, z/**mSpeed*/);
+    //}
 
-    }
+    //private Vector3 RandoMDestinationGeneratorbasedonRobotdistance()
+    //{
+    //    Vector3 temp = RandomDestinationGenerator();
+    //    float tempdist = Vector3.Distance(this.startingPos, robot.transform.position);
+    //    Debug.Log("tempVector:" + temp);
+    //    Debug.Log("tempdistance" + tempdist);
+
+
+    //    temp.x = Mathf.Tan(temp.x / tempdist);
+    //    temp.y = Mathf.Tan(temp.y / tempdist);
+    //    temp.z = Mathf.Tan(temp.z / tempdist);
+    //    Debug.Log("new Vector" + temp);
+    //    return temp;
+    //}
+
+    //public void Modify_Destination()
+    //{
+    //    Vector3 random = RandoMDestinationGeneratorbasedonRobotdistance();
+
+    //    destination = this.robot_startpos_Vector;
+
+    //    if (Random.Range(0,2) == 0)
+    //    {
+    //        destination += Quaternion.Euler(random.x, random.y, random.z).eulerAngles;
+    //    }
+    //    else
+    //    {
+    //        destination -= Quaternion.Euler(random.x, random.y, random.z).eulerAngles;
+
+    //    }
+
+    //}
 
     private Vector3 FixDestinationGenerator()
     {

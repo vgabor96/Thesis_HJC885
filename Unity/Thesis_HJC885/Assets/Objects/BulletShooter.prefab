@@ -117,7 +117,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2228170872741310539}
-  m_LocalRotation: {x: -0, y: 0.7071068, z: -0, w: 0.7071068}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -2.23, y: 1.14, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -151,13 +151,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3743905937675046070}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 2295138645787858580}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!20 &1993461217568399573
 Camera:
   m_ObjectHideFlags: 0
@@ -240,17 +240,17 @@ PrefabInstance:
     - target: {fileID: 384794974105365767, guid: 8ee64c13b62982a4f8c55cc08a7c06a3,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.04
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 384794974105365767, guid: 8ee64c13b62982a4f8c55cc08a7c06a3,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 384794974105365767, guid: 8ee64c13b62982a4f8c55cc08a7c06a3,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: -0.01
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 384794974105365767, guid: 8ee64c13b62982a4f8c55cc08a7c06a3,
         type: 3}
@@ -308,6 +308,18 @@ PrefabInstance:
       propertyPath: numberOfBullets
       value: 3
       objectReference: {fileID: 0}
+    - target: {fileID: -2134223630963607892, guid: 8ee64c13b62982a4f8c55cc08a7c06a3,
+        type: 3}
+      propertyPath: Robot
+      value: 
+      objectReference: {fileID: 6790511235177514559, guid: d59f13dc5f70b7a499d58f443771e379,
+        type: 3}
+    - target: {fileID: -2134223630963607892, guid: 8ee64c13b62982a4f8c55cc08a7c06a3,
+        type: 3}
+      propertyPath: robot
+      value: 
+      objectReference: {fileID: 6790511235177514559, guid: d59f13dc5f70b7a499d58f443771e379,
+        type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8ee64c13b62982a4f8c55cc08a7c06a3, type: 3}
 --- !u!4 &6074858363894653611 stripped

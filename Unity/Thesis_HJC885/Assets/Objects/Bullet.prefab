@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 5510428482363700592}
   - component: {fileID: 5356440763280539787}
   m_Layer: 0
-  m_Name: BulletSphere
+  m_Name: Bullet
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -92,12 +92,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a097c5399acc3ee449d9660d1fb8e4a4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  robot: {fileID: 6790511235177514559, guid: d59f13dc5f70b7a499d58f443771e379, type: 3}
   this_ID: 0
   ResetDistance: 50
   mSpeed: 5
-  min: {x: -5, y: -5, z: -5}
-  max: {x: 5, y: 5, z: 5}
 --- !u!135 &5356440763280539787
 SphereCollider:
   m_ObjectHideFlags: 0
