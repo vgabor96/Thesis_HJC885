@@ -30,7 +30,7 @@ public class Bullet_Shooter_Script : MonoBehaviour
     public WhereToShootEnum Wheretoshootenum = WhereToShootEnum.random;
 
 
-    private Bullet_Movement_Script[] Bullets;
+    private List<Bullet_Movement_Script> Bullets;
 
 
     
@@ -41,7 +41,7 @@ public class Bullet_Shooter_Script : MonoBehaviour
 
         transform.rotation = Quaternion.Euler(new Vector3(0, 0, 0));
         this.gen_robot_vector = robot.transform.position - this.transform.position;
-        this.Bullets = new Bullet_Movement_Script[numberOfBullets];
+        this.Bullets = new List<Bullet_Movement_Script>();
 
         
         GenerateBullets();
@@ -57,7 +57,7 @@ public class Bullet_Shooter_Script : MonoBehaviour
             {
                 if (item != null && Vector3.Distance(item.startingPos, item.mPrevPos) >= ResetDistance)
                 {
-                    ReGenerate(item);
+                    ReGenerate(item,true);
 
                 }
             }        
@@ -69,7 +69,7 @@ public class Bullet_Shooter_Script : MonoBehaviour
         if (currentBullets < numberOfBullets)
         {
          
-            this.Bullets[currentBullets] = Instantiate(Bullet, transform.position,this.transform.rotation);
+            this.Bullets.Add(Instantiate(Bullet, transform.position,this.transform.rotation));
             SetDestination(Bullets[currentBullets]);
      
             Bullets[currentBullets].transform.position = this.transform.position;
@@ -79,7 +79,7 @@ public class Bullet_Shooter_Script : MonoBehaviour
             Bullets[currentBullets].transform.localScale = body.GetChild(0).GetComponent<BoxCollider>().size *0.1f;
             Bullets[currentBullets].transform.rotation = this.transform.rotation;
           
-            ReGenerate(Bullets[currentBullets]);
+            ReGenerate(Bullets[currentBullets],true);
             Bullets[currentBullets].mSpeed = mSpeed;
             Bullets[currentBullets].ResetDistance = ResetDistance;
 
@@ -95,11 +95,31 @@ public class Bullet_Shooter_Script : MonoBehaviour
        
     }
 
+    private void ReGenerate(Bullet_Movement_Script bullet, bool waitforall)
+    {
+        if (waitforall)
+        {
+            if (this.Bullets.FindAll(x => x.ishit == false).Count == 0) 
+             {
+                bullet.transform.position = this.transform.position;
+                bullet.ishit = true;
+                SetDestination(bullet);
+            }
+        }
+        else
+        {
+            ReGenerate(bullet);
+        }
+
+      
+    }
+
     private void ReGenerate(Bullet_Movement_Script bullet)
     {
-        bullet.transform.position = this.transform.position;
-        bullet.ishit = true;
-        SetDestination(bullet);
+
+                bullet.transform.position = this.transform.position;
+                bullet.ishit = true;
+                SetDestination(bullet);
 
     }
 
