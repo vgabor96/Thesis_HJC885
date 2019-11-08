@@ -8,11 +8,11 @@ public class Bullet_Movement_Script : MonoBehaviour
 {
     private static int Bullet_ID = 0;
     public int this_ID;
-    private Vector3 startingPos;
-    private Vector3 destination;
+    public Vector3 startingPos;
+    public Vector3 destination;
     public float ResetDistance = 1000.0f;
     public float mSpeed = 100.0f;
-    private bool ishit = true;
+    public bool ishit;
     private Ray ray;
 
 
@@ -22,7 +22,7 @@ public class Bullet_Movement_Script : MonoBehaviour
     //public Vector3 max;
   
 
-    Vector3 mPrevPos;
+    public Vector3 mPrevPos;
     // Start is called before the first frame update
     void Start()
     {
@@ -32,9 +32,10 @@ public class Bullet_Movement_Script : MonoBehaviour
         startingPos = mPrevPos;
         //transform.localPosition = new Vector3(0, 0, 0);
         //destination = RandomDestinationGenerator(min,max);
-        this.destination = transform.position;
+        //this.destination = transform.position;
         //this.RandomDestinationGenerator();
         this.this_ID = Bullet_ID++;
+        this.ishit = true;
         //setting the bullet's hitbox!!
         GetComponent<SphereCollider>().radius *= transform.localScale.x ;
         //TODO min max according to robot distance!!
@@ -47,51 +48,65 @@ public class Bullet_Movement_Script : MonoBehaviour
     {
 
         mPrevPos = transform.position;
-
+        string hitname="";
         //transform.Translate(mSpeed * Time.deltaTime,0.0f, 0.0f); 
         transform.Translate(destination*Time.deltaTime*mSpeed);
         ray = new Ray(mPrevPos, (transform.position - mPrevPos).normalized);
         RaycastHit[] hits = Physics.SphereCastAll(ray, GetComponent<SphereCollider>().radius, (transform.position - mPrevPos).magnitude);
         if (ishit)
         {
+            //Debug.Log($"{ this_ID} HITS:{hits.Length}");
             for (int i = 0; i < hits.Length; i++)
             {
-                if (hits[i].collider.gameObject.name =="Head")
+                hitname = hits[i].collider.gameObject.name;
+                if (IsRobothittedandLog(hitname))
                 {
-                  
-                    Debug.Log(hits[i].collider.gameObject.name);
+
+                    Debug.Log($"{this_ID} Hit => {hitname}");
+                    //Debug.Log(hits[i].collider.gameObject.name);
                     //Debug.Log(GetComponent<SphereCollider>().radius);
-                    Debug.Log(this_ID);
-                    Debug.Log($"{mPrevPos} {(transform.position - mPrevPos).normalized} {GetComponent<SphereCollider>().radius} {(transform.position - mPrevPos).magnitude}");
-                    Debug.Break();
+                    //Debug.Log(this_ID);
+                    //Debug.Log($"{mPrevPos} {(transform.position - mPrevPos).normalized} {GetComponent<SphereCollider>().radius} {(transform.position - mPrevPos).magnitude}");
+                    //Debug.Break();
                     //GameObject.Find("BulletShooter_Camera").SendMessage("DoShake");
-                   // explosion.Play();
+                    // explosion.Play();
                     CameraShaker.Instance.ShakeOnce(4f, 4f, .1f, .1f);
                     ishit = false;
                 }
-               
+
             }
             
         }
-
+        //Debug.Log($"ID: {this_ID } Startpos: {startingPos}  RayDirection:{ray.direction} MPrepos:{mPrevPos}  transformPosition: {transform.position}");
         Debug.DrawRay(startingPos, ray.direction * ((transform.position - mPrevPos).magnitude) * 1000, Color.red);
 
         //Debug.DrawLine(startingPos, robot.transform.position, Color.green);
 
-        if (Vector3.Distance(startingPos, mPrevPos) >= ResetDistance)
-        {
-            ReGenerate();
-           
-        }
+       
     }
 
-    private void ReGenerate()
+    private bool IsRobothittedandLog(string name)
     {
-        transform.position = startingPos;
-        ishit = true;
-        //destination = RandomDestinationGenerator(min, max);
-        //this.RandomDestinationGenerator();
+        bool ishitted = false;
+        if (name != "Robot_Body")
+        {
+           
+            foreach (BoxCollider item in GameObject.Find("Robot_Body").GetComponentsInChildren<BoxCollider>())
+            {
+                if (name == item.name)
+                {
+                    ishitted = true;
+
+
+                }
+            }
+        }
+       
+
+        return ishitted;
+
     }
+
 
     //private void RandomDestinationGenerator()
     //{

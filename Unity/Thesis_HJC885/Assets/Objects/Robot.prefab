@@ -38,11 +38,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 9062283000640831868}
     m_Modifications:
-    - target: {fileID: 1868352198232967229, guid: 3288c04319ee56d41afb3950df2046ce,
-        type: 3}
-      propertyPath: m_Name
-      value: Robot_Body
-      objectReference: {fileID: 0}
     - target: {fileID: 1868352198232967201, guid: 3288c04319ee56d41afb3950df2046ce,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -97,6 +92,26 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1868352198232967229, guid: 3288c04319ee56d41afb3950df2046ce,
+        type: 3}
+      propertyPath: m_Name
+      value: Robot_Body
+      objectReference: {fileID: 0}
+    - target: {fileID: 4431242674583872581, guid: 3288c04319ee56d41afb3950df2046ce,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3121271990741041731, guid: 3288c04319ee56d41afb3950df2046ce,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1423429500387608284, guid: 3288c04319ee56d41afb3950df2046ce,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3288c04319ee56d41afb3950df2046ce, type: 3}
