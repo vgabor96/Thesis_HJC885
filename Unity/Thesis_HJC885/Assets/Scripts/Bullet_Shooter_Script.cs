@@ -41,14 +41,8 @@ public class Bullet_Shooter_Script : MonoBehaviour
 
         transform.rotation = Quaternion.Euler(new Vector3(0, 0, 0));
         this.gen_robot_vector = robot.transform.position - this.transform.position;
-        //Align();
         this.Bullets = new Bullet_Movement_Script[numberOfBullets];
-        //for (int i = 0; i < numberOfBullets; i++)
-        //{
-        //    this.Bullets.Add(Bullet.GetComponent<Bullet_Movement_Script>());
-        //    Debug.Log(this.Bullets[i].this_ID);
-        //}
-        //Align();
+
         
         GenerateBullets();
 
@@ -66,8 +60,7 @@ public class Bullet_Shooter_Script : MonoBehaviour
                     ReGenerate(item);
 
                 }
-            }
-        
+            }        
        
     }
 
@@ -75,10 +68,8 @@ public class Bullet_Shooter_Script : MonoBehaviour
     {
         if (currentBullets < numberOfBullets)
         {
-            //Quaternion rot = Quaternion.Euler(DestinationRandomize() - this.transform.position);
          
             this.Bullets[currentBullets] = Instantiate(Bullet, transform.position,this.transform.rotation);
-            //Align(this.Bullets[currentBullets]);
             SetDestination(Bullets[currentBullets]);
      
             Bullets[currentBullets].transform.position = this.transform.position;
@@ -91,15 +82,9 @@ public class Bullet_Shooter_Script : MonoBehaviour
             ReGenerate(Bullets[currentBullets]);
             Bullets[currentBullets].mSpeed = mSpeed;
             Bullets[currentBullets].ResetDistance = ResetDistance;
-            //Bullets[currentBullets].destination = gen_robot_vector;
-
-
 
             currentBullets++;
-        }
-
-      
-
+        }     
 
     }
 
@@ -113,12 +98,9 @@ public class Bullet_Shooter_Script : MonoBehaviour
     private void ReGenerate(Bullet_Movement_Script bullet)
     {
         bullet.transform.position = this.transform.position;
-        //Debug.Log(bullet.this_ID+"ishit TRUE");
         bullet.ishit = true;
-        //bullet.destination = this.gen_robot_vector;
         SetDestination(bullet);
-        //destination = RandomDestinationGenerator(min, max);
-        //this.RandomDestinationGenerator();
+
     }
 
     private void SetDestination(Bullet_Movement_Script bullet)
@@ -139,34 +121,19 @@ public class Bullet_Shooter_Script : MonoBehaviour
             case WhereToShootEnum.legs:
                 return Random_Shootaround(GameObject.Find("Legs").GetComponent<BoxCollider>());
             default:
-                return Random_Shootaround(GameObject.Find("Body").GetComponent<BoxCollider>());
+                return Random_Shootaround(GameObject.Find("Robot_Body").GetComponent<BoxCollider>());
         }
 
 
     }
-    private Vector3 Random_Shootaround(Collider bodypart)
+    private Vector3 Random_Shootaround(BoxCollider bodypart)
     {
         
-        float x = bodypart.transform.position.x + Random.Range(-bodypart.transform.localScale.x, bodypart.transform.localScale.x);
-        float y = bodypart.transform.position.y + Random.Range(-bodypart.transform.localScale.y, bodypart.transform.localScale.y);
-        float z = bodypart.transform.position.z + Random.Range(-bodypart.transform.localScale.z, bodypart.transform.localScale.z);
+        float x = bodypart.transform.position.x + Random.Range(-bodypart.size.x, bodypart.size.x);
+        float y = bodypart.transform.position.y + Random.Range(-bodypart.size.y, bodypart.size.y);
+        float z = bodypart.transform.position.z + Random.Range(-bodypart.size.z, bodypart.size.z);
 
         return new Vector3(x, y, z);
     }
 
-    private void Align(Bullet_Movement_Script bullet)
-    {
-        Vector3 direction = this.gen_robot_vector;
-        // Change child.forward to child.up if you want the up vectors to "look at" the other child object
-        Quaternion rotation = Quaternion.FromToRotation(bullet.transform.up, direction);
-        bullet.transform.rotation = rotation * bullet.transform.rotation;
-    }
-
-    private void Align()
-    {
-        Vector3 direction = this.gen_robot_vector;
-        // Change child.forward to child.up if you want the up vectors to "look at" the other child object
-        Quaternion rotation = Quaternion.FromToRotation(this.transform.up, direction);
-        this.transform.rotation = rotation * this.transform.rotation;
-    }
 }
