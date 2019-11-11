@@ -27,7 +27,16 @@ public class Bullet_Shooter_Script : MonoBehaviour
  legs = 3,
  random = 4
 }
+    public enum ShootTypeEnum
+    { 
+        Continous,
+        Afterpreviousregenerated,
+        AllAtOnce
+
+
+    }
     public WhereToShootEnum Wheretoshootenum = WhereToShootEnum.random;
+    public ShootTypeEnum ShootTypeenum = ShootTypeEnum.Continous;
 
 
     private List<Bullet_Movement_Script> Bullets;
@@ -76,7 +85,7 @@ public class Bullet_Shooter_Script : MonoBehaviour
             var body = GameObject.Find("Robot_Body").transform;
 
             //Setting Bullet Size, Rotation, MSpeed,ResetDistance,Destination
-            Bullets[currentBullets].transform.localScale = body.GetChild(0).GetComponent<BoxCollider>().size *0.1f;
+            Bullets[currentBullets].transform.localScale = body.GetChild(0).GetComponent<BoxCollider>().size;
             Bullets[currentBullets].transform.rotation = this.transform.rotation;
           
             ReGenerate(Bullets[currentBullets],false);
@@ -88,11 +97,62 @@ public class Bullet_Shooter_Script : MonoBehaviour
 
     }
 
+    private void InstantiateBulletAfterPreviousDone()
+    {
+        if (currentBullets < numberOfBullets)
+        {
+
+            this.Bullets.Add(Instantiate(Bullet, transform.position, this.transform.rotation));
+            SetDestination(Bullets[currentBullets]);
+
+            Bullets[currentBullets].transform.position = this.transform.position;
+            var body = GameObject.Find("Robot_Body").transform;
+
+            //Setting Bullet Size, Rotation, MSpeed,ResetDistance,Destination
+            Bullets[currentBullets].transform.localScale = body.GetChild(0).GetComponent<BoxCollider>().size;
+            Bullets[currentBullets].transform.rotation = this.transform.rotation;
+
+            ReGenerate(Bullets[currentBullets], true);
+            Bullets[currentBullets].mSpeed = mSpeed;
+            Bullets[currentBullets].ResetDistance = ResetDistance;
+
+            currentBullets++;
+        }
+    }
+
     private void GenerateBullets()
     {
-            InvokeRepeating(nameof(InstianteBullet), 0, delay);
+        switch (ShootTypeenum)
+        {
+            case ShootTypeEnum.Continous:
+                InvokeRepeating(nameof(InstianteBullet), 0, delay);
+                break;
+            case ShootTypeEnum.Afterpreviousregenerated:
+                InstantiateBulletAfterPreviousDone();
+                break;
+            case ShootTypeEnum.AllAtOnce:
+                InvokeRepeating(nameof(InstianteBullet), 0, 0.0001f);
+                break;
+            default:
+                break;
+        }
+       
                
        
+    }
+
+    private void SpawnBulletsAllAtOnce()
+    { 
+    
+    }
+
+    private void SpawnBulletsContinous()
+    { 
+    }
+
+    private void SpawnBulletsAfterPreviousDone()
+    { 
+    
     }
 
     private void ReGenerate(Bullet_Movement_Script bullet, bool waitforall)

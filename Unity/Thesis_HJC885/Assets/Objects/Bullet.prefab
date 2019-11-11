@@ -93,8 +93,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   this_ID: 0
+  startingPos: {x: 0, y: 0, z: 0}
+  destination: {x: 0, y: 0, z: 0}
   ResetDistance: 50
   mSpeed: 5
+  ishit: 0
+  mPrevPos: {x: 0, y: 0, z: 0}
 --- !u!135 &5356440763280539787
 SphereCollider:
   m_ObjectHideFlags: 0
