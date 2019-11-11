@@ -106,71 +106,6 @@ public class Bullet_Movement_Script : MonoBehaviour
         return ishitted;
 
     }
-
-
-    //private void RandomDestinationGenerator()
-    //{
-    //    Vector3 movement = Random.insideUnitSphere * 5;/*robot.transform.position - startingPos;*/
-    //    Vector3 newPos = transform.position + movement;
-
-    //    // Calculate the distance of the new position from the center point. Keep the direction
-    //    // the same but clamp the length to the specified radius.
-    //    Vector3 offset = newPos - robot.transform.position;
-    //    this.destination = robot.transform.position + Vector3.ClampMagnitude(offset, shootradius);
-    //}
-
-    //private Vector3 RandomDestinationVectorGenerator()
-    //{
-
-    //    float x = UnityEngine.Random.Range(-shootradius, shootradius);
-    //    float y = UnityEngine.Random.Range(-shootradius, shootradius);
-    //    float z = UnityEngine.Random.Range(-shootradius, shootradius);
-
-    //    return new Vector3(x/**mSpeed*/, y/** mSpeed*/, z/**mSpeed*/);
-    //}
-
-    //private Vector3 RandoMDestinationGeneratorbasedonRobotdistance()
-    //{
-    //    Vector3 temp = RandomDestinationGenerator();
-    //    float tempdist = Vector3.Distance(this.startingPos, robot.transform.position);
-    //    Debug.Log("tempVector:" + temp);
-    //    Debug.Log("tempdistance" + tempdist);
-
-
-    //    temp.x = Mathf.Tan(temp.x / tempdist);
-    //    temp.y = Mathf.Tan(temp.y / tempdist);
-    //    temp.z = Mathf.Tan(temp.z / tempdist);
-    //    Debug.Log("new Vector" + temp);
-    //    return temp;
-    //}
-
-    //public void Modify_Destination()
-    //{
-    //    Vector3 random = RandoMDestinationGeneratorbasedonRobotdistance();
-
-    //    destination = this.robot_startpos_Vector;
-
-    //    if (Random.Range(0,2) == 0)
-    //    {
-    //        destination += Quaternion.Euler(random.x, random.y, random.z).eulerAngles;
-    //    }
-    //    else
-    //    {
-    //        destination -= Quaternion.Euler(random.x, random.y, random.z).eulerAngles;
-
-    //    }
-
-    //}
-
-    //private Vector3 RandomSpherePoints()
-    //{
-
-    //    float x = UnityEngine.Random.Range(-shootradius, shootradius);
-    //    float y = UnityEngine.Random.Range(-shootradius, shootradius);
-    //    float z = UnityEngine.Random.Range(-shootradius, shootradius);
-
-    //    return new Vector3(x/**mSpeed*/, y/** mSpeed*/, z/**mSpeed*/);
-    //}
     private Vector3 FixDestinationGenerator()
     {
         float x = 0;
@@ -178,11 +113,6 @@ public class Bullet_Movement_Script : MonoBehaviour
         float z = 1;
         return new Vector3(x * mSpeed, y * mSpeed, z * mSpeed);
     }
-
-    //private void OnTriggerEnter(Collider other)
-    //{
-    //    Debug.Log(other.gameObject.name);
-    //}
     private void OnDrawGizmos()
     {
 

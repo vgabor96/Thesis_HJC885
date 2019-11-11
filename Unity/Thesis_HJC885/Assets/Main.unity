@@ -206,7 +206,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8990968}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 19.62, y: 8.87, z: 3.68}
+  m_LocalPosition: {x: 19.62, y: 8.87, z: 0}
   m_LocalScale: {x: 1, y: 19.181, z: 21.481}
   m_Children: []
   m_Father: {fileID: 0}
@@ -333,7 +333,7 @@ PrefabInstance:
     - target: {fileID: 2989247873272443177, guid: 74807d21bee8dc54ea89ee8ef182c121,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 5
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2989247873272443177, guid: 74807d21bee8dc54ea89ee8ef182c121,
         type: 3}
@@ -383,7 +383,7 @@ PrefabInstance:
     - target: {fileID: 3708887370843355392, guid: 74807d21bee8dc54ea89ee8ef182c121,
         type: 3}
       propertyPath: mSpeed
-      value: 20
+      value: 30
       objectReference: {fileID: 0}
     - target: {fileID: 3708887370843355392, guid: 74807d21bee8dc54ea89ee8ef182c121,
         type: 3}
@@ -394,6 +394,21 @@ PrefabInstance:
         type: 3}
       propertyPath: Wheretoshootenum
       value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 3708887370843355392, guid: 74807d21bee8dc54ea89ee8ef182c121,
+        type: 3}
+      propertyPath: ResetDistance
+      value: 200
+      objectReference: {fileID: 0}
+    - target: {fileID: 3708887370843355392, guid: 74807d21bee8dc54ea89ee8ef182c121,
+        type: 3}
+      propertyPath: ShootTypeenum
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3708887370843355392, guid: 74807d21bee8dc54ea89ee8ef182c121,
+        type: 3}
+      propertyPath: actualbulletsize
+      value: 0.1
       objectReference: {fileID: 0}
     - target: {fileID: 1993461217568399573, guid: 74807d21bee8dc54ea89ee8ef182c121,
         type: 3}
@@ -555,7 +570,7 @@ PrefabInstance:
     - target: {fileID: 9062283000640831868, guid: d59f13dc5f70b7a499d58f443771e379,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 5
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 9062283000640831868, guid: d59f13dc5f70b7a499d58f443771e379,
         type: 3}
@@ -676,6 +691,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_NormalizedViewPortRect.y
       value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 434946105547511058, guid: d59f13dc5f70b7a499d58f443771e379,
+        type: 3}
+      propertyPath: near clip plane
+      value: 0.01
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d59f13dc5f70b7a499d58f443771e379, type: 3}
@@ -933,7 +953,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2043750820}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -44, y: -0.5, z: 4.3}
+  m_LocalPosition: {x: -44, y: -0.5, z: 0}
   m_LocalScale: {x: 12.4204235, y: 1, z: 2.078376}
   m_Children: []
   m_Father: {fileID: 0}
