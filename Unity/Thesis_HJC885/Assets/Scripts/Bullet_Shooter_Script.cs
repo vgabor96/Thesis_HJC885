@@ -6,20 +6,17 @@ public class Bullet_Shooter_Script : MonoBehaviour
 {
     // Start is called before the first frame update
     public float delay = 1f;
+    public float recoil = 1f;
     private int currentBullets = 0;
     public int numberOfBullets = 8;
-    public float shootradius = 5f;
     private Vector3 gen_robot_vector;
     public float mSpeed = 10f;
-    public float ResetDistance = 100f;
+    private float ResetDistance = 100f;
 
     public Bullet_Movement_Script Bullet;
     public GameObject robot;
     public float actualbulletsize = 1;
-    //public float maxdistancereset;
-    //public float mSpeed;
 
-    private Vector3 randomaround;
 
     public enum WhereToShootEnum
 {
@@ -50,6 +47,7 @@ public class Bullet_Shooter_Script : MonoBehaviour
         //Move the object to the same position as the parent:
 
         transform.rotation = Quaternion.Euler(new Vector3(0, 0, 0));
+        this.ResetDistance = Vector3.Distance(this.robot.transform.position, this.transform.position)+10f;
         this.gen_robot_vector = robot.transform.position - this.transform.position;
         this.Bullets = new List<Bullet_Movement_Script>();
 
@@ -235,9 +233,9 @@ public class Bullet_Shooter_Script : MonoBehaviour
     private Vector3 Random_Shootaround(BoxCollider bodypart)
     {
         
-        float x = bodypart.transform.position.x + Random.Range(-bodypart.size.x, bodypart.size.x);
-        float y = bodypart.transform.position.y + Random.Range(-bodypart.size.y, bodypart.size.y);
-        float z = bodypart.transform.position.z + Random.Range(-bodypart.size.z, bodypart.size.z);
+        float x = bodypart.transform.position.x + Random.Range(-bodypart.size.x*recoil, bodypart.size.x*recoil);
+        float y = bodypart.transform.position.y + Random.Range(-bodypart.size.y * recoil, bodypart.size.y * recoil);
+        float z = bodypart.transform.position.z + Random.Range(-bodypart.size.z * recoil, bodypart.size.z * recoil);
 
         return new Vector3(x, y, z);
     }
