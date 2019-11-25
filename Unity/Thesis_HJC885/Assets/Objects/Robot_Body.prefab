@@ -287,6 +287,8 @@ MonoBehaviour:
   resWidth: 2550
   resHeight: 3300
   camera: {fileID: 4092648648463609956}
+  timer: 3.4028235e+38
+  secondcapturedelay: 0.2
 --- !u!1 &5706762655560314139
 GameObject:
   m_ObjectHideFlags: 0

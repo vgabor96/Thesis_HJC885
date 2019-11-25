@@ -50,8 +50,8 @@ public class Bullet_Shooter_Script : MonoBehaviour
         this.ResetDistance = Vector3.Distance(this.robot.transform.position, this.transform.position)+10f;
         this.gen_robot_vector = robot.transform.position - this.transform.position;
         this.Bullets = new List<Bullet_Movement_Script>();
+        Debug.DrawLine(transform.localPosition, robot.transform.localPosition, Color.green);
 
-        
         GenerateBullets();
 
     }
@@ -59,7 +59,7 @@ public class Bullet_Shooter_Script : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Debug.DrawLine(transform.position, robot.transform.position, Color.green);
+       
         
             foreach (Bullet_Movement_Script item in this.Bullets)
             {
