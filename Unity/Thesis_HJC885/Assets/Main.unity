@@ -670,7 +670,7 @@ PrefabInstance:
     - target: {fileID: 434946105547511058, guid: d59f13dc5f70b7a499d58f443771e379,
         type: 3}
       propertyPath: m_TargetDisplay
-      value: 2
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 434946105547511058, guid: d59f13dc5f70b7a499d58f443771e379,
         type: 3}
@@ -694,16 +694,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 434946105547511058, guid: d59f13dc5f70b7a499d58f443771e379,
         type: 3}
-      propertyPath: m_NormalizedViewPortRect.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 434946105547511058, guid: d59f13dc5f70b7a499d58f443771e379,
-        type: 3}
-      propertyPath: m_NormalizedViewPortRect.width
-      value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 434946105547511058, guid: d59f13dc5f70b7a499d58f443771e379,
-        type: 3}
       propertyPath: m_Depth
       value: 0
       objectReference: {fileID: 0}
@@ -711,16 +701,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_ClearFlags
       value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 434946105547511058, guid: d59f13dc5f70b7a499d58f443771e379,
-        type: 3}
-      propertyPath: m_NormalizedViewPortRect.height
-      value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 434946105547511058, guid: d59f13dc5f70b7a499d58f443771e379,
-        type: 3}
-      propertyPath: m_NormalizedViewPortRect.y
-      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 434946105547511058, guid: d59f13dc5f70b7a499d58f443771e379,
         type: 3}
@@ -741,6 +721,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_BackGroundColor.b
       value: 0.8679245
+      objectReference: {fileID: 0}
+    - target: {fileID: 434946105547511058, guid: d59f13dc5f70b7a499d58f443771e379,
+        type: 3}
+      propertyPath: m_NormalizedViewPortRect.height
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1127384905364378615, guid: d59f13dc5f70b7a499d58f443771e379,
         type: 3}
@@ -781,6 +766,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalPosition.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3329276397070494682, guid: d59f13dc5f70b7a499d58f443771e379,
+        type: 3}
+      propertyPath: resWidth
+      value: 1024
+      objectReference: {fileID: 0}
+    - target: {fileID: 3329276397070494682, guid: d59f13dc5f70b7a499d58f443771e379,
+        type: 3}
+      propertyPath: resHeight
+      value: 768
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d59f13dc5f70b7a499d58f443771e379, type: 3}
