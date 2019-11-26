@@ -1,8 +1,9 @@
 #include<opencv2/opencv.hpp>
 #include<iostream>
+#include<cuda.h>
+#include<cuda_runtime.h>
 using namespace std;
 using namespace cv;
-
 
 int main()
 {
@@ -21,6 +22,7 @@ int main()
 	imshow("newpic", img2);
 
 	//read height, width data
+
 	
 	int height = img.rows;
 	int width = img.cols;

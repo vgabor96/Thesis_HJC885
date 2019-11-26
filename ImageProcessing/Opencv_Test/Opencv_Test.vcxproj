@@ -87,7 +87,7 @@
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>C:\opencv\build\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v10.2\include;C:\opencv\build\include</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -127,6 +127,11 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="first.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\cuda_proj\cuda_proj.vcxproj">
+      <Project>{6de61345-2c0c-4002-a789-d4d6706052b5}</Project>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
