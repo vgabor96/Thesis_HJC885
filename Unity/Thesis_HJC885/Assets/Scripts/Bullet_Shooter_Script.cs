@@ -166,7 +166,7 @@ public class Bullet_Shooter_Script : MonoBehaviour
 
             currentBullets++;
         }
-        ReGenerate(Bullets[0], true);
+        ReGenerate(Bullets[0], false);
         Bullets[0].mSpeed = mSpeed;
         Bullets[0].ResetDistance = ResetDistance;
 

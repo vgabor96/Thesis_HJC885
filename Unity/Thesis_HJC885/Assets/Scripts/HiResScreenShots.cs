@@ -15,6 +15,7 @@ public class HiResScreenShots : MonoBehaviour
     public float timer = float.MaxValue;
     private bool cantakeshot2 = false;
     public float secondcapturedelay = .2f;
+    private Robot robot;
 
 
     public static string ScreenShotName(int width, int height)
@@ -36,6 +37,10 @@ public class HiResScreenShots : MonoBehaviour
     {
         takeHiResShot = true;
     }
+    private void Start()
+    {
+       robot = GameObject.Find("Robot_Body").GetComponent<Robot>();
+    }
 
     void LateUpdate()
     {
@@ -55,9 +60,15 @@ public class HiResScreenShots : MonoBehaviour
             TakeHiResShot2();
                 cantakeshot2 = false;
             timer = float.MaxValue;
+            // BREAKSTHE GAME TEST
+            Time.timeScale = 0;
 
-            
+            robot.DoMovement = true;
+
+
+
         }
+       
       
     }
 

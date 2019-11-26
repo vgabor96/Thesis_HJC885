@@ -403,7 +403,7 @@ PrefabInstance:
     - target: {fileID: 3708887370843355392, guid: 74807d21bee8dc54ea89ee8ef182c121,
         type: 3}
       propertyPath: ShootTypeenum
-      value: 0
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 3708887370843355392, guid: 74807d21bee8dc54ea89ee8ef182c121,
         type: 3}
@@ -777,6 +777,11 @@ PrefabInstance:
       propertyPath: resHeight
       value: 768
       objectReference: {fileID: 0}
+    - target: {fileID: 3329276397070494682, guid: d59f13dc5f70b7a499d58f443771e379,
+        type: 3}
+      propertyPath: robot
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 7121326836859478610, guid: d59f13dc5f70b7a499d58f443771e379,
         type: 3}
       propertyPath: radius
@@ -786,6 +791,11 @@ PrefabInstance:
         type: 3}
       propertyPath: radius
       value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 8817790372997222892, guid: d59f13dc5f70b7a499d58f443771e379,
+        type: 3}
+      propertyPath: m_Name
+      value: RobotCamera
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d59f13dc5f70b7a499d58f443771e379, type: 3}
