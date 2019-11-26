@@ -25,6 +25,20 @@ int main()
 	img.convertTo(dst, CV_32F);
 	float* data = dst.ptr<float>();
 
+	//Grayscale
+	for (int i = 0; i < (height*width)*3; i+=3)
+	{
+		float r = data[i];
+		float g = data[i + 1];
+		float b = data[i + 2];
+
+		float avg = (r + g + b) / 3;
+		data[i] = avg;
+		data[i + 1] = avg;
+		data[i + 2] = avg;
+	}
+	
+
 	//convert back the image from float* to CV::MAT.
 	Mat dest(height, width, CV_32FC3, data);
 
