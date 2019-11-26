@@ -378,7 +378,7 @@ PrefabInstance:
     - target: {fileID: 3708887370843355392, guid: 74807d21bee8dc54ea89ee8ef182c121,
         type: 3}
       propertyPath: delay
-      value: 0.5
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 3708887370843355392, guid: 74807d21bee8dc54ea89ee8ef182c121,
         type: 3}
@@ -388,7 +388,7 @@ PrefabInstance:
     - target: {fileID: 3708887370843355392, guid: 74807d21bee8dc54ea89ee8ef182c121,
         type: 3}
       propertyPath: numberOfBullets
-      value: 30
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3708887370843355392, guid: 74807d21bee8dc54ea89ee8ef182c121,
         type: 3}
@@ -403,7 +403,7 @@ PrefabInstance:
     - target: {fileID: 3708887370843355392, guid: 74807d21bee8dc54ea89ee8ef182c121,
         type: 3}
       propertyPath: ShootTypeenum
-      value: 2
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3708887370843355392, guid: 74807d21bee8dc54ea89ee8ef182c121,
         type: 3}
@@ -781,6 +781,11 @@ PrefabInstance:
         type: 3}
       propertyPath: radius
       value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 2594235278984003993, guid: d59f13dc5f70b7a499d58f443771e379,
+        type: 3}
+      propertyPath: radius
+      value: 5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d59f13dc5f70b7a499d58f443771e379, type: 3}

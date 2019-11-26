@@ -14,29 +14,31 @@ public class Robot_MovementScript : MonoBehaviour
     void Start()
     {
 
-        startpos = transform.position;
+        startpos = transform.localPosition;
        
     }
 
     // Update is called once per frame
     void Update()
     {
-        RandomMovement();
+        transform.Translate(RandomMovement()* Time.deltaTime);
     }
 
 
-    private void RandomMovement()
+    private Vector3 RandomMovement()
     {
-        float next_x = Random.Range(-radius, radius);
-        float next_z = Random.Range(-radius, radius);
+        // float next_x = Random.Range(-radius, radius);
+        //float next_z = Random.Range(-radius, radius);
+        float next_x = Random.Range(0,2) == 0 ? radius/2 : -radius/2;
+        float next_z = Random.Range(0, 2) == 0 ? radius / 2 : -radius / 2;
         Vector3 newpos = new Vector3(next_x, 0,next_z);
-        
-        if (Vector3.Distance(this.startpos,this.transform.localPosition+newpos) <radius)
+        float distance = Vector3.Distance(this.startpos,this.transform.localPosition + newpos * Time.deltaTime);
+        if (distance <radius)
         {
-           
-            transform.Translate(newpos* Time.deltaTime);
+            //Debug.LogError(startpos+" "+newpos+" "+distance);
+            return newpos;
         }
-       
+        return new Vector3(0, 0, 0);
     }
 }
 
