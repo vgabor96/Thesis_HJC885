@@ -3,17 +3,19 @@
 using namespace std;
 using namespace cv;
 
+
 int main()
 {
+	float v_threshold = 10;
 	//load the image
 	//Mat img = imread("lena.jpg");
-	Mat img = imread("C:\\Users\\loahc\\Documents\\GitHub\\Thesis_HJC885\\Unity\\Thesis_HJC885\\Assets\\screenshots\\screen_1024x768_2019-11-25_15-22-04_01.png");
+	Mat img = imread("C:\\Users\\loahc\\Documents\\GitHub\\Thesis_HJC885\\Unity\\Thesis_HJC885\\Assets\\screenshots\\testpic\\screen_1024x768_2019-11-25_15-22-04_01.png");
 	
 	namedWindow("pic_1", WINDOW_NORMAL);
 	resizeWindow("pic_1", img.cols, img.rows);
 	imshow("pic_1", img);
 
-	Mat img2 = imread("C:\\Users\\loahc\\Documents\\GitHub\\Thesis_HJC885\\Unity\\Thesis_HJC885\\Assets\\screenshots\\screen_1024x768_2019-11-25_15-22-04_02.png");
+	Mat img2 = imread("C:\\Users\\loahc\\Documents\\GitHub\\Thesis_HJC885\\Unity\\Thesis_HJC885\\Assets\\screenshots\\testpic\\screen_1024x768_2019-11-25_15-22-04_02.png");
 	namedWindow("newpic", WINDOW_NORMAL);
 	resizeWindow("newpic", img2.cols, img2.rows);
 	imshow("newpic", img2);
@@ -53,8 +55,9 @@ int main()
 	}
 	*/
 
+
 	//sub
-	/*
+
 	for (int i = 0; i < (height * width) * 3; i += 3)
 	{
 		float r = abs((data[i] - data2[i]) / 2);
@@ -66,9 +69,10 @@ int main()
 		data[i + 1] = g;
 		data[i + 2] = b;
 	}
-	*/
-	//Add
+
 	
+	//Add
+	/*
 	for (int i = 0; i < (height * width) * 3; i += 3)
 	{
 		float r = (data[i]+data2[i])/2;
@@ -80,7 +84,7 @@ int main()
 		data[i + 1] = g;
 		data[i + 2] = b;
 	}
-	
+	*/
 
 
 
@@ -88,12 +92,38 @@ int main()
 	Mat dest(height, width, CV_32FC3, data);
 
 	//print the image
-	imwrite("addedpic.jpg", dest);
-	Mat img3 = imread("addedpic.jpg");
-	namedWindow("addedpic", WINDOW_NORMAL);
-	resizeWindow("addedpic", img3.cols, img3.rows);
-	imshow("addedpic", img3);
+	imwrite("subpic.jpg", dest);
+	Mat img3 = imread("subpic.jpg");
+	namedWindow("subpic", WINDOW_NORMAL);
+	resizeWindow("subpic", img3.cols, img3.rows);
+	imshow("subpic", img3);
+
+	//Makewhite and black only
+	for (int i = 0; i < (height * width) * 3; i += 3)
+	{
+
+		float r = data[i];
+		float g = data[i + 1];
+		float b = data[i + 2];
+		if (r >= v_threshold || g >= v_threshold ||b >= v_threshold)
+		{
+			data[i] = 255;
+			data[i+1] = 255;
+			data[i+2] = 255;
+		}
+		
 	
+	}
+	Mat dest2(height, width, CV_32FC3, data);
+
+	//print the image
+	imwrite("blackandwhite.jpg", dest2);
+	Mat img4 = imread("blackandwhite.jpg");
+	namedWindow("blackandwhite", WINDOW_NORMAL);
+	resizeWindow("blackandwhite", img4.cols, img4.rows);
+	imshow("blackandwhite", img4);
+
+
 	waitKey(0);
 	return 0;
 }
