@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Robot_MovementScript : MonoBehaviour
+public class Robot : MonoBehaviour
 {
     // Start is called before the first frame update
     public float radius;
@@ -15,17 +15,18 @@ public class Robot_MovementScript : MonoBehaviour
     {
 
         startpos = transform.localPosition;
+        InvokeRepeating(nameof(RandomMovement), 0, 0.5f);
        
     }
 
     // Update is called once per frame
     void Update()
     {
-        transform.Translate(RandomMovement()* Time.deltaTime);
+        
     }
 
 
-    private Vector3 RandomMovement()
+    private Vector3 RandomMovement_Vector3()
     {
         // float next_x = Random.Range(-radius, radius);
         //float next_z = Random.Range(-radius, radius);
@@ -39,6 +40,11 @@ public class Robot_MovementScript : MonoBehaviour
             return newpos;
         }
         return new Vector3(0, 0, 0);
+    }
+
+    private void RandomMovement()
+    {
+        transform.Translate(RandomMovement_Vector3() * Time.deltaTime);
     }
 }
 
