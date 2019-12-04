@@ -1264,15 +1264,21 @@ int main()
 			Point center(cvRound(circles[i][0]), cvRound(circles[i][1]));
 			int radius = cvRound(circles[i][2]);
 			// circle center
-			circle(src, center, 2, Scalar(0, 255, 0), -1, 8, 0);
+			circle(src, center, 2, Scalar(0, 255, 0),2, 8, 0);
 			// circle outline
-			circle(src, center, radius, Scalar(0, 255, 0), 2, 8, 0);
+			circle(src, center, radius, Scalar(0, 0, 255), 2, 8, 0);
 			if (i > 0)
 			{
 				Point center1(cvRound(circles[i - 1][0]), cvRound(circles[i - 1][1]));
+				printf("%i \t", center1.x);
+				printf("%i \n", center1.y);
+
 				Point center2(cvRound(circles[i][0]), cvRound(circles[i][1]));
 
-				line(src_gray, center1, center2, Scalar(255, 0, 255), 2, 8, 0);
+				printf("%i \t", center2.x);
+				printf("%i \n", center2.y);
+
+				line(src, center1, center2, Scalar(0, 0, 255), 2, 8, 0);
 			}
 		}
 	}
