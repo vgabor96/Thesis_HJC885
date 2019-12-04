@@ -1175,21 +1175,23 @@ int main()
 
 	//print the image
 	imwrite("blackandwhite.jpg", dest2);
-	Mat img5 = imread("blackandwhite.png",1);
+	//Mat img5 = imread("blackandwhite.png");
 	Mat img4 = imread("blackandwhite.jpg");
-	printf("%i", img5.type());
+	//printf("%i", img5.type());
+
+	//
+	//
+	//namedWindow("blackandwhite", WINDOW_NORMAL);
+	//resizeWindow("blackandwhite", img4.cols, img4.rows);
+	//imshow("blackandwhite", img5);
+	//waitKey(0);
+
+//imread("subpic.jpg", 1);
 
 	
-	
-	namedWindow("blackandwhite", WINDOW_NORMAL);
-	resizeWindow("blackandwhite", img4.cols, img4.rows);
-	imshow("blackandwhite", img5);
-	waitKey(0);
-	
-	Mat src_gray;
-	src_gray.convertTo(img5, CV_8U);
+	//src_gray.convertTo(src, CV_8U);
 
-		cvtColor(src_gray, img5, COLOR_RGB2GRAY);
+//		cvtColor(src_gray, img5, COLOR_RGB2GRAY);
 	
 
 
@@ -1197,20 +1199,17 @@ int main()
 	//cvtColor(img5, src_gray, COLOR_RGB2GRAY);
 
 	/// Reduce the noise so we avoid false circle detection
-	GaussianBlur(src_gray, src_gray, Size(9, 9), 2, 2);
+	//GaussianBlur(src_gray, src_gray, Size(9, 9), 2, 2);
 
-	vector<Vec3f> circles;
+	//vector<Vec3f> circles;
 
-	HoughCircles(img5, circles, HOUGH_GRADIENT, 1, src_gray.rows / 8, 200, 100, 0, 0);
+	//HoughCircles(img, circles, HOUGH_GRADIENT, 1, /*src_gray.rows / */8, 200, 100, 0, 0);
 
 
 
-	if (circles.size() == 0)
-	{
-		printf("No circles");
-			return(-1);
-	}
-	int radius;
+	/// Convert it to gray
+
+	/*int radius;
 	for (int i = 0; i < circles.size(); i++)
 	{
 		Point center1(cvRound(circles[i][0]), cvRound(circles[i][1]));
@@ -1224,12 +1223,67 @@ int main()
 	
 			line(img5, center1, center2, Scalar(255, 0, 255), 3, 8, 0);
 		}
+	}*/
+
+	//namedWindow("CIRCLES", WINDOW_NORMAL);
+	//resizeWindow("CIRCLES", img5.cols, img5.rows);
+	//imshow("CIRCLES", img5);
+	//waitKey(0);
+
+	Mat src, src_gray;
+
+	/// Read the image
+	src = imread(/*"C:\\Users\\loahc\\Documents\\GitHub\\Thesis_HJC885\\Unity\\Thesis_HJC885\\Assets\\screenshots\\testpic\\screen_1024x768_2019-11-25_15-22-04_01CUSTOM.png"*/"blackandwhite.jpg", 1);
+
+	if (!src.data)
+	{
+		return -1;
 	}
 
-	namedWindow("CIRCLES", WINDOW_NORMAL);
-	resizeWindow("CIRCLES", img5.cols, img5.rows);
-	imshow("CIRCLES", img5);
+	/// Convert it to gray
+	cvtColor(src, src_gray, COLOR_RGB2GRAY);
+	namedWindow("Hough Circle Transform Gray", WINDOW_NORMAL);
+	imshow("Hough Circle Transform Gray", src);
+
+	/// Reduce the noise so we avoid false circle detection
+	GaussianBlur(src_gray, src_gray, Size(9, 9), 2, 2);
+	namedWindow("Hough Circle Transform Gauss", WINDOW_NORMAL);
+	imshow("Hough Circle Transform Gauss", src);
+
+	vector<Vec3f> circles;
+	for (int maxR = 10; maxR < 200; maxR = maxR + 200-9)
+	{
+
+		/// Apply the Hough Transform to find the circles
+		//		WorkingHoughCircles(src_gray, circles, HOUGH_GRADIENT, 1, src_gray.rows / 100, 10, 10, 0, 100);
+		HoughCircles(src_gray, circles, HOUGH_GRADIENT, 1, src_gray.rows / 100, 10, 10, 0, 0);
+
+		/// Draw the circles detected
+		for (size_t i = 0; i < circles.size(); i++)
+		{
+			Point center(cvRound(circles[i][0]), cvRound(circles[i][1]));
+			int radius = cvRound(circles[i][2]);
+			// circle center
+			circle(src, center, 2, Scalar(0, 255, 0), -1, 8, 0);
+			// circle outline
+			circle(src, center, radius, Scalar(0, 255, 0), 2, 8, 0);
+			if (i > 0)
+			{
+				Point center1(cvRound(circles[i - 1][0]), cvRound(circles[i - 1][1]));
+				Point center2(cvRound(circles[i][0]), cvRound(circles[i][1]));
+
+				line(src_gray, center1, center2, Scalar(255, 0, 255), 2, 8, 0);
+			}
+		}
+	}
+
+	/// Show your results
+	namedWindow("Hough Circle Transform Demo", WINDOW_NORMAL);
+	imshow("Hough Circle Transform Demo", src);
+
 	waitKey(0);
+	return 0;
+
 
 	//////////////////////////////////////////////INNEN START////////////////////////////////////////////////////////////
 	cudaEventCreate(&start);
