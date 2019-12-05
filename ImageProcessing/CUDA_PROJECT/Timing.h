@@ -9,7 +9,7 @@
 				function;																		\
 			}																					\
 			timer.StopTimer();																	\
-			printf("Timer[%s]=%f\n", function_str, (float)timer.GetTimeMilliSec() / reply);     \
+			printf("|CPU| [%s]=%f millsec\n", function_str, (float)timer.GetTimeMilliSec() / reply);     \
 		}
 
 void WarmUp();

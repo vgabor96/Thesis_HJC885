@@ -19,7 +19,7 @@ const int M = 1024;
 
 const int NM = N * M;
 
-//Konstansok
+
 const int RND_Min = 0;
 const int RND_Max = 255;
 const int MaxThreads = 1024;
@@ -31,39 +31,40 @@ __device__ const int dev_NM = dev_N * dev_M;
 __device__ const int dev_MaxThreads = 1024;
 __device__ const int dev_Max = 255;
 
-//Mérési eszközök:
+
+//Contributed by Pakos
 
 cudaEvent_t start;
 cudaEvent_t stop;
 
-//RGB csatornák (eredeti kép):
+
 float channel_r[N][M];
 float channel_g[N][M];
 float channel_b[N][M];
 
-//Módosított képek:
-int grayScale[N][M];     // fekete-fehér kép
 
-int forMinMaxSearch[NM]; // vektor a Minimum és Maximum kereséshez
+int grayScale[N][M];    
 
-int histogram[N][M];     // histogram korrekció
+int forMinMaxSearch[NM];
 
-int noNoise[N][M];		 // Gauss után
+int histogram[N][M];    
 
-int blackAndWhite[N][M]; // csak 0 és 255 értékû pixelek
+int noNoise[N][M];		
 
-int valueMatrix[N][M];	 // csak -3 és 255 értékû pixelek
+int blackAndWhite[N][M]; 
 
-//Segéd változók:
-int globalMin[1];		  // globális Minimum
-int globalMax[1];	      // globális Maximum
+int valueMatrix[N][M];	 
+
+
+int globalMin[1];		  
+int globalMax[1];	      
 
 int darkPixelCounter[1] = { 0 };
 
 int avgPixelColor[1] = { 0 };
 int avgPixelColorCounter[1] = { 0 };
 
-//GAUSS Mátrixok:
+
 int GaussSize = 3;
 int GaussValue[1] = { 0 };
 int GaussMatrix[3][3] =
@@ -74,19 +75,18 @@ int GaussMatrix[3][3] =
 };
 
 
-//***********************************************************************************//
 
-//GPU - RGB csatornák (eredeti kép):
+
+
 __device__ float dev_channel_r[N][M];
 __device__ float dev_channel_g[N][M];
 __device__ float dev_channel_b[N][M];
 
-//GPU - Módosított képek:
-__device__ int dev_grayScale[N][M];     // fekete-fehér kép
+__device__ int dev_grayScale[N][M];    
 
-__device__ int dev_forMinMaxSearch[NM]; // vektor a Minimum és Maximum kereséshez
+__device__ int dev_forMinMaxSearch[NM]; 
 
-__device__ int dev_histogram[N][M];     // histogram korrekció
+__device__ int dev_histogram[N][M];    
 
 __device__ int dev_noNoise[N][M];
 
@@ -107,12 +107,12 @@ int res_blackAndWhite[N][M];
 
 int res_valueMatrix[N][M];
 
-//GPU - Segéd változók:
+
 __device__ int localMin[(NM + 1) / 2];
 __device__ int localMax[(NM + 1) / 2];
 
-__device__ int dev_globalMin[1];		  // globális Minimum
-__device__ int dev_globalMax[1];	      // globális Maximum
+__device__ int dev_globalMin[1];		  
+__device__ int dev_globalMax[1];	     
 
 __device__ int dev_darkPixelCounter[1] = { 0 };
 
@@ -120,14 +120,14 @@ __device__ int dev_avgPixelColor[1] = { 0 };
 __device__ int dev_avgPixelColorCounter[1] = { 0 };
 
 
-int res_globalMin[1];		  // globális Minimum
+int res_globalMin[1];		
 int res_globalMax[1];
 
 int res_darkPixelCounter[1] = { 0 };
 
 int res_avgPixelColor[1] = { 0 };
 
-//GPU - GAUSS Mátrixok:
+
 __device__ int dev_GaussSize = 3;
 __device__ int dev_GaussValue[1] = { 0 };
 __device__ int dev_GaussMatrix[3][3] =
@@ -139,8 +139,6 @@ __device__ int dev_GaussMatrix[3][3] =
 
 int res_GaussValue[1] = { 0 };
 
-//********************************************************************************************************************//
-//Random kép generálása:
 
 void RandomPicture_CPU()
 {
@@ -156,9 +154,56 @@ void RandomPicture_CPU()
 	}
 }
 
-//********************************************************************************************************************//
-//Kép beolvasása:
 
+void LoadPicture_CPU(Mat img)
+{
+	Mat img2 = imread("C:\\Users\\loahc\\Documents\\GitHub\\Thesis_HJC885\\Unity\\Thesis_HJC885\\Assets\\screenshots\\testpic\\screen_1024x768_2019-11-25_15-22-04_01.png");
+	Mat dst;
+	img2.convertTo(dst, CV_32F);
+	float* data = dst.ptr<float>();
+
+	int x = 0;
+
+	for (int i = 0; i < N; i++)
+	{
+		for (int j = 0; j < M; j++)
+		{
+
+			//channel_r[i][j] = data[i * M + j *3];
+			channel_r[i][j] = data[x];
+			channel_g[i][j] = data[x + 1];
+			channel_b[i][j] = data[x + 2];
+			x += 3;
+
+		}
+	
+	
+	}
+								
+}
+
+Mat LoadBackPicture()
+{
+	Mat img,r,g,b;
+
+	r = Mat(N, M, CV_32FC1, channel_r,0);
+	g = Mat(N, M, CV_32FC1, channel_g,0);
+	b = Mat(N, M, CV_32FC1, channel_b,0);
+
+	
+	vector<Mat> channels;
+	
+
+	channels.push_back(r);
+	channels.push_back(g);
+	channels.push_back(b);
+
+	merge(channels, img);
+
+
+	return img;
+
+}
 
 //********************************************************************************************************************//
 //Fekete fehér:
@@ -206,8 +251,6 @@ void GrayScale_CPU()
 	}
 }
 
-//********************************************************************************************************************//
-//2D tömb --> 1D vektor konvertálás:
 
 __global__ void ConvertArrayToVector()
 {
@@ -242,7 +285,6 @@ __global__ void ConvertArrayToVector()
 	}
 }
 
-//Minimum kiválasztás:
 
 __global__ void MinSearch()
 {
@@ -375,7 +417,6 @@ void MinSearch_CPU()
 	}
 }
 
-//Maximum kiválasztás:
 
 __global__ void MaxSearch()
 {
@@ -509,7 +550,6 @@ void MaxSearch_CPU()
 	}
 }
 
-//Histogram széthúzás:
 
 __global__ void HistogramCorrection()
 {
@@ -552,8 +592,6 @@ void HistogramCorrection_CPU()
 	}
 }
 
-//********************************************************************************************************************/
-//Szín invertálás (ha kell):
 
 __global__ void DarkPixelNumber()
 {
@@ -647,10 +685,6 @@ void ColorInverter_CPU()
 	}
 }
 
-//********************************************************************************************************************/
-//Zajszûrés:
-
-//Gauss osztó kiszámítása:
 
 __global__ void GetGaussValue()
 {
@@ -671,7 +705,6 @@ void GetGaussValue_CPU()
 	}
 }
 
-//Gauss Mátrix - Zajszûrés:
 
 __global__ void GaussTransformation()
 {
@@ -783,10 +816,7 @@ void GaussTransformation_CPU()
 	}
 }
 
-//********************************************************************************************************************/
-//To Black And White:
 
-//Átlagos pixel érték
 
 __global__ void AVGPixelColor()
 {
@@ -798,7 +828,6 @@ __global__ void AVGPixelColor()
 		{
 			for (int i = 0; i < dev_N; i++)
 			{
-				//256 * 0,8 = 204,8 
 				if (dev_noNoise[i][j] <= 205)
 				{
 					atomicAdd(&dev_avgPixelColor[0], dev_noNoise[i][j]);
@@ -917,8 +946,6 @@ void ConvertToBlackAndWhite_CPU()
 	}
 }
 
-//********************************************************************************************************************/
-//Konvertálás értékmátrixá:
 
 __global__ void ConvertToValueMatrix()
 {
@@ -982,14 +1009,7 @@ void ConvertToValueMatrix_CPU()
 	}
 }
 
-//********************************************************************************************************************/
-//Text file létrehozása, generálása:
-
-
-//********************************************************************************************************************//
-//Kiiratás:
-
-void Console_WriteLine(float arr[N][M])
+void Custom_printf(float arr[N][M])
 {
 	for (int i = 0; i < N; i++)
 	{
@@ -1002,7 +1022,7 @@ void Console_WriteLine(float arr[N][M])
 	printf("\n");
 }
 
-void Console_WriteLine(int arr[N][M])
+void Custom_printf(int arr[N][M])
 {
 	for (int i = 0; i < N; i++)
 	{
@@ -1015,7 +1035,7 @@ void Console_WriteLine(int arr[N][M])
 	printf("\n");
 }
 
-void Console_WriteLine(int vector[NM])
+void Custom_printf(int vector[NM])
 {
 	for (int i = 0; i < NM; i++)
 	{
@@ -1024,28 +1044,28 @@ void Console_WriteLine(int vector[NM])
 	printf("\n\n");
 }
 
-void Console_WriteLine(int number)
+void Custom_printf(int number)
 {
 	printf("%003d", number);
 	printf("\n\n");
 }
 
-void Console_WriteLine(char text[])
+void Custom_printf(char text[])
 {
 	printf("%s\n", text);
 }
 
-void Console_WriteLine(char text[], int number)
+void Custom_printf(char text[], int number)
 {
 	printf("%s %d\n", text, number);
 }
 
-void Console_WriteLine(char text[], float number)
+void Custom_printf(char text[], float number)
 {
 	printf("%s %f\n", text, number);
 }
 
-void Console_WriteLine(bool isCPU, char functionName[])
+void Custom_printf(bool isCPU, char functionName[])
 {
 	if (isCPU)
 	{
@@ -1053,11 +1073,11 @@ void Console_WriteLine(bool isCPU, char functionName[])
 	}
 	else
 	{
-		printf("[GPU] - %s\n", functionName);
+		printf("|GPU| - %s\n", functionName);
 	}
 }
 
-void Console_WriteLine(bool isCPU, char functionName[], float time)
+void Custom_printf(bool isCPU, char functionName[], float time)
 {
 	if (isCPU)
 	{
@@ -1065,7 +1085,7 @@ void Console_WriteLine(bool isCPU, char functionName[], float time)
 	}
 	else
 	{
-		printf("[GPU] - %s, time: %f millisec\n", functionName, time);
+		printf("|GPU| - %s, time: %f millisec\n", functionName, time);
 	}
 }
 
@@ -1083,18 +1103,18 @@ void ClockStop(float& milliseconds)
 	cudaEventElapsedTime(&milliseconds, start, stop);
 }
 
-//********************************************************************************************************************//
-//Main:
 
 int main()
 {
 
 	float v_threshold = 10;
-	//load the image
-	//Mat img = imread("lena.jpg");
+
 	Mat img = imread("C:\\Users\\loahc\\Documents\\GitHub\\Thesis_HJC885\\Unity\\Thesis_HJC885\\Assets\\screenshots\\testpic\\screen_1024x768_2019-11-25_15-22-04_01.png");
 	Mat img2 = imread("C:\\Users\\loahc\\Documents\\GitHub\\Thesis_HJC885\\Unity\\Thesis_HJC885\\Assets\\screenshots\\testpic\\screen_1024x768_2019-11-25_15-22-04_02.png");
 	
+	Custom_printf("Picture Size N: ", N);
+	Custom_printf("Picture Size M: ", M);
+
 	namedWindow("pic_1", WINDOW_NORMAL);
 	resizeWindow("pic_1", img.cols, img.rows);
 	imshow("pic_1", img);
@@ -1103,15 +1123,49 @@ int main()
 	resizeWindow("newpic", img2.cols, img2.rows);
 	imshow("newpic", img2);
 
-	waitKey(0);
 
-	//read height, width data
-//	Kernel();
+
 
 	int height = img.rows;
 	int width = img.cols;
 
+	Mat imgadd = imread("C:\\Users\\loahc\\Documents\\GitHub\\Thesis_HJC885\\Unity\\Thesis_HJC885\\Assets\\screenshots\\testpic\\screen_1024x768_2019-11-25_15-22-04_01.png");
+	Mat img2add = imread("C:\\Users\\loahc\\Documents\\GitHub\\Thesis_HJC885\\Unity\\Thesis_HJC885\\Assets\\screenshots\\testpic\\screen_1024x768_2019-11-25_15-22-04_02.png");
 
+	//convert image from CV::MAT to float*.
+	Mat dstadd;
+	imgadd.convertTo(dstadd, CV_32F);
+	float* dataadd = dstadd.ptr<float>();
+
+	Mat dst2add;
+	img2add.convertTo(dst2add, CV_32F);
+	float* data2add = dst2add.ptr<float>();
+
+
+	//ADDED
+
+	for (int i = 0; i < (height * width) * 3; i += 3)
+	{
+		float r = (dataadd[i] + data2add[i]) / 2;
+		float g = (dataadd[i + 1] + data2add[i + 1]) / 2;
+		float b = (dataadd[i + 2] + data2add[i + 2]) / 2;
+
+
+		dataadd[i] = r;
+		dataadd[i + 1] = g;
+		dataadd[i + 2] = b;
+	}
+
+
+	//convert back the image from float* to CV::MAT.
+	Mat destadd(height, width, CV_32FC3, dataadd);
+
+	//print the image
+	imwrite("addpic.jpg", destadd);
+	Mat img3add = imread("addpic.jpg");
+	namedWindow("AddedPic", WINDOW_NORMAL);
+	resizeWindow("AddedPic", img3add.cols, img3add.rows);
+	imshow("AddedPic", img3add);
 
 
 	//check whether image loaded is empty or not.
@@ -1155,6 +1209,8 @@ int main()
 	resizeWindow("subpic", img3.cols, img3.rows);
 	imshow("subpic", img3);
 
+
+
 		//Makewhite and black only
 	for (int i = 0; i < (height * width) * 3; i += 3)
 	{
@@ -1177,63 +1233,11 @@ int main()
 	imwrite("blackandwhite.jpg", dest2);
 	//Mat img5 = imread("blackandwhite.png");
 	Mat img4 = imread("blackandwhite.jpg");
-	//printf("%i", img5.type());
-
-	//
-	//
-	//namedWindow("blackandwhite", WINDOW_NORMAL);
-	//resizeWindow("blackandwhite", img4.cols, img4.rows);
-	//imshow("blackandwhite", img5);
-	//waitKey(0);
-
-//imread("subpic.jpg", 1);
-
-	
-	//src_gray.convertTo(src, CV_8U);
-
-//		cvtColor(src_gray, img5, COLOR_RGB2GRAY);
-	
-
-
-	/// Convert it to gray
-	//cvtColor(img5, src_gray, COLOR_RGB2GRAY);
-
-	/// Reduce the noise so we avoid false circle detection
-	//GaussianBlur(src_gray, src_gray, Size(9, 9), 2, 2);
-
-	//vector<Vec3f> circles;
-
-	//HoughCircles(img, circles, HOUGH_GRADIENT, 1, /*src_gray.rows / */8, 200, 100, 0, 0);
-
-
-
-	/// Convert it to gray
-
-	/*int radius;
-	for (int i = 0; i < circles.size(); i++)
-	{
-		Point center1(cvRound(circles[i][0]), cvRound(circles[i][1]));
-		radius = cvRound(circles[i][2]);
-		circle(img5, center1, 3, Scalar(0, 255, 0), -1, 8, 0);
-		circle(img5, center1, radius, Scalar(255, 0, 0), 3, 8, 0);
-		if (i>0)
-		{
-			Point center1(cvRound(circles[i-1][0]), cvRound(circles[i-1][1]));
-			Point center2(cvRound(circles[i][0]), cvRound(circles[i][1]));
-	
-			line(img5, center1, center2, Scalar(255, 0, 255), 3, 8, 0);
-		}
-	}*/
-
-	//namedWindow("CIRCLES", WINDOW_NORMAL);
-	//resizeWindow("CIRCLES", img5.cols, img5.rows);
-	//imshow("CIRCLES", img5);
-	//waitKey(0);
 
 	Mat src, src_gray;
 
 	/// Read the image
-	src = imread(/*"C:\\Users\\loahc\\Documents\\GitHub\\Thesis_HJC885\\Unity\\Thesis_HJC885\\Assets\\screenshots\\testpic\\screen_1024x768_2019-11-25_15-22-04_01CUSTOM.png"*/"blackandwhite.jpg", 1);
+	src = imread("blackandwhite.jpg", 1);
 
 	if (!src.data)
 	{
@@ -1270,13 +1274,13 @@ int main()
 			if (i > 0)
 			{
 				Point center1(cvRound(circles[i - 1][0]), cvRound(circles[i - 1][1]));
-				printf("%i \t", center1.x);
-				printf("%i \n", center1.y);
+				printf("Point1 <%i, \t", center1.x);
+				printf("%i >\n", center1.y);
 
 				Point center2(cvRound(circles[i][0]), cvRound(circles[i][1]));
 
-				printf("%i \t", center2.x);
-				printf("%i \n", center2.y);
+				printf("Point2 <%i, \t", center2.x);
+				printf("%i >\n", center2.y);
 
 				line(src, center1, center2, Scalar(0, 0, 255), 2, 8, 0);
 			}
@@ -1284,26 +1288,61 @@ int main()
 	}
 
 	/// Show your results
-	namedWindow("Hough Circle Transform Demo", WINDOW_NORMAL);
-	imshow("Hough Circle Transform Demo", src);
+	namedWindow("Hough Circle Transform", WINDOW_NORMAL);
+	imshow("Hough Circle Transform", src);
 
-	waitKey(0);
-	return 0;
+
+
+	Mat merged = imread("C:\\Users\\loahc\\Documents\\GitHub\\Thesis_HJC885\\Unity\\Thesis_HJC885\\Assets\\screenshots\\testpic\\screen_1024x768_2019-11-25_15-22-04_01.png");
+	Mat imgsecond = imread("C:\\Users\\loahc\\Documents\\GitHub\\Thesis_HJC885\\Unity\\Thesis_HJC885\\Assets\\screenshots\\testpic\\screen_1024x768_2019-11-25_15-22-04_02.png");
+
+	Mat dstmerged;
+	merged.convertTo(dstmerged, CV_32F);
+	float* datamerged = dstmerged.ptr<float>();
+
+	Mat dstsecond;
+	imgsecond.convertTo(dstsecond, CV_32F);
+	float* data2second = dstsecond.ptr<float>();
+
+	Mat dstcircles;
+	src.convertTo(dstcircles, CV_32F);
+	float* datamcircles = dstcircles.ptr<float>();
+
+	//add
+
+	for (int i = 0; i < (height * width) * 3; i += 3)
+	{
+		float r = (datamerged[i] + data2second[i] + datamcircles[i]) / 3;
+		float g = (datamerged[i+1] + data2second[i + 1] + datamcircles[i + 1] )/ 3;
+		float b = (datamerged[i + 2] + data2second[i + 2] + datamcircles[i + 2]) / 3;
+
+		//float avg = (r + g + b) / 3;
+		datamerged[i] = r;
+		datamerged[i + 1] = g;
+		datamerged[i + 2] = b;
+	}
+
+
 
 
 	//////////////////////////////////////////////INNEN START////////////////////////////////////////////////////////////
 	cudaEventCreate(&start);
 	cudaEventCreate(&stop);
 
+
 	float milliseconds = 0;
 
-	Console_WriteLine("Picture Size N: ", N);
-	Console_WriteLine("Picture Size M: ", M);
 
-	Console_WriteLine("");
-	Console_WriteLine("");
 
-	MEASURE_TIME(1, "RandomPicture_CPU", RandomPicture_CPU());
+	Custom_printf("");
+	Custom_printf("");
+
+	MEASURE_TIME(1, "LoadPicture_CPU", RandomPicture_CPU());
+
+	//MEASURE_TIME(1, "LoadedPicture_CPU", LoadPicture_CPU(img));
+
+
+
 
 
 	ClockStart();
@@ -1311,28 +1350,24 @@ int main()
 	cudaMemcpyToSymbol(dev_channel_g, channel_g, N * M * sizeof(float));
 	cudaMemcpyToSymbol(dev_channel_b, channel_b, N * M * sizeof(float));
 	ClockStop(milliseconds);
-	Console_WriteLine(false, "Copy", milliseconds);
+	Custom_printf(false, "Copy", milliseconds);
 
 	ClockStart();
 	GrayScale << < 1, MaxThreads >> > ();
 	ClockStop(milliseconds);
-	Console_WriteLine(false, "Grayscale", milliseconds);
+	Custom_printf(false, "Grayscale", milliseconds);
 
 
 
-	ClockStart();
+
 	ConvertArrayToVector << < 1, MaxThreads >> > ();
-
-	ClockStop(milliseconds);
-	Console_WriteLine(false, "Convert Array To Vector", milliseconds);
-
 
 
 	ClockStart();
 	MinSearch << < 1, MaxThreads >> > ();
 
 	ClockStop(milliseconds);
-	Console_WriteLine(false, "Minimum Search", milliseconds);
+	Custom_printf(false, "Minimum Search", milliseconds);
 
 
 
@@ -1340,23 +1375,14 @@ int main()
 	MaxSearch << < 1, MaxThreads >> > ();
 
 	ClockStop(milliseconds);
-	Console_WriteLine(false, "Maximum Search", milliseconds);
-
-
-
-	ClockStart();
-	HistogramCorrection << < 1, MaxThreads >> > ();
-
-	ClockStop(milliseconds);
-	Console_WriteLine(false, "Historam Correction", milliseconds);
-
+	Custom_printf(false, "Maximum Search", milliseconds);
 
 
 	ClockStart();
 	DarkPixelNumber << <1, MaxThreads >> > ();
 
 	ClockStop(milliseconds);
-	Console_WriteLine(false, "Dark Pixel Counter", milliseconds);
+	Custom_printf(false, "Dark Pixel Counter", milliseconds);
 
 	cudaMemcpyFromSymbol(res_darkPixelCounter, dev_darkPixelCounter, 1 * sizeof(int));
 
@@ -1366,7 +1392,7 @@ int main()
 		ColorInverter << <1, MaxThreads >> > ();
 
 		ClockStop(milliseconds);
-		Console_WriteLine(false, "Color Inverter", milliseconds);
+		Custom_printf(false, "Color Inverter", milliseconds);
 	}
 
 
@@ -1375,7 +1401,7 @@ int main()
 	GetGaussValue << <1, GaussSize* GaussSize >> > ();
 
 	ClockStop(milliseconds);
-	Console_WriteLine(false, "Gauss Value", milliseconds);
+	Custom_printf(false, "Gauss Value", milliseconds);
 
 
 
@@ -1383,7 +1409,7 @@ int main()
 	GaussTransformation << <1, MaxThreads >> > ();
 
 	ClockStop(milliseconds);
-	Console_WriteLine(false, "Gauss Transformation", milliseconds);
+	Custom_printf(false, "Gauss Transformation", milliseconds);
 
 
 
@@ -1391,7 +1417,7 @@ int main()
 	AVGPixelColor << <1, MaxThreads >> > ();
 
 	ClockStop(milliseconds);
-	Console_WriteLine(false, "AVG Pixel Color", milliseconds);
+	Custom_printf(false, "AVG Pixel Color", milliseconds);
 
 
 
@@ -1399,7 +1425,7 @@ int main()
 	ConvertToBlackAndWhite << <1, MaxThreads >> > ();
 
 	ClockStop(milliseconds);
-	Console_WriteLine(false, "Convert To Black And White", milliseconds);
+	Custom_printf(false, "Convert To Black And White", milliseconds);
 
 
 
@@ -1407,13 +1433,13 @@ int main()
 	ConvertToValueMatrix << <1, MaxThreads >> > ();
 
 	ClockStop(milliseconds);
-	Console_WriteLine(false, "Convert To Value Matrix", milliseconds);
+	Custom_printf(false, "Convert To Value Matrix", milliseconds);
 
 
 
-	Console_WriteLine("");
-	Console_WriteLine("All GPU Process Finished");
-	Console_WriteLine("");
+	Custom_printf("");
+	Custom_printf("All GPU Process Finished");
+	Custom_printf("");
 
 
 
@@ -1430,54 +1456,52 @@ int main()
 	cudaMemcpyFromSymbol(res_valueMatrix, dev_valueMatrix, N * M * sizeof(int));
 
 	ClockStop(milliseconds);
-	Console_WriteLine(false, "All Value Copy Back", milliseconds);
+	Custom_printf(false, "All Value Copy Back", milliseconds);
 
 
 	MEASURE_TIME(1, "GrayScale_CPU", GrayScale_CPU());
 	MEASURE_TIME(1, "MinSearch_CPU", MinSearch_CPU());
 	MEASURE_TIME(1, "MaxSearch_CPU", MaxSearch_CPU());
-	MEASURE_TIME(1, "HistogramCorrection_CPU", HistogramCorrection_CPU());
 	MEASURE_TIME(1, "DarkPixelNumber_CPU", DarkPixelNumber_CPU());
 
-	if (NM / 2 < darkPixelCounter[0])
-	{
-		MEASURE_TIME(1, "ColorInverter_CPU", ColorInverter_CPU());
-	}
 
 	MEASURE_TIME(1, "GetGaussValue_CPU", GetGaussValue_CPU());
 	MEASURE_TIME(1, "GaussTransformation_CPU", GaussTransformation_CPU());
 	MEASURE_TIME(1, "AVGPixelColor_CPU", AVGPixelColor_CPU());
 	MEASURE_TIME(1, "ConvertToBlackAndWhite_CPU", ConvertToBlackAndWhite_CPU());
-	MEASURE_TIME(1, "ConvertToValueMatrix_CPU", ConvertToValueMatrix_CPU());
 
-	/*
-	Console_WriteLine(channel_r);
+	//Custom_printf(channel_r);
+	//Custom_printf(channel_g);
+	//Custom_printf(channel_b);
 
-	Console_WriteLine(channel_g);
+	
+	//Custom_printf(channel_r);
 
-	Console_WriteLine(channel_b);
+	//Custom_printf(channel_g);
 
-	Console_WriteLine(grayScale);
+	//Custom_printf(channel_b);
 
-	Console_WriteLine(forMinMaxSearch);
+	//Custom_printf(grayScale);
 
-	Console_WriteLine(globalMin[0]);
+	//Custom_printf(forMinMaxSearch);
 
-	Console_WriteLine(globalMax[0]);
+	//Custom_printf(globalMin[0]);
 
-	Console_WriteLine(histogram);
+	//Custom_printf(globalMax[0]);
 
-	Console_WriteLine(GaussValue[0]);
+	//Custom_printf(histogram);
 
-	Console_WriteLine(noNoise);
+	//Custom_printf(GaussValue[0]);
 
-	Console_WriteLine(avgPixelColor[0]);
+	//Custom_printf(noNoise);
 
-	Console_WriteLine(blackAndWhite);
+	//Custom_printf(avgPixelColor[0]);
 
-	Console_WriteLine(valueMatrix);
-	*/
+	//Custom_printf(blackAndWhite);
 
+	//Custom_printf(valueMatrix);
 
+	
+	waitKey(0);
 	return 0;
 }

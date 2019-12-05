@@ -83,10 +83,6 @@
     </CudaCompile>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <CudaCompile Include="kernel.cu">
-      <AdditionalDeps Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-      </AdditionalDeps>
-    </CudaCompile>
     <CudaCompile Include="kernel2.cu" />
     <CudaCompile Include="WarmUp.cu" />
   </ItemGroup>
