@@ -377,43 +377,23 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3708887370843355392, guid: 74807d21bee8dc54ea89ee8ef182c121,
         type: 3}
-      propertyPath: delay
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 3708887370843355392, guid: 74807d21bee8dc54ea89ee8ef182c121,
-        type: 3}
-      propertyPath: mSpeed
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 3708887370843355392, guid: 74807d21bee8dc54ea89ee8ef182c121,
-        type: 3}
-      propertyPath: numberOfBullets
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3708887370843355392, guid: 74807d21bee8dc54ea89ee8ef182c121,
-        type: 3}
-      propertyPath: Wheretoshootenum
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3708887370843355392, guid: 74807d21bee8dc54ea89ee8ef182c121,
-        type: 3}
       propertyPath: ResetDistance
       value: 100
       objectReference: {fileID: 0}
     - target: {fileID: 3708887370843355392, guid: 74807d21bee8dc54ea89ee8ef182c121,
         type: 3}
       propertyPath: ShootTypeenum
-      value: 3
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3708887370843355392, guid: 74807d21bee8dc54ea89ee8ef182c121,
         type: 3}
-      propertyPath: actualbulletsize
-      value: 0.1
+      propertyPath: Wheretoshootenum
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 3708887370843355392, guid: 74807d21bee8dc54ea89ee8ef182c121,
         type: 3}
       propertyPath: recoil
-      value: 0.01
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 1993461217568399573, guid: 74807d21bee8dc54ea89ee8ef182c121,
         type: 3}
@@ -670,7 +650,7 @@ PrefabInstance:
     - target: {fileID: 434946105547511058, guid: d59f13dc5f70b7a499d58f443771e379,
         type: 3}
       propertyPath: m_TargetDisplay
-      value: 2
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 434946105547511058, guid: d59f13dc5f70b7a499d58f443771e379,
         type: 3}
@@ -725,17 +705,17 @@ PrefabInstance:
     - target: {fileID: 434946105547511058, guid: d59f13dc5f70b7a499d58f443771e379,
         type: 3}
       propertyPath: m_NormalizedViewPortRect.height
-      value: 0.5
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 434946105547511058, guid: d59f13dc5f70b7a499d58f443771e379,
         type: 3}
       propertyPath: m_NormalizedViewPortRect.y
-      value: 0.5
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 434946105547511058, guid: d59f13dc5f70b7a499d58f443771e379,
         type: 3}
       propertyPath: m_NormalizedViewPortRect.width
-      value: 0.5
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1127384905364378615, guid: d59f13dc5f70b7a499d58f443771e379,
         type: 3}
@@ -776,16 +756,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalPosition.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3329276397070494682, guid: d59f13dc5f70b7a499d58f443771e379,
-        type: 3}
-      propertyPath: resWidth
-      value: 1024
-      objectReference: {fileID: 0}
-    - target: {fileID: 3329276397070494682, guid: d59f13dc5f70b7a499d58f443771e379,
-        type: 3}
-      propertyPath: resHeight
-      value: 768
       objectReference: {fileID: 0}
     - target: {fileID: 3329276397070494682, guid: d59f13dc5f70b7a499d58f443771e379,
         type: 3}

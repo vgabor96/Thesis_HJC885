@@ -14,7 +14,9 @@ public class HiResScreenShots : MonoBehaviour
     private bool takeHiResShot = false;
     public float timer = float.MaxValue;
     private bool cantakeshot2 = false;
-    public float secondcapturedelay = .2f;
+    public float capturedelay = .2f;
+    public float secondcapturedelay = 3f;
+    private bool start;
     private Robot robot;
 
 
@@ -36,6 +38,7 @@ public class HiResScreenShots : MonoBehaviour
     public void TakeHiResShot()
     {
         takeHiResShot = true;
+        start = true;
     }
     private void Start()
     {
@@ -44,27 +47,37 @@ public class HiResScreenShots : MonoBehaviour
 
     void LateUpdate()
     {
+       
         takeHiResShot |= Input.GetKeyDown("k");
         if (takeHiResShot)
         {
-            TakeHiResShot1();
-            Debug.LogError("TakeHiResShot11111111111111");
-            cantakeshot2 = true;
-            takeHiResShot = false;
-            timer = Time.time + secondcapturedelay;
+            if (Time.time > timer)
+            {
+                TakeHiResShot1();
+                Debug.LogError("TakeHiResShot11111111111111");
+                cantakeshot2 = true;
+                takeHiResShot = false;
+                timer = Time.time + secondcapturedelay;
+            }
+            else if(start)
+            {
+                timer = Time.time+capturedelay ;
+                start = false;
+            }
+           
 
         }
         if (cantakeshot2 && Time.time>timer )
         {
             Debug.LogError("TakeHiResShot2222222");
             TakeHiResShot2();
-                cantakeshot2 = false;
+            cantakeshot2 = false;
             timer = float.MaxValue;
             // BREAKSTHE GAME TEST
-            Time.timeScale = 0;
+            //Time.timeScale = 0;
 
-           // robot.DoMovement = true;
-
+            // robot.DoMovement = true;
+            GameObject.Find("Robot_Body").GetComponent<Robot>().RandomMovement();
 
 
         }

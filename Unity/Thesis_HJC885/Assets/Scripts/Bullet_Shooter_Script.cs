@@ -5,7 +5,7 @@ using UnityEngine;
 public class Bullet_Shooter_Script : MonoBehaviour
 {
     // Start is called before the first frame update
-    public float delay = 0.5f;
+    public float delay = 1f;
 
     public float recoil = 1f;
     private int currentBullets = 0;
@@ -72,11 +72,11 @@ public class Bullet_Shooter_Script : MonoBehaviour
 
         foreach (Bullet_Movement_Script item in this.Bullets)
         {
-            //if (item != null && Vector3.Distance(item.startingPos, item.mPrevPos) >= ResetDistance)
-            //{
-            //    ReGenerate(item, false);
+            if (item != null && Vector3.Distance(item.startingPos, item.mPrevPos) >= ResetDistance)
+            {
+                ReGenerate(item, false);
 
-            //}
+            }
 
             //if (item.isfired)
             //{
@@ -92,6 +92,8 @@ public class Bullet_Shooter_Script : MonoBehaviour
 
     private void InstianteBullet()
     {
+      
+
         if (currentBullets < numberOfBullets)
         {
          
@@ -110,7 +112,8 @@ public class Bullet_Shooter_Script : MonoBehaviour
             Bullets[currentBullets].ResetDistance = ResetDistance;
 
             currentBullets++;
-        }     
+        }
+
 
     }
 
@@ -165,7 +168,7 @@ public class Bullet_Shooter_Script : MonoBehaviour
 
         //GameObject.Find("Robot_Body").GetComponent<Robot>().DoMovement = true;
 
-        GameObject.Find("Robot_Body").GetComponent<Robot>().Reset();
+
 
         if (currentBullets < numberOfBullets)
         {
@@ -192,8 +195,8 @@ public class Bullet_Shooter_Script : MonoBehaviour
         Bullets[0].mSpeed = mSpeed;
         Bullets[0].ResetDistance = ResetDistance;
 
-        GameObject.Find("Robot_Body").GetComponent<Robot>().RandomMovement();
-
+      
+  
     }
 
     private void GenerateBullets()
@@ -246,7 +249,7 @@ public class Bullet_Shooter_Script : MonoBehaviour
     private void ReGenerate(Bullet_Movement_Script bullet, bool waitforall)
     {
 
-       // GameObject.Find("Robot_Body").GetComponent<Robot>().DoReset = true;
+        GameObject.Find("Robot_Body").GetComponent<Robot>().Reset();
         bullet.isfired = true;
 
         //Debug.Log(bullet.this_ID.ToString()+robot + " MOOOOVE");
@@ -268,8 +271,8 @@ public class Bullet_Shooter_Script : MonoBehaviour
         
            
         }
+        GameObject.Find("RobotCamera").GetComponent<HiResScreenShots>().TakeHiResShot();
 
-       
     }
 
     private void ReGenerate(Bullet_Movement_Script bullet)

@@ -113,11 +113,6 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 4943310607423468698, guid: 3288c04319ee56d41afb3950df2046ce,
-        type: 3}
-      propertyPath: m_Name
-      value: RobotCamera
-      objectReference: {fileID: 0}
     - target: {fileID: 4092648648463609956, guid: 3288c04319ee56d41afb3950df2046ce,
         type: 3}
       propertyPath: near clip plane
@@ -128,15 +123,10 @@ PrefabInstance:
       propertyPath: far clip plane
       value: 3000
       objectReference: {fileID: 0}
-    - target: {fileID: 1222384598185676460, guid: 3288c04319ee56d41afb3950df2046ce,
+    - target: {fileID: 4943310607423468698, guid: 3288c04319ee56d41afb3950df2046ce,
         type: 3}
-      propertyPath: resWidth
-      value: 768
-      objectReference: {fileID: 0}
-    - target: {fileID: 1222384598185676460, guid: 3288c04319ee56d41afb3950df2046ce,
-        type: 3}
-      propertyPath: resHeight
-      value: 1024
+      propertyPath: m_Name
+      value: RobotCamera
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3288c04319ee56d41afb3950df2046ce, type: 3}

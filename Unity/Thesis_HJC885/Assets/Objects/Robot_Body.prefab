@@ -298,11 +298,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c6a3089365ed1034cadd931b57ea0267, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  resWidth: 2550
-  resHeight: 3300
+  resWidth: 1024
+  resHeight: 768
   camera: {fileID: 4092648648463609956}
   timer: 3.4028235e+38
-  secondcapturedelay: 0.2
+  capturedelay: 0.2
+  secondcapturedelay: 0.5
 --- !u!1 &5706762655560314139
 GameObject:
   m_ObjectHideFlags: 0

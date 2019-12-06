@@ -305,11 +305,6 @@ PrefabInstance:
         type: 3}
     - target: {fileID: -2134223630963607892, guid: 8ee64c13b62982a4f8c55cc08a7c06a3,
         type: 3}
-      propertyPath: numberOfBullets
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: -2134223630963607892, guid: 8ee64c13b62982a4f8c55cc08a7c06a3,
-        type: 3}
       propertyPath: Robot
       value: 
       objectReference: {fileID: 6790511235177514559, guid: d59f13dc5f70b7a499d58f443771e379,
