@@ -63,7 +63,7 @@ public class HiResScreenShots : MonoBehaviour
             // BREAKSTHE GAME TEST
             Time.timeScale = 0;
 
-            robot.DoMovement = true;
+           // robot.DoMovement = true;
 
 
 

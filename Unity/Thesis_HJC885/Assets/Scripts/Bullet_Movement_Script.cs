@@ -14,6 +14,7 @@ public class Bullet_Movement_Script : MonoBehaviour
     public float mSpeed = 100.0f;
     public bool ishit;
     private Ray ray;
+    public bool isfired;
 
 
     //public ParticleSystem explosion;
@@ -26,8 +27,8 @@ public class Bullet_Movement_Script : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-       
 
+        isfired = true;
         mPrevPos = transform.position;
         startingPos = mPrevPos;
         //transform.localPosition = new Vector3(0, 0, 0);
@@ -46,7 +47,7 @@ public class Bullet_Movement_Script : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
+        isfired = false;
         mPrevPos = transform.position;
         string hitname="";
         //transform.Translate(mSpeed * Time.deltaTime,0.0f, 0.0f); 
@@ -79,10 +80,10 @@ public class Bullet_Movement_Script : MonoBehaviour
         }
         //Debug.Log($"ID: {this_ID } Startpos: {startingPos}  RayDirection:{ray.direction} MPrepos:{mPrevPos}  transformPosition: {transform.position}");
         Debug.DrawRay(startingPos, ray.direction * ((transform.position - mPrevPos).magnitude) * 1000, Color.red);
-
+       
         //Debug.DrawLine(startingPos, robot.transform.position, Color.green);
 
-       
+
     }
 
     private bool IsRobothittedandLog(string name)

@@ -15,8 +15,10 @@ public class Bullet_Shooter_Script : MonoBehaviour
     private float ResetDistance = 100f;
 
     public Bullet_Movement_Script Bullet;
+   
 
-    public GameObject robot;
+    public GameObject robotobject;
+    Robot robot;
     public float actualbulletsize = 1;
 
 
@@ -48,31 +50,44 @@ public class Bullet_Shooter_Script : MonoBehaviour
     {
 
         //Move the object to the same position as the parent:
-
+        //robot = robotobject.GetComponent<Robot>();
+        robot = robotobject.transform.Find("Robot_Body").GetComponent<Robot>();
+        //robot.DoMovement = true;
+        
         transform.rotation = Quaternion.Euler(new Vector3(0, 0, 0));
-        this.ResetDistance = Vector3.Distance(this.robot.transform.position, this.transform.position)+10f;
-        this.gen_robot_vector = robot.transform.position - this.transform.position;
+        this.ResetDistance = Vector3.Distance(this.robotobject.transform.position, this.transform.position)+10f;
+        this.gen_robot_vector = robotobject.transform.position - this.transform.position;
         this.Bullets = new List<Bullet_Movement_Script>();
-        Debug.DrawLine(transform.localPosition, robot.transform.localPosition, Color.green);
- 
+        Debug.DrawLine(transform.localPosition, robotobject.transform.localPosition);
+
         GenerateBullets();
+      
 
     }
 
     // Update is called once per frame
     void Update()
     {
-       
-        
-            foreach (Bullet_Movement_Script item in this.Bullets)
-            {
-                if (item != null && Vector3.Distance(item.startingPos, item.mPrevPos) >= ResetDistance)
-                {
-                    ReGenerate(item,false);
 
-                }
-            }
-       
+
+        foreach (Bullet_Movement_Script item in this.Bullets)
+        {
+            //if (item != null && Vector3.Distance(item.startingPos, item.mPrevPos) >= ResetDistance)
+            //{
+            //    ReGenerate(item, false);
+
+            //}
+
+            //if (item.isfired)
+            //{
+            //    GameObject.Find("Robot_Body").GetComponent<Robot>().DoMovement = true;
+            //}
+
+
+
+
+        }
+
     }
 
     private void InstianteBullet()
@@ -147,16 +162,21 @@ public class Bullet_Shooter_Script : MonoBehaviour
 
     private void InstantiateBulletOnlyOncewithDelay()
     {
+
+        //GameObject.Find("Robot_Body").GetComponent<Robot>().DoMovement = true;
+
+        GameObject.Find("Robot_Body").GetComponent<Robot>().Reset();
+
         if (currentBullets < numberOfBullets)
         {
-            
+            var body = GameObject.Find("Robot_Body").transform;
 
 
             this.Bullets.Add(Instantiate(Bullet, transform.position, this.transform.rotation));
             SetDestination(Bullets[currentBullets]);
 
             Bullets[currentBullets].transform.position = this.transform.position;
-            var body = GameObject.Find("Robot_Body").transform;
+            //robotobject.transform;
 
             //Setting Bullet Size, Rotation, MSpeed,ResetDistance,Destination
             Bullets[currentBullets].transform.localScale = body.GetChild(0).GetComponent<BoxCollider>().size * actualbulletsize;
@@ -166,14 +186,18 @@ public class Bullet_Shooter_Script : MonoBehaviour
 
             currentBullets++;
         }
+
+      
         ReGenerate(Bullets[0], false);
         Bullets[0].mSpeed = mSpeed;
         Bullets[0].ResetDistance = ResetDistance;
 
+        GameObject.Find("Robot_Body").GetComponent<Robot>().RandomMovement();
+
     }
 
     private void GenerateBullets()
-    {
+    { 
         switch (ShootTypeenum)
         {
             case ShootTypeEnum.Continous:
@@ -205,6 +229,7 @@ public class Bullet_Shooter_Script : MonoBehaviour
 
     private void SpawnOnlyOneBulletWithDelay()
     {
+       
         InvokeRepeating(nameof(InstantiateBulletOnlyOncewithDelay), 0, delay);
     }
 
@@ -220,6 +245,12 @@ public class Bullet_Shooter_Script : MonoBehaviour
 
     private void ReGenerate(Bullet_Movement_Script bullet, bool waitforall)
     {
+
+       // GameObject.Find("Robot_Body").GetComponent<Robot>().DoReset = true;
+        bullet.isfired = true;
+
+        //Debug.Log(bullet.this_ID.ToString()+robot + " MOOOOVE");
+       
         if (waitforall)
         {
             if (this.Bullets.FindAll(x => x.ishit == false).Count == 0) 
@@ -227,20 +258,23 @@ public class Bullet_Shooter_Script : MonoBehaviour
                 bullet.transform.position = this.transform.position;
                 bullet.ishit = true;
                 SetDestination(bullet);
+              
+             
             }
         }
         else
         {
             ReGenerate(bullet);
+        
+           
         }
 
-      
+       
     }
 
     private void ReGenerate(Bullet_Movement_Script bullet)
     {
-
-                bullet.transform.position = this.transform.position;
+        bullet.transform.position = this.transform.position;
                 bullet.ishit = true;
                 SetDestination(bullet);
 
@@ -253,6 +287,7 @@ public class Bullet_Shooter_Script : MonoBehaviour
 
     private Vector3 DestinationRandomize()
     {
+       
         switch (this.Wheretoshootenum)
         {
             case WhereToShootEnum.head:

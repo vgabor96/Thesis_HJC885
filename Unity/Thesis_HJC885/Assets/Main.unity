@@ -393,7 +393,7 @@ PrefabInstance:
     - target: {fileID: 3708887370843355392, guid: 74807d21bee8dc54ea89ee8ef182c121,
         type: 3}
       propertyPath: Wheretoshootenum
-      value: 4
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3708887370843355392, guid: 74807d21bee8dc54ea89ee8ef182c121,
         type: 3}
@@ -413,7 +413,7 @@ PrefabInstance:
     - target: {fileID: 3708887370843355392, guid: 74807d21bee8dc54ea89ee8ef182c121,
         type: 3}
       propertyPath: recoil
-      value: 0.5
+      value: 0.01
       objectReference: {fileID: 0}
     - target: {fileID: 1993461217568399573, guid: 74807d21bee8dc54ea89ee8ef182c121,
         type: 3}
@@ -670,7 +670,7 @@ PrefabInstance:
     - target: {fileID: 434946105547511058, guid: d59f13dc5f70b7a499d58f443771e379,
         type: 3}
       propertyPath: m_TargetDisplay
-      value: 0
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 434946105547511058, guid: d59f13dc5f70b7a499d58f443771e379,
         type: 3}
@@ -725,7 +725,17 @@ PrefabInstance:
     - target: {fileID: 434946105547511058, guid: d59f13dc5f70b7a499d58f443771e379,
         type: 3}
       propertyPath: m_NormalizedViewPortRect.height
-      value: 1
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 434946105547511058, guid: d59f13dc5f70b7a499d58f443771e379,
+        type: 3}
+      propertyPath: m_NormalizedViewPortRect.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 434946105547511058, guid: d59f13dc5f70b7a499d58f443771e379,
+        type: 3}
+      propertyPath: m_NormalizedViewPortRect.width
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 1127384905364378615, guid: d59f13dc5f70b7a499d58f443771e379,
         type: 3}
