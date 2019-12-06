@@ -77,8 +77,9 @@ public class HiResScreenShots : MonoBehaviour
             //Time.timeScale = 0;
 
             // robot.DoMovement = true;
+            //Time.timeScale = 0.5f;
             GameObject.Find("Robot_Body").GetComponent<Robot>().RandomMovement();
-
+            //Time.timeScale = 1;
 
         }
        
