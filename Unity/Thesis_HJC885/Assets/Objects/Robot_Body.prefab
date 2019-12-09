@@ -104,6 +104,7 @@ GameObject:
   - component: {fileID: 1868352198232967230}
   - component: {fileID: 1868352198232967231}
   - component: {fileID: 1868352198232967228}
+  - component: {fileID: -5942061104445709906}
   m_Layer: 0
   m_Name: Robot_Body
   m_TagString: Untagged
@@ -119,7 +120,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1868352198232967229}
   m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
-  m_LocalPosition: {x: 10, y: 1.849, z: 5}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 8617983638113623744}
@@ -188,6 +189,19 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 2.8623886, z: 1.0133729}
   m_Center: {x: 0, y: -0.9311943, z: 0.006686449}
+--- !u!114 &-5942061104445709906
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1868352198232967229}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 291437a26e9b02640abe34824572eadc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  radius: 5
 --- !u!1 &4943310607423468698
 GameObject:
   m_ObjectHideFlags: 0
@@ -284,11 +298,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c6a3089365ed1034cadd931b57ea0267, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  resWidth: 2550
-  resHeight: 3300
+  resWidth: 1024
+  resHeight: 768
   camera: {fileID: 4092648648463609956}
   timer: 3.4028235e+38
-  secondcapturedelay: 0.2
+  capturedelay: 0.4
+  secondcapturedelay: 0.4
 --- !u!1 &5706762655560314139
 GameObject:
   m_ObjectHideFlags: 0

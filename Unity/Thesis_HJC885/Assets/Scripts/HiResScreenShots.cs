@@ -14,7 +14,11 @@ public class HiResScreenShots : MonoBehaviour
     private bool takeHiResShot = false;
     public float timer = float.MaxValue;
     private bool cantakeshot2 = false;
-    public float secondcapturedelay = .2f;
+    public float capturedelay = .2f;
+    public float secondcapturedelay = 3f;
+    private bool start;
+    private Robot robot;
+    private Bullet_Movement_Script bullet;
 
 
     public static string ScreenShotName(int width, int height)
@@ -32,33 +36,79 @@ public class HiResScreenShots : MonoBehaviour
                              System.DateTime.Now.ToString("yyyy-MM-dd_HH-mm-ss"));
     }
 
+    public static string ScreenShotName(int width, int height, Bullet_Movement_Script bullet)
+    {
+        return string.Format("{0}/screenshots/screen_{1}x{2}_{4}_01_{3}.png",
+                             Application.dataPath,
+                             width, height,
+                              bullet.isreallyrobothitted,
+                             System.DateTime.Now.ToString("yyyy-MM-dd_HH-mm-ss"));
+    }
+    public static string ScreenShotName2(int width, int height, Bullet_Movement_Script bullet)
+    {
+        return string.Format("{0}/screenshots/screen_{1}x{2}_{4}_02_{3}.png",
+                             Application.dataPath,
+                             width, height,
+                             bullet.isreallyrobothitted,
+                             System.DateTime.Now.ToString("yyyy-MM-dd_HH-mm-ss"));
+    }
+
     public void TakeHiResShot()
     {
         takeHiResShot = true;
+        start = true;
+    }
+
+    public void TakeHiResShot(Bullet_Movement_Script bullet)
+    {
+        this.bullet = bullet;
+        takeHiResShot = true;
+        start = true;
+    }
+    private void Start()
+    {
+       robot = GameObject.Find("Robot_Body").GetComponent<Robot>();
     }
 
     void LateUpdate()
     {
-        takeHiResShot |= Input.GetKeyDown("k");
+
+        //takeHiResShot |= Input.GetKeyDown("k");
         if (takeHiResShot)
         {
-            TakeHiResShot1();
-            Debug.LogError("TakeHiResShot11111111111111");
-            cantakeshot2 = true;
-            takeHiResShot = false;
-            timer = Time.time + secondcapturedelay;
+            if (Time.time > timer)
+            {
+                TakeHiResShot1();
+                Debug.Log("TakeHiResShot11111111111111");
+                cantakeshot2 = true;
+                takeHiResShot = false;
+                timer = Time.time + secondcapturedelay;
+            }
+            else if (start)
+            {
+                timer = Time.time + capturedelay;
+                start = false;
+            }
+
 
         }
-        if (cantakeshot2 && Time.time>timer )
+        if (cantakeshot2 && Time.time > timer)
         {
-            Debug.LogError("TakeHiResShot2222222");
+            Debug.Log("TakeHiResShot2222222");
             TakeHiResShot2();
-                cantakeshot2 = false;
+            cantakeshot2 = false;
             timer = float.MaxValue;
+            // BREAKSTHE GAME TEST
+            //Time.timeScale = 0;
 
-            
+            // robot.DoMovement = true;
+            //Time.timeScale = 0.5f;
+            GameObject.Find("Robot_Body").GetComponent<Robot>().RandomMovement();
+            //Time.timeScale = 1;
+
         }
-      
+
+
     }
 
     private void TakeHiResShot1()
@@ -76,7 +126,7 @@ public class HiResScreenShots : MonoBehaviour
         byte[] bytes = screenShot.EncodeToPNG();
         string filename;
      
-            filename = ScreenShotName(resWidth, resHeight);
+            filename = ScreenShotName(resWidth, resHeight,bullet);
      
        
         System.IO.File.WriteAllBytes(filename, bytes);
@@ -98,7 +148,7 @@ public class HiResScreenShots : MonoBehaviour
         byte[] bytes = screenShot.EncodeToPNG();
         string filename;
        
-            filename = ScreenShotName2(resWidth, resHeight);
+            filename = ScreenShotName2(resWidth, resHeight,bullet);
         
 
         System.IO.File.WriteAllBytes(filename, bytes);

@@ -6,6 +6,7 @@ public class Bullet_Shooter_Script : MonoBehaviour
 {
     // Start is called before the first frame update
     public float delay = 1f;
+
     public float recoil = 1f;
     private int currentBullets = 0;
     public int numberOfBullets = 8;
@@ -14,7 +15,10 @@ public class Bullet_Shooter_Script : MonoBehaviour
     private float ResetDistance = 100f;
 
     public Bullet_Movement_Script Bullet;
-    public GameObject robot;
+   
+
+    public GameObject robotobject;
+    Robot robot;
     public float actualbulletsize = 1;
 
 
@@ -29,7 +33,8 @@ public class Bullet_Shooter_Script : MonoBehaviour
     { 
         Continous,
         Afterpreviousregenerated,
-        AllAtOnce
+        AllAtOnce,
+        OnlyOnewithDelay
 
 
     }
@@ -45,35 +50,50 @@ public class Bullet_Shooter_Script : MonoBehaviour
     {
 
         //Move the object to the same position as the parent:
-
+        //robot = robotobject.GetComponent<Robot>();
+        robot = robotobject.transform.Find("Robot_Body").GetComponent<Robot>();
+        //robot.DoMovement = true;
+        
         transform.rotation = Quaternion.Euler(new Vector3(0, 0, 0));
-        this.ResetDistance = Vector3.Distance(this.robot.transform.position, this.transform.position)+10f;
-        this.gen_robot_vector = robot.transform.position - this.transform.position;
+        this.ResetDistance = Vector3.Distance(this.robotobject.transform.position, this.transform.position)+10f;
+        this.gen_robot_vector = robotobject.transform.position - this.transform.position;
         this.Bullets = new List<Bullet_Movement_Script>();
-        Debug.DrawLine(transform.localPosition, robot.transform.localPosition, Color.green);
+        Debug.DrawLine(transform.localPosition, robotobject.transform.localPosition);
 
         GenerateBullets();
+      
 
     }
 
     // Update is called once per frame
     void Update()
     {
-       
-        
-            foreach (Bullet_Movement_Script item in this.Bullets)
-            {
-                if (item != null && Vector3.Distance(item.startingPos, item.mPrevPos) >= ResetDistance)
-                {
-                    ReGenerate(item,false);
 
-                }
-            }        
-       
+
+        foreach (Bullet_Movement_Script item in this.Bullets)
+        {
+            if (item != null && Vector3.Distance(item.startingPos, item.mPrevPos) >= ResetDistance)
+            {
+                ReGenerate(item, false);
+
+            }
+
+            //if (item.isfired)
+            //{
+            //    GameObject.Find("Robot_Body").GetComponent<Robot>().DoMovement = true;
+            //}
+
+
+
+
+        }
+
     }
 
     private void InstianteBullet()
     {
+      
+
         if (currentBullets < numberOfBullets)
         {
          
@@ -92,7 +112,8 @@ public class Bullet_Shooter_Script : MonoBehaviour
             Bullets[currentBullets].ResetDistance = ResetDistance;
 
             currentBullets++;
-        }     
+        }
+
 
     }
 
@@ -142,8 +163,44 @@ public class Bullet_Shooter_Script : MonoBehaviour
         }
     }
 
-    private void GenerateBullets()
+    private void InstantiateBulletOnlyOncewithDelay()
     {
+
+        //GameObject.Find("Robot_Body").GetComponent<Robot>().DoMovement = true;
+
+
+
+        if (currentBullets < numberOfBullets)
+        {
+            var body = GameObject.Find("Robot_Body").transform;
+
+
+            this.Bullets.Add(Instantiate(Bullet, transform.position, this.transform.rotation));
+            SetDestination(Bullets[currentBullets]);
+
+            Bullets[currentBullets].transform.position = this.transform.position;
+            //robotobject.transform;
+
+            //Setting Bullet Size, Rotation, MSpeed,ResetDistance,Destination
+            Bullets[currentBullets].transform.localScale = body.GetChild(0).GetComponent<BoxCollider>().size * actualbulletsize;
+            Bullets[currentBullets].transform.rotation = this.transform.rotation;
+
+           
+
+            currentBullets++;
+        }
+
+      
+        ReGenerate(Bullets[0], false);
+        Bullets[0].mSpeed = mSpeed;
+        Bullets[0].ResetDistance = ResetDistance;
+
+      
+  
+    }
+
+    private void GenerateBullets()
+    { 
         switch (ShootTypeenum)
         {
             case ShootTypeEnum.Continous:
@@ -154,6 +211,10 @@ public class Bullet_Shooter_Script : MonoBehaviour
                 break;
             case ShootTypeEnum.AllAtOnce:
                 SpawnBulletsAllAtOnce();
+                break;
+            case ShootTypeEnum.OnlyOnewithDelay:
+                numberOfBullets = 1;
+                SpawnOnlyOneBulletWithDelay();
                 break;
             default:
                 break;
@@ -169,6 +230,12 @@ public class Bullet_Shooter_Script : MonoBehaviour
       
     }
 
+    private void SpawnOnlyOneBulletWithDelay()
+    {
+       
+        InvokeRepeating(nameof(InstantiateBulletOnlyOncewithDelay), 0, delay);
+    }
+
     private void SpawnBulletsContinous()
     {
         InvokeRepeating(nameof(InstianteBullet), 0, delay);
@@ -181,6 +248,15 @@ public class Bullet_Shooter_Script : MonoBehaviour
 
     private void ReGenerate(Bullet_Movement_Script bullet, bool waitforall)
     {
+    
+            //Debug.Log($"BUllet ID: {bullet.this_ID} Vector:{bullet.destination} Hit => NONE");
+        
+        GameObject.Find("Robot_Body").GetComponent<Robot>().Reset();
+        bullet.isfired = true;
+        bullet.isrobothitted = false;
+
+        //Debug.Log(bullet.this_ID.ToString()+robot + " MOOOOVE");
+
         if (waitforall)
         {
             if (this.Bullets.FindAll(x => x.ishit == false).Count == 0) 
@@ -188,20 +264,23 @@ public class Bullet_Shooter_Script : MonoBehaviour
                 bullet.transform.position = this.transform.position;
                 bullet.ishit = true;
                 SetDestination(bullet);
+              
+             
             }
         }
         else
         {
             ReGenerate(bullet);
+        
+           
         }
+        GameObject.Find("RobotCamera").GetComponent<HiResScreenShots>().TakeHiResShot(bullet);
 
-      
     }
 
     private void ReGenerate(Bullet_Movement_Script bullet)
     {
-
-                bullet.transform.position = this.transform.position;
+        bullet.transform.position = this.transform.position;
                 bullet.ishit = true;
                 SetDestination(bullet);
 
@@ -214,6 +293,7 @@ public class Bullet_Shooter_Script : MonoBehaviour
 
     private Vector3 DestinationRandomize()
     {
+       
         switch (this.Wheretoshootenum)
         {
             case WhereToShootEnum.head:

@@ -44,10 +44,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   delay: 1
-  numberOfBullets: 8
-  shootradius: 5
-  mSpeed: 10
-  ResetDistance: 100
+  recoil: 0.01
+  numberOfBullets: 1
+  mSpeed: 5
   Bullet: {fileID: 5510428482363700592, guid: 575f2ac066f144148b04c4011b1c5e8c, type: 3}
-  robot: {fileID: 6790511235177514559, guid: d59f13dc5f70b7a499d58f443771e379, type: 3}
+  robotobject: {fileID: 0}
+  actualbulletsize: 0.1
   Wheretoshootenum: 1
+  ShootTypeenum: 3

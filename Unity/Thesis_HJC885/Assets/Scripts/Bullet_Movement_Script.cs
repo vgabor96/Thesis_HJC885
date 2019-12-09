@@ -14,6 +14,10 @@ public class Bullet_Movement_Script : MonoBehaviour
     public float mSpeed = 100.0f;
     public bool ishit;
     private Ray ray;
+    private Ray raystart;
+    public bool isfired;
+    public bool isrobothitted;
+    public bool isreallyrobothitted;
 
 
     //public ParticleSystem explosion;
@@ -26,8 +30,8 @@ public class Bullet_Movement_Script : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-       
 
+        isfired = true;
         mPrevPos = transform.position;
         startingPos = mPrevPos;
         //transform.localPosition = new Vector3(0, 0, 0);
@@ -38,19 +42,91 @@ public class Bullet_Movement_Script : MonoBehaviour
         this.ishit = true;
         //setting the bullet's hitbox!!
         GetComponent<SphereCollider>().radius *= transform.localScale.x ;
+
+     
         //TODO min max according to robot distance!!
         //this.destination = RandoMDestinationGeneratorbasedonRobotdistance();
-       
+
     }
 
     // Update is called once per frame
     void Update()
     {
+        // UpdateBulletBasic();
+        UpdateBulletForTest();
 
+    }
+
+    private void UpdateBulletForTest()
+    {
         mPrevPos = transform.position;
-        string hitname="";
+        string hitname = "";
+      
         //transform.Translate(mSpeed * Time.deltaTime,0.0f, 0.0f); 
-        transform.Translate(destination*Time.deltaTime*mSpeed);
+        transform.Translate(destination * Time.deltaTime * mSpeed);
+
+        ray = new Ray(mPrevPos, (transform.position - mPrevPos).normalized);
+        if (isfired)
+        {
+            raystart = new Ray(mPrevPos,(transform.position - mPrevPos)*int.MaxValue);
+        }
+        isfired = false;
+        RaycastHit[] hits = Physics.SphereCastAll(raystart, GetComponent<SphereCollider>().radius, (transform.position - mPrevPos).magnitude * int.MaxValue);
+        if (ishit)
+        {
+          
+            //Debug.Log($"{ this_ID} HITS:{hits.Length}");
+            int i = 0;
+            for (i = 0; i < hits.Length; i++)
+            {
+                hitname = hits[i].collider.gameObject.name;
+                if (IsRobothittedandLog(hitname))
+                {
+
+                    //Debug.Log($"Bullet ID: {this_ID} Vector:{destination * mSpeed} Hit => {hitname}");
+                    Debug.Log($"Bullet ID: {this_ID} Vector:{destination * mSpeed} Hit =>HIT");
+
+                    //Debug.Log(hits[i].collider.gameObject.name);
+                    //Debug.Log(GetComponent<SphereCollider>().radius);
+                    //Debug.Log(this_ID);
+                    //Debug.Log($"{mPrevPos} {(transform.position - mPrevPos).normalized} {GetComponent<SphereCollider>().radius} {(transform.position - mPrevPos).magnitude}");
+                    //Debug.Break();
+                    //GameObject.Find("BulletShooter_Camera").SendMessage("DoShake");
+                    // explosion.Play();
+                    CameraShaker.Instance.ShakeOnce(4f, 4f, .1f, .1f);
+                    ishit = false;
+                    isrobothitted = true;
+                    isreallyrobothitted = true;
+                }
+
+            }
+            if (!isrobothitted)
+            {
+                Debug.Log($"Bullet ID: {this_ID} Vector:{destination * mSpeed} Hit =>NONE");
+                isrobothitted = true;
+                isreallyrobothitted = false;
+                ishit = false;
+
+            }
+           
+
+        }
+     
+        //Debug.Log($"ID: {this_ID } Startpos: {startingPos}  RayDirection:{ray.direction} MPrepos:{mPrevPos}  transformPosition: {transform.position}");
+       // Debug.DrawRay(startingPos, ray.direction * ((transform.position - mPrevPos).magnitude) * int.MaxValue, Color.red);
+        Debug.DrawRay(startingPos, raystart.direction * ((transform.position - mPrevPos).magnitude) * int.MaxValue, Color.green);
+
+        //Debug.DrawLine(startingPos, robot.transform.position, Color.green);
+    }
+
+    private void UpdateBulletBasic()
+    {
+    
+        mPrevPos = transform.position;
+        string hitname = "";
+        //transform.Translate(mSpeed * Time.deltaTime,0.0f, 0.0f); 
+        transform.Translate(destination * Time.deltaTime * mSpeed);
+
         ray = new Ray(mPrevPos, (transform.position - mPrevPos).normalized);
         RaycastHit[] hits = Physics.SphereCastAll(ray, GetComponent<SphereCollider>().radius, (transform.position - mPrevPos).magnitude);
         if (ishit)
@@ -62,7 +138,7 @@ public class Bullet_Movement_Script : MonoBehaviour
                 if (IsRobothittedandLog(hitname))
                 {
 
-                    Debug.Log($"BUllet ID: {this_ID} Vector:{ray} Hit => {hitname}");
+                    Debug.Log($"Bullet ID: {this_ID} Vector:{ray} Hit => {hitname}");
                     //Debug.Log(hits[i].collider.gameObject.name);
                     //Debug.Log(GetComponent<SphereCollider>().radius);
                     //Debug.Log(this_ID);
@@ -75,14 +151,14 @@ public class Bullet_Movement_Script : MonoBehaviour
                 }
 
             }
-            
+
         }
+
         //Debug.Log($"ID: {this_ID } Startpos: {startingPos}  RayDirection:{ray.direction} MPrepos:{mPrevPos}  transformPosition: {transform.position}");
-        Debug.DrawRay(startingPos, ray.direction * ((transform.position - mPrevPos).magnitude) * 1000, Color.red);
+        Debug.DrawRay(startingPos, ray.direction * ((transform.position - mPrevPos).magnitude) * int.MaxValue, Color.red);
+        Debug.DrawRay(startingPos, ray.direction * ((transform.position - mPrevPos).magnitude) * int.MaxValue, Color.green);
 
         //Debug.DrawLine(startingPos, robot.transform.position, Color.green);
-
-       
     }
 
     private bool IsRobothittedandLog(string name)
