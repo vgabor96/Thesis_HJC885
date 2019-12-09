@@ -79,7 +79,7 @@ public class HiResScreenShots : MonoBehaviour
             if (Time.time > timer)
             {
                 TakeHiResShot1();
-                Debug.LogError("TakeHiResShot11111111111111");
+                Debug.Log("TakeHiResShot11111111111111");
                 cantakeshot2 = true;
                 takeHiResShot = false;
                 timer = Time.time + secondcapturedelay;
@@ -94,7 +94,7 @@ public class HiResScreenShots : MonoBehaviour
         }
         if (cantakeshot2 && Time.time > timer)
         {
-            Debug.LogError("TakeHiResShot2222222");
+            Debug.Log("TakeHiResShot2222222");
             TakeHiResShot2();
             cantakeshot2 = false;
             timer = float.MaxValue;
