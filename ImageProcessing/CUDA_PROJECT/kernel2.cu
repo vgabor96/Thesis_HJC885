@@ -1352,6 +1352,8 @@ int main()
 	ClockStop(milliseconds);
 	Custom_printf(false, "Copy", milliseconds);
 
+	printf("");
+
 	ClockStart();
 	GrayScale << < 1, MaxThreads >> > ();
 	ClockStop(milliseconds);
@@ -1360,64 +1362,64 @@ int main()
 
 
 
-	ConvertArrayToVector << < 1, MaxThreads >> > ();
+	//ConvertArrayToVector << < 1, MaxThreads >> > ();
 
 
-	ClockStart();
-	MinSearch << < 1, MaxThreads >> > ();
+	//ClockStart();
+	//MinSearch << < 1, MaxThreads >> > ();
 
-	ClockStop(milliseconds);
-	Custom_printf(false, "Minimum Search", milliseconds);
-
-
-
-	ClockStart();
-	MaxSearch << < 1, MaxThreads >> > ();
-
-	ClockStop(milliseconds);
-	Custom_printf(false, "Maximum Search", milliseconds);
-
-
-	ClockStart();
-	DarkPixelNumber << <1, MaxThreads >> > ();
-
-	ClockStop(milliseconds);
-	Custom_printf(false, "Dark Pixel Counter", milliseconds);
-
-	cudaMemcpyFromSymbol(res_darkPixelCounter, dev_darkPixelCounter, 1 * sizeof(int));
-
-	if (NM / 2 < res_darkPixelCounter[0])
-	{
-		ClockStart();
-		ColorInverter << <1, MaxThreads >> > ();
-
-		ClockStop(milliseconds);
-		Custom_printf(false, "Color Inverter", milliseconds);
-	}
+	//ClockStop(milliseconds);
+	//Custom_printf(false, "Minimum Search", milliseconds);
 
 
 
-	ClockStart();
-	GetGaussValue << <1, GaussSize* GaussSize >> > ();
+	//ClockStart();
+	//MaxSearch << < 1, MaxThreads >> > ();
 
-	ClockStop(milliseconds);
-	Custom_printf(false, "Gauss Value", milliseconds);
-
-
-
-	ClockStart();
-	GaussTransformation << <1, MaxThreads >> > ();
-
-	ClockStop(milliseconds);
-	Custom_printf(false, "Gauss Transformation", milliseconds);
+	//ClockStop(milliseconds);
+	//Custom_printf(false, "Maximum Search", milliseconds);
 
 
+	//ClockStart();
+	//DarkPixelNumber << <1, MaxThreads >> > ();
 
-	ClockStart();
-	AVGPixelColor << <1, MaxThreads >> > ();
+	//ClockStop(milliseconds);
+	//Custom_printf(false, "Dark Pixel Counter", milliseconds);
 
-	ClockStop(milliseconds);
-	Custom_printf(false, "AVG Pixel Color", milliseconds);
+	//cudaMemcpyFromSymbol(res_darkPixelCounter, dev_darkPixelCounter, 1 * sizeof(int));
+
+	//if (NM / 2 < res_darkPixelCounter[0])
+	//{
+	//	ClockStart();
+	//	ColorInverter << <1, MaxThreads >> > ();
+
+	//	ClockStop(milliseconds);
+	//	Custom_printf(false, "Color Inverter", milliseconds);
+	//}
+
+
+
+	//ClockStart();
+	//GetGaussValue << <1, GaussSize* GaussSize >> > ();
+
+	//ClockStop(milliseconds);
+	//Custom_printf(false, "Gauss Value", milliseconds);
+
+
+
+	//ClockStart();
+	//GaussTransformation << <1, MaxThreads >> > ();
+
+	//ClockStop(milliseconds);
+	//Custom_printf(false, "Gauss Transformation", milliseconds);
+
+
+
+	//ClockStart();
+	//AVGPixelColor << <1, MaxThreads >> > ();
+
+	//ClockStop(milliseconds);
+	//Custom_printf(false, "AVG Pixel Color", milliseconds);
 
 
 
@@ -1432,42 +1434,42 @@ int main()
 	ClockStart();
 	ConvertToValueMatrix << <1, MaxThreads >> > ();
 
-	ClockStop(milliseconds);
-	Custom_printf(false, "Convert To Value Matrix", milliseconds);
+	//ClockStop(milliseconds);
+	//Custom_printf(false, "Convert To Value Matrix", milliseconds);
 
 
 
-	Custom_printf("");
-	Custom_printf("All GPU Process Finished");
+	//Custom_printf("");
+	//Custom_printf("All GPU Process Finished");
 	Custom_printf("");
 
 
 
 	ClockStart();
-	cudaMemcpyFromSymbol(res_grayScale, dev_grayScale, N * M * sizeof(int));
-	cudaMemcpyFromSymbol(res_forMinMaxSearch, dev_forMinMaxSearch, N * M * sizeof(int));
-	cudaMemcpyFromSymbol(res_globalMin, dev_globalMin, 1 * sizeof(int));
-	cudaMemcpyFromSymbol(res_globalMax, dev_globalMax, 1 * sizeof(int));
-	cudaMemcpyFromSymbol(res_histogram, dev_histogram, N * M * sizeof(int));
-	cudaMemcpyFromSymbol(res_GaussValue, dev_GaussValue, 1 * sizeof(int));
-	cudaMemcpyFromSymbol(res_noNoise, dev_noNoise, N * M * sizeof(int));
-	cudaMemcpyFromSymbol(res_avgPixelColor, dev_avgPixelColor, 1 * sizeof(int));
-	cudaMemcpyFromSymbol(res_blackAndWhite, dev_blackAndWhite, N * M * sizeof(int));
-	cudaMemcpyFromSymbol(res_valueMatrix, dev_valueMatrix, N * M * sizeof(int));
+	//cudaMemcpyFromSymbol(res_grayScale, dev_grayScale, N * M * sizeof(int));
+	//cudaMemcpyFromSymbol(res_forMinMaxSearch, dev_forMinMaxSearch, N * M * sizeof(int));
+	//cudaMemcpyFromSymbol(res_globalMin, dev_globalMin, 1 * sizeof(int));
+	//cudaMemcpyFromSymbol(res_globalMax, dev_globalMax, 1 * sizeof(int));
+	//cudaMemcpyFromSymbol(res_histogram, dev_histogram, N * M * sizeof(int));
+	//cudaMemcpyFromSymbol(res_GaussValue, dev_GaussValue, 1 * sizeof(int));
+	//cudaMemcpyFromSymbol(res_noNoise, dev_noNoise, N * M * sizeof(int));
+	//cudaMemcpyFromSymbol(res_avgPixelColor, dev_avgPixelColor, 1 * sizeof(int));
+	//cudaMemcpyFromSymbol(res_blackAndWhite, dev_blackAndWhite, N * M * sizeof(int));
+	//cudaMemcpyFromSymbol(res_valueMatrix, dev_valueMatrix, N * M * sizeof(int));
 
-	ClockStop(milliseconds);
-	Custom_printf(false, "All Value Copy Back", milliseconds);
+	//ClockStop(milliseconds);
+	//Custom_printf(false, "All Value Copy Back", milliseconds);
 
 
 	MEASURE_TIME(1, "GrayScale_CPU", GrayScale_CPU());
-	MEASURE_TIME(1, "MinSearch_CPU", MinSearch_CPU());
-	MEASURE_TIME(1, "MaxSearch_CPU", MaxSearch_CPU());
-	MEASURE_TIME(1, "DarkPixelNumber_CPU", DarkPixelNumber_CPU());
+	//MEASURE_TIME(1, "MinSearch_CPU", MinSearch_CPU());
+	//MEASURE_TIME(1, "MaxSearch_CPU", MaxSearch_CPU());
+	//MEASURE_TIME(1, "DarkPixelNumber_CPU", DarkPixelNumber_CPU());
 
 
-	MEASURE_TIME(1, "GetGaussValue_CPU", GetGaussValue_CPU());
-	MEASURE_TIME(1, "GaussTransformation_CPU", GaussTransformation_CPU());
-	MEASURE_TIME(1, "AVGPixelColor_CPU", AVGPixelColor_CPU());
+	//MEASURE_TIME(1, "GetGaussValue_CPU", GetGaussValue_CPU());
+	//MEASURE_TIME(1, "GaussTransformation_CPU", GaussTransformation_CPU());
+	//MEASURE_TIME(1, "AVGPixelColor_CPU", AVGPixelColor_CPU());
 	MEASURE_TIME(1, "ConvertToBlackAndWhite_CPU", ConvertToBlackAndWhite_CPU());
 
 	//Custom_printf(channel_r);
