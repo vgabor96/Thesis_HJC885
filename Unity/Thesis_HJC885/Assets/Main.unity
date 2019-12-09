@@ -375,27 +375,7 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 3708887370843355392, guid: 74807d21bee8dc54ea89ee8ef182c121,
-        type: 3}
-      propertyPath: ResetDistance
-      value: 100
-      objectReference: {fileID: 0}
-    - target: {fileID: 3708887370843355392, guid: 74807d21bee8dc54ea89ee8ef182c121,
-        type: 3}
-      propertyPath: ShootTypeenum
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3708887370843355392, guid: 74807d21bee8dc54ea89ee8ef182c121,
-        type: 3}
-      propertyPath: Wheretoshootenum
-      value: 4
-      objectReference: {fileID: 0}
-    - target: {fileID: 3708887370843355392, guid: 74807d21bee8dc54ea89ee8ef182c121,
-        type: 3}
-      propertyPath: recoil
-      value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 1993461217568399573, guid: 74807d21bee8dc54ea89ee8ef182c121,
+     - target: {fileID: 1993461217568399573, guid: 74807d21bee8dc54ea89ee8ef182c121,
         type: 3}
       propertyPath: m_TargetDisplay
       value: 2
