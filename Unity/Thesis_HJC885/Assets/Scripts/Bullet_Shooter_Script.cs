@@ -248,12 +248,15 @@ public class Bullet_Shooter_Script : MonoBehaviour
 
     private void ReGenerate(Bullet_Movement_Script bullet, bool waitforall)
     {
-
+    
+            //Debug.Log($"BUllet ID: {bullet.this_ID} Vector:{bullet.destination} Hit => NONE");
+        
         GameObject.Find("Robot_Body").GetComponent<Robot>().Reset();
         bullet.isfired = true;
+        bullet.isrobothitted = false;
 
         //Debug.Log(bullet.this_ID.ToString()+robot + " MOOOOVE");
-       
+
         if (waitforall)
         {
             if (this.Bullets.FindAll(x => x.ishit == false).Count == 0) 
@@ -271,7 +274,7 @@ public class Bullet_Shooter_Script : MonoBehaviour
         
            
         }
-        GameObject.Find("RobotCamera").GetComponent<HiResScreenShots>().TakeHiResShot();
+        GameObject.Find("RobotCamera").GetComponent<HiResScreenShots>().TakeHiResShot(bullet);
 
     }
 

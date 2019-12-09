@@ -18,6 +18,7 @@ public class HiResScreenShots : MonoBehaviour
     public float secondcapturedelay = 3f;
     private bool start;
     private Robot robot;
+    private Bullet_Movement_Script bullet;
 
 
     public static string ScreenShotName(int width, int height)
@@ -35,8 +36,32 @@ public class HiResScreenShots : MonoBehaviour
                              System.DateTime.Now.ToString("yyyy-MM-dd_HH-mm-ss"));
     }
 
+    public static string ScreenShotName(int width, int height, Bullet_Movement_Script bullet)
+    {
+        return string.Format("{0}/screenshots/screen_{1}x{2}_{4}_01_{3}.png",
+                             Application.dataPath,
+                             width, height,
+                              bullet.isreallyrobothitted,
+                             System.DateTime.Now.ToString("yyyy-MM-dd_HH-mm-ss"));
+    }
+    public static string ScreenShotName2(int width, int height, Bullet_Movement_Script bullet)
+    {
+        return string.Format("{0}/screenshots/screen_{1}x{2}_{4}_02_{3}.png",
+                             Application.dataPath,
+                             width, height,
+                             bullet.isreallyrobothitted,
+                             System.DateTime.Now.ToString("yyyy-MM-dd_HH-mm-ss"));
+    }
+
     public void TakeHiResShot()
     {
+        takeHiResShot = true;
+        start = true;
+    }
+
+    public void TakeHiResShot(Bullet_Movement_Script bullet)
+    {
+        this.bullet = bullet;
         takeHiResShot = true;
         start = true;
     }
@@ -47,8 +72,8 @@ public class HiResScreenShots : MonoBehaviour
 
     void LateUpdate()
     {
-       
-        takeHiResShot |= Input.GetKeyDown("k");
+
+        //takeHiResShot |= Input.GetKeyDown("k");
         if (takeHiResShot)
         {
             if (Time.time > timer)
@@ -59,15 +84,15 @@ public class HiResScreenShots : MonoBehaviour
                 takeHiResShot = false;
                 timer = Time.time + secondcapturedelay;
             }
-            else if(start)
+            else if (start)
             {
-                timer = Time.time+capturedelay ;
+                timer = Time.time + capturedelay;
                 start = false;
             }
-           
+
 
         }
-        if (cantakeshot2 && Time.time>timer )
+        if (cantakeshot2 && Time.time > timer)
         {
             Debug.LogError("TakeHiResShot2222222");
             TakeHiResShot2();
@@ -82,8 +107,8 @@ public class HiResScreenShots : MonoBehaviour
             //Time.timeScale = 1;
 
         }
-       
-      
+
+
     }
 
     private void TakeHiResShot1()
@@ -101,7 +126,7 @@ public class HiResScreenShots : MonoBehaviour
         byte[] bytes = screenShot.EncodeToPNG();
         string filename;
      
-            filename = ScreenShotName(resWidth, resHeight);
+            filename = ScreenShotName(resWidth, resHeight,bullet);
      
        
         System.IO.File.WriteAllBytes(filename, bytes);
@@ -123,7 +148,7 @@ public class HiResScreenShots : MonoBehaviour
         byte[] bytes = screenShot.EncodeToPNG();
         string filename;
        
-            filename = ScreenShotName2(resWidth, resHeight);
+            filename = ScreenShotName2(resWidth, resHeight,bullet);
         
 
         System.IO.File.WriteAllBytes(filename, bytes);
