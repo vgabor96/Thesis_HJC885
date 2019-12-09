@@ -26,6 +26,8 @@ int main()
 	String folderpath = "C:\\Users\\loahc\\Documents\\GitHub\\Thesis_HJC885\\Unity\\Thesis_HJC885\\Assets\\screenshots\\*.png";
 		vector<String> filenames;
 	cv::glob(folderpath, filenames);
+	int hitcounter = 0;
+	int nothitcounter = 0;
 	printf("Picture Size N: %d \n", N);
 	printf("Picture Size M: %d \n", M);
 	string falsstring = "False";
@@ -37,10 +39,12 @@ int main()
 		
 		if (filenames[i].find("True") != std::string::npos) {
 			falsstring = "True";
+			hitcounter++;
 		}
 		else
 		{
 			falsstring = "False";
+			nothitcounter++;
 		}
 
 		namedWindow("pic_1", WINDOW_NORMAL);
@@ -173,6 +177,7 @@ int main()
 			}
 		}
 
+
 		/// Show your results
 		namedWindow("Hough Circle Transform", WINDOW_NORMAL);
 		imshow("Hough Circle Transform", src);
@@ -184,6 +189,7 @@ int main()
 	/*Mat img = imread("C:\\Users\\loahc\\Documents\\GitHub\\Thesis_HJC885\\Unity\\Thesis_HJC885\\Assets\\screenshots\\testpic\\screen_1024x768_2019-11-25_15-22-04_01.png");
 	Mat img2 = imread("C:\\Users\\loahc\\Documents\\GitHub\\Thesis_HJC885\\Unity\\Thesis_HJC885\\Assets\\screenshots\\testpic\\screen_1024x768_2019-11-25_15-22-04_02.png");
 	*/
-
+	printf("Number of Hits: %i\n", hitcounter);
+	printf("Number of Non-Hits: %i\n", nothitcounter);
 	return 0;
 }

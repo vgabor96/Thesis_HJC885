@@ -85,14 +85,6 @@ public class Bullet_Movement_Script : MonoBehaviour
 
                     //Debug.Log($"Bullet ID: {this_ID} Vector:{destination * mSpeed} Hit => {hitname}");
                     Debug.Log($"Bullet ID: {this_ID} Vector:{destination * mSpeed} Hit =>HIT");
-
-                    //Debug.Log(hits[i].collider.gameObject.name);
-                    //Debug.Log(GetComponent<SphereCollider>().radius);
-                    //Debug.Log(this_ID);
-                    //Debug.Log($"{mPrevPos} {(transform.position - mPrevPos).normalized} {GetComponent<SphereCollider>().radius} {(transform.position - mPrevPos).magnitude}");
-                    //Debug.Break();
-                    //GameObject.Find("BulletShooter_Camera").SendMessage("DoShake");
-                    // explosion.Play();
                     CameraShaker.Instance.ShakeOnce(4f, 4f, .1f, .1f);
                     ishit = false;
                     isrobothitted = true;

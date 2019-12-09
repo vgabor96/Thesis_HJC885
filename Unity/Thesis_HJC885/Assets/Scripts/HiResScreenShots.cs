@@ -14,8 +14,8 @@ public class HiResScreenShots : MonoBehaviour
     private bool takeHiResShot = false;
     public float timer = float.MaxValue;
     private bool cantakeshot2 = false;
-    public float capturedelay = .2f;
-    public float secondcapturedelay = 3f;
+    public float capturedelay = .5f;
+    public float secondcapturedelay = 5f;
     private bool start;
     private Robot robot;
     private Bullet_Movement_Script bullet;
@@ -78,8 +78,9 @@ public class HiResScreenShots : MonoBehaviour
         {
             if (Time.time > timer)
             {
-                TakeHiResShot1();
                 Debug.Log("TakeHiResShot11111111111111");
+                TakeHiResShot1();
+               
                 cantakeshot2 = true;
                 takeHiResShot = false;
                 timer = Time.time + secondcapturedelay;

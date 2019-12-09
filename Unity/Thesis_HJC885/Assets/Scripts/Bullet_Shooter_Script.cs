@@ -253,7 +253,7 @@ public class Bullet_Shooter_Script : MonoBehaviour
         
         GameObject.Find("Robot_Body").GetComponent<Robot>().Reset();
         bullet.isfired = true;
-        bullet.isrobothitted = false;
+        bullet.isreallyrobothitted = false;
 
         //Debug.Log(bullet.this_ID.ToString()+robot + " MOOOOVE");
 
