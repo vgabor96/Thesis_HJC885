@@ -12,8 +12,8 @@ namespace RobotNeuralNetwork
     class NeuralNetwork
     {
 
-        const int batchSize = 10;
-        const int epochCount = 10;
+        const int batchSize = 1000;
+        const int epochCount = 100;
 
         readonly Variable x;
         readonly Function y;
@@ -83,15 +83,17 @@ namespace RobotNeuralNetwork
             Variable yt = Variable.InputVariable(new int[] { DataSet.OutputSize }, DataType.Float);
 
             Function sqDiff = CNTKLib.Square(CNTKLib.Minus(y, yt));
-            Function loss = CNTKLib.ReduceSum(sqDiff, Axis.AllAxes());
+            //Function loss = CNTKLib.ReduceSum(sqDiff, Axis.AllAxes());
+            //Function err = CNTKLib.ClassificationError(y, yt);
+            Function loss = CNTKLib.CrossEntropyWithSoftmax(y, yt);
             Function err = CNTKLib.ClassificationError(y, yt);
-          
+
             Learner learner = CNTKLib.SGDLearner(new ParameterVector(y.Parameters().ToArray()), new TrainingParameterScheduleDouble(1.0, batchSize));
             Trainer trainer = Trainer.CreateTrainer(y, loss, err, new List<Learner>() { learner });
 
 
             //TRAIN
-            for (int i = 0; i <= 100; i++)
+            for (int epochi = 0; epochi <= epochCount; epochi++)
             {
                 double sumLoss = 0;
                 // double sumEval = 0;
@@ -117,7 +119,7 @@ namespace RobotNeuralNetwork
 
                 // float w1Value = new Value(w.GetValue()).GetDenseData<float>(w)[0][0];
                 //float w2Value = new Value(w.GetValue()).GetDenseData<float>(w)[0][1];
-                Console.WriteLine(string.Format("{0}\tloss:{1}", i, sumLoss / n));
+                Console.WriteLine(string.Format("{0}\tloss:{1}", epochi, sumLoss / n));
             }
 
 
@@ -151,7 +153,7 @@ namespace RobotNeuralNetwork
 public class Program
 {
     const int hiddenneruoncount = 10;
-    string[] trainData = File.ReadAllLines(@"..\data\HusbandEvaluation.txt");
+    string[] trainData =File.ReadAllLines(@"C:\Users\loahc\Documents\GitHub\Thesis_HJC885\ImageProcessing\CUDA_PROJECT\results.txt");
     NeuralNetwork app = new NeuralNetwork(hiddenneruoncount);
 
     void Run()
@@ -173,7 +175,7 @@ public class Program
         double f1_score = 0;
         foreach (string line in trainData)
         {
-            float[] values = line.Split('\t').Select(x => float.Parse(x)).ToArray();
+            float[] values = line.Split(',').Select(x => float.Parse(x)).ToArray();
             float good = values[4];
             float pred = app.Prediction(values[0], values[1], values[2], values[3]);
 

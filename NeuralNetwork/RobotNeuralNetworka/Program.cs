@@ -163,7 +163,7 @@ namespace RobotNeuralNetwork
 public class Program
 {
     const int hiddenneruoncount = 10;
-    string[] trainData = File.ReadAllLines(@"..\data\HusbandEvaluation.txt");
+    string[] trainData = File.ReadAllLines(@"C:\Users\loahc\Documents\GitHub\Thesis_HJC885\ImageProcessing\CUDA_PROJECT\results.txt");
     NeuralNetwork app = new NeuralNetwork(hiddenneruoncount);
 
     void Run()
