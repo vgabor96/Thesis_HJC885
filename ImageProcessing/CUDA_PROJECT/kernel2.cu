@@ -23,17 +23,25 @@ int main()
 
 	float v_threshold = 10;
 
-	String folderpath = "C:\\Users\\loahc\\Documents\\GitHub\\Thesis_HJC885\\Unity\\Thesis_HJC885\\Assets\\screenshots\\testpic\\*.png";
+	String folderpath = "C:\\Users\\loahc\\Documents\\GitHub\\Thesis_HJC885\\Unity\\Thesis_HJC885\\Assets\\screenshots\\*.png";
 		vector<String> filenames;
 	cv::glob(folderpath, filenames);
-
-	for (size_t i = 1; i < filenames.size(); i++)
+	printf("Picture Size N: %d \n", N);
+	printf("Picture Size M: %d \n", M);
+	string falsstring = "False";
+	for (size_t i = 0; i < filenames.size()-1; i+=2)
 	{
-		Mat img = imread(filenames[i-1]);
-		Mat img2 = imread(filenames[i]);
+		Mat img = imread(filenames[i]);
+		Mat img2 = imread(filenames[i+1]);
 
-		printf("Picture Size N: %d \n", N);
-		printf("Picture Size M: %d \n", M);
+		
+		if (filenames[i].find("True") != std::string::npos) {
+			falsstring = "True";
+		}
+		else
+		{
+			falsstring = "False";
+		}
 
 		namedWindow("pic_1", WINDOW_NORMAL);
 		resizeWindow("pic_1", img.cols, img.rows);
@@ -136,7 +144,8 @@ int main()
 
 			/// Apply the Hough Transform to find the circles
 			//		WorkingHoughCircles(src_gray, circles, HOUGH_GRADIENT, 1, src_gray.rows / 100, 10, 10, 0, 100);
-			HoughCircles(src_gray, circles, HOUGH_GRADIENT, 1, src_gray.rows / 100, 10, 10, 0, 0);
+			//HoughCircles(src_gray, circles, HOUGH_GRADIENT, 1,0.5, 10, 7, 0, 10);
+			HoughCircles(src_gray, circles, HOUGH_GRADIENT, 1,0.5, 10, 7, 0, 10);
 
 			/// Draw the circles detected
 			for (size_t i = 0; i < circles.size(); i++)
@@ -156,7 +165,8 @@ int main()
 					Point center2(cvRound(circles[i][0]), cvRound(circles[i][1]));
 
 					printf("%i,", center2.x);
-					printf("%i,true\n", center2.y);
+					printf("%i,", center2.y);
+					printf("%s\n",falsstring.c_str());
 
 					line(src, center1, center2, Scalar(0, 0, 255), 2, 8, 0);
 				}
