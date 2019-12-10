@@ -25,7 +25,8 @@ int main()
 
 	float v_threshold = 10;
 
-	String folderpath = "C:\\Users\\loahc\\Documents\\GitHub\\Thesis_HJC885\\Unity\\Thesis_HJC885\\Assets\\screenshots\\*.png";
+	/*String folderpath = "C:\\Users\\loahc\\Documents\\GitHub\\Thesis_HJC885\\Unity\\Thesis_HJC885\\Assets\\screenshots\\train\\*.png";*/
+	String folderpath = "C:\\Users\\loahc\\Documents\\GitHub\\Thesis_HJC885\\Unity\\Thesis_HJC885\\Assets\\screenshots\\test\\*.png";
 		vector<String> filenames;
 	cv::glob(folderpath, filenames);
 	int hitcounter = 0;
@@ -33,8 +34,10 @@ int main()
 	printf("Picture Size N: %d \n", N);
 	printf("Picture Size M: %d \n", M);
 	int falsstring = 0;
+	
 	ofstream myfile;
-	myfile.open("results.txt");
+	//myfile.open("results.txt");
+	myfile.open("tests.txt");
 	
 	
 	for (size_t x = 0; x < filenames.size()-1; x+=2)
@@ -192,11 +195,11 @@ int main()
 
 
 		/// Show your results
-		namedWindow("Hough Circle Transform", WINDOW_NORMAL);
-		imshow("Hough Circle Transform", src);
+	//	namedWindow("Hough Circle Transform", WINDOW_NORMAL);
+		//imshow("Hough Circle Transform", src);
 
 		//WAIT OR NOT
-		waitKey(0);
+		//waitKey(0);
 	}
 
 
