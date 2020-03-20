@@ -11,7 +11,7 @@ public class Bullet_Shooter_Script : MonoBehaviour
     private int currentBullets = 0;
     public int numberOfBullets = 8;
     private Vector3 gen_robot_vector;
-    public float mSpeed = 10f;
+    public float mSpeed = 0.1f;
     private float ResetDistance = 100f;
 
     public Bullet_Movement_Script Bullet;
@@ -251,6 +251,7 @@ public class Bullet_Shooter_Script : MonoBehaviour
     
             //Debug.Log($"BUllet ID: {bullet.this_ID} Vector:{bullet.destination} Hit => NONE");
         
+
         GameObject.Find("Robot_Body").GetComponent<Robot>().Reset();
         bullet.isfired = true;
         bullet.isrobothitted = false;

@@ -12,7 +12,7 @@
 #include <opencv2\highgui.hpp>
 #include <opencv2\imgproc.hpp>
 #include <string>
-
+#include <vector>
 using namespace std;
 using namespace cv;
 
@@ -26,18 +26,16 @@ int main()
 	float v_threshold = 10;
 
 	String folderpath = "C:\\Users\\loahc\\Documents\\GitHub\\Thesis_HJC885\\Unity\\Thesis_HJC885\\Assets\\screenshots\\temp\\*.png";
-		vector<String> filenames;
+	vector<String> filenames;
 	cv::glob(folderpath, filenames);
-
-
-	printf("Picture Size N: %d \n", N);
-	printf("Picture Size M: %d \n", M);
 
 	for (size_t i = 1; i < filenames.size(); i++)
 	{
-		Mat img = imread(filenames[i-1]);
+		Mat img = imread(filenames[i - 1]);
 		Mat img2 = imread(filenames[i]);
 
+		printf("Picture Size N: %d \n", N);
+		printf("Picture Size M: %d \n", M);
 
 		namedWindow("pic_1", WINDOW_NORMAL);
 		resizeWindow("pic_1", img.cols, img.rows);

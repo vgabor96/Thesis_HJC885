@@ -11,7 +11,7 @@ public class Bullet_Movement_Script : MonoBehaviour
     public Vector3 startingPos;
     public Vector3 destination;
     public float ResetDistance = 1000.0f;
-    public float mSpeed = 100.0f;
+    public float mSpeed = 1.0f;
     public bool ishit;
     private Ray ray;
     private Ray raystart;
@@ -61,30 +61,31 @@ public class Bullet_Movement_Script : MonoBehaviour
     {
         mPrevPos = transform.position;
         string hitname = "";
-      
+
         //transform.Translate(mSpeed * Time.deltaTime,0.0f, 0.0f); 
         transform.Translate(destination * Time.deltaTime * mSpeed);
 
         ray = new Ray(mPrevPos, (transform.position - mPrevPos).normalized);
         if (isfired)
         {
-            raystart = new Ray(mPrevPos,(transform.position - mPrevPos)*int.MaxValue);
+            raystart = new Ray(mPrevPos, (transform.position - mPrevPos) * int.MaxValue);
         }
         isfired = false;
         RaycastHit[] hits = Physics.SphereCastAll(raystart, GetComponent<SphereCollider>().radius, (transform.position - mPrevPos).magnitude * int.MaxValue);
         if (ishit)
         {
-          
+
             //Debug.Log($"{ this_ID} HITS:{hits.Length}");
             int i = 0;
             for (i = 0; i < hits.Length; i++)
             {
                 hitname = hits[i].collider.gameObject.name;
+                //Debug.Log(hitname);
                 if (IsRobothittedandLog(hitname))
                 {
 
                     //Debug.Log($"Bullet ID: {this_ID} Vector:{destination * mSpeed} Hit => {hitname}");
-                    Debug.Log($"Bullet ID: {this_ID} Vector:{destination * mSpeed} Hit =>HIT");
+                    Debug.Log($"Bullet ID: {this_ID} Vector:{destination * mSpeed} Hit =>HIT "+hitname);
 
                     //Debug.Log(hits[i].collider.gameObject.name);
                     //Debug.Log(GetComponent<SphereCollider>().radius);
@@ -93,7 +94,7 @@ public class Bullet_Movement_Script : MonoBehaviour
                     //Debug.Break();
                     //GameObject.Find("BulletShooter_Camera").SendMessage("DoShake");
                     // explosion.Play();
-                    CameraShaker.Instance.ShakeOnce(4f, 4f, .1f, .1f);
+                    //CameraShaker.Instance.ShakeOnce(4f, 4f, .1f, .1f);
                     ishit = false;
                     isrobothitted = true;
                     isreallyrobothitted = true;
@@ -108,15 +109,15 @@ public class Bullet_Movement_Script : MonoBehaviour
                 ishit = false;
 
             }
-           
+
 
         }
-     
+
         //Debug.Log($"ID: {this_ID } Startpos: {startingPos}  RayDirection:{ray.direction} MPrepos:{mPrevPos}  transformPosition: {transform.position}");
-       // Debug.DrawRay(startingPos, ray.direction * ((transform.position - mPrevPos).magnitude) * int.MaxValue, Color.red);
+        //Debug.DrawRay(startingPos, ray.direction * ((transform.position - mPrevPos).magnitude) * int.MaxValue, Color.red);
         Debug.DrawRay(startingPos, raystart.direction * ((transform.position - mPrevPos).magnitude) * int.MaxValue, Color.green);
 
-        //Debug.DrawLine(startingPos, robot.transform.position, Color.green);
+        //Debug.DrawLine(startingPos, robot.transform.position, Color.red);
     }
 
     private void UpdateBulletBasic()

@@ -23,14 +23,14 @@ public class HiResScreenShots : MonoBehaviour
 
     public static string ScreenShotName(int width, int height)
     {
-        return string.Format("{0}/screenshots/screen_{1}x{2}_{3}_01.png",
+        return string.Format("{0}/screenshots/temp/screen_{1}x{2}_{3}_01.png",
                              Application.dataPath,
                              width, height,
                              System.DateTime.Now.ToString("yyyy-MM-dd_HH-mm-ss"));
     }
     public static string ScreenShotName2(int width, int height)
     {
-        return string.Format("{0}/screenshots/screen_{1}x{2}_{3}_02.png",
+        return string.Format("{0}/screenshots/temp/screen_{1}x{2}_{3}_02.png",
                              Application.dataPath,
                              width, height,
                              System.DateTime.Now.ToString("yyyy-MM-dd_HH-mm-ss"));
@@ -38,7 +38,7 @@ public class HiResScreenShots : MonoBehaviour
 
     public static string ScreenShotName(int width, int height, Bullet_Movement_Script bullet)
     {
-        return string.Format("{0}/screenshots/screen_{1}x{2}_{4}_01_{3}.png",
+        return string.Format("{0}/screenshots/temp/screen_{1}x{2}_{4}_01_{3}.png",
                              Application.dataPath,
                              width, height,
                               bullet.isreallyrobothitted,
@@ -46,7 +46,7 @@ public class HiResScreenShots : MonoBehaviour
     }
     public static string ScreenShotName2(int width, int height, Bullet_Movement_Script bullet)
     {
-        return string.Format("{0}/screenshots/screen_{1}x{2}_{4}_02_{3}.png",
+        return string.Format("{0}/screenshots/temp/screen_{1}x{2}_{4}_02_{3}.png",
                              Application.dataPath,
                              width, height,
                              bullet.isreallyrobothitted,
@@ -103,6 +103,7 @@ public class HiResScreenShots : MonoBehaviour
 
             // robot.DoMovement = true;
             //Time.timeScale = 0.5f;
+
             GameObject.Find("Robot_Body").GetComponent<Robot>().RandomMovement();
             //Time.timeScale = 1;
 
