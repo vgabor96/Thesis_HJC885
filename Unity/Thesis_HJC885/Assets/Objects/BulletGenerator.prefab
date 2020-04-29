@@ -40,16 +40,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 5773162765896915636}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b7b855f00cf703d45a4d70211127f685, type: 3}
+  m_Script: {fileID: 11500000, guid: 0da695bf55fd06540b4df9f2286668ec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   delay: 1
-  recoil: 0.1
+  recoil: 1
   numberOfBullets: 1
   mSpeed: 5
-  Bullet: {fileID: 5510428482363700592, guid: 575f2ac066f144148b04c4011b1c5e8c, type: 3}
-  robotobject: {fileID: 6790511235177514559, guid: d59f13dc5f70b7a499d58f443771e379,
+  Bullet: {fileID: 5510428482363700592, guid: 168f64e27c185894f800448a1750063e, type: 3}
+  robotobject: {fileID: 6790511235177514559, guid: e3596bcd47336c0438a3b5dc47ad3f38,
     type: 3}
-  actualbulletsize: 0.1
+  actualbulletsize: 1
   Wheretoshootenum: 1
-  ShootTypeenum: 3
+  ShootTypeenum: 1

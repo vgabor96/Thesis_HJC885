@@ -10,6 +10,7 @@ public class HiResScreenShots : MonoBehaviour
 {
     public int resWidth = 1024;
     public int resHeight = 768;
+    public bool Istakingpictures = true;
     public Camera camera;
     private bool takeHiResShot = false;
     public float timer = float.MaxValue;
@@ -23,14 +24,14 @@ public class HiResScreenShots : MonoBehaviour
 
     public static string ScreenShotName(int width, int height)
     {
-        return string.Format("{0}/screenshots/screen_{1}x{2}_{3}_01.png",
+        return string.Format("{0}/screenshots/temp/screen_{1}x{2}_{3}_01.png",
                              Application.dataPath,
                              width, height,
                              System.DateTime.Now.ToString("yyyy-MM-dd_HH-mm-ss"));
     }
     public static string ScreenShotName2(int width, int height)
     {
-        return string.Format("{0}/screenshots/screen_{1}x{2}_{3}_02.png",
+        return string.Format("{0}/screenshots/temp/screen_{1}x{2}_{3}_02.png",
                              Application.dataPath,
                              width, height,
                              System.DateTime.Now.ToString("yyyy-MM-dd_HH-mm-ss"));
@@ -38,7 +39,7 @@ public class HiResScreenShots : MonoBehaviour
 
     public static string ScreenShotName(int width, int height, Bullet_Movement_Script bullet)
     {
-        return string.Format("{0}/screenshots/screen_{1}x{2}_{4}_01_{3}.png",
+        return string.Format("{0}/screenshots/temp/screen_{1}x{2}_{4}_01_{3}.png",
                              Application.dataPath,
                              width, height,
                               bullet.isreallyrobothitted,
@@ -46,7 +47,7 @@ public class HiResScreenShots : MonoBehaviour
     }
     public static string ScreenShotName2(int width, int height, Bullet_Movement_Script bullet)
     {
-        return string.Format("{0}/screenshots/screen_{1}x{2}_{4}_02_{3}.png",
+        return string.Format("{0}/screenshots/temp/screen_{1}x{2}_{4}_02_{3}.png",
                              Application.dataPath,
                              width, height,
                              bullet.isreallyrobothitted,
@@ -72,42 +73,45 @@ public class HiResScreenShots : MonoBehaviour
 
     void LateUpdate()
     {
-
-        //takeHiResShot |= Input.GetKeyDown("k");
-        if (takeHiResShot)
+        if (Istakingpictures)
         {
-            if (Time.time > timer)
+            //takeHiResShot |= Input.GetKeyDown("k");
+            if (takeHiResShot)
             {
-                Debug.Log("TakeHiResShot11111111111111");
-                TakeHiResShot1();
-               
-                cantakeshot2 = true;
-                takeHiResShot = false;
-                timer = Time.time + secondcapturedelay;
+                if (Time.time > timer)
+                {
+                    Debug.Log("TakeHiResShot11111111111111");
+                    TakeHiResShot1();
+
+                    cantakeshot2 = true;
+                    takeHiResShot = false;
+                    timer = Time.time + secondcapturedelay;
+                }
+                else if (start)
+                {
+                    timer = Time.time + capturedelay;
+                    start = false;
+                }
+
+
             }
-            else if (start)
+            if (cantakeshot2 && Time.time > timer)
             {
-                timer = Time.time + capturedelay;
-                start = false;
+                Debug.Log("TakeHiResShot2222222");
+                TakeHiResShot2();
+                cantakeshot2 = false;
+                timer = float.MaxValue;
+                // BREAKSTHE GAME TEST
+                //Time.timeScale = 0;
+
+                // robot.DoMovement = true;
+                //Time.timeScale = 0.5f;
+                GameObject.Find("Robot_Body").GetComponent<Robot>().RandomMovement();
+                //Time.timeScale = 1;
+
             }
-
-
         }
-        if (cantakeshot2 && Time.time > timer)
-        {
-            Debug.Log("TakeHiResShot2222222");
-            TakeHiResShot2();
-            cantakeshot2 = false;
-            timer = float.MaxValue;
-            // BREAKSTHE GAME TEST
-            //Time.timeScale = 0;
-
-            // robot.DoMovement = true;
-            //Time.timeScale = 0.5f;
-            GameObject.Find("Robot_Body").GetComponent<Robot>().RandomMovement();
-            //Time.timeScale = 1;
-
-        }
+      
 
 
     }

@@ -73,18 +73,18 @@ public class Bullet_Movement_Script : MonoBehaviour
         isfired = false;
         RaycastHit[] hits = Physics.SphereCastAll(raystart, GetComponent<SphereCollider>().radius, (transform.position - mPrevPos).magnitude * int.MaxValue);
         if (ishit)
-        {
-          
+        {     
             //Debug.Log($"{ this_ID} HITS:{hits.Length}");
             int i = 0;
             for (i = 0; i < hits.Length; i++)
             {
                 hitname = hits[i].collider.gameObject.name;
-                if (IsRobothittedandLog(hitname))
+                if (IsRobothitandLog(hitname))
                 {
 
                     //Debug.Log($"Bullet ID: {this_ID} Vector:{destination * mSpeed} Hit => {hitname}");
-                    Debug.Log($"Bullet ID: {this_ID} Vector:{destination * mSpeed} Hit =>HIT");
+                    Debug.Log($"Bullet ID: {this_ID} Vector:{destination * mSpeed} Hit => {hitname}");
+                    //Debug.Log($"Bullet ID: {this_ID} Vector:{ray} Hit => {hitname}");
                     CameraShaker.Instance.ShakeOnce(4f, 4f, .1f, .1f);
                     ishit = false;
                     isrobothitted = true;
@@ -105,7 +105,7 @@ public class Bullet_Movement_Script : MonoBehaviour
         }
      
         //Debug.Log($"ID: {this_ID } Startpos: {startingPos}  RayDirection:{ray.direction} MPrepos:{mPrevPos}  transformPosition: {transform.position}");
-       // Debug.DrawRay(startingPos, ray.direction * ((transform.position - mPrevPos).magnitude) * int.MaxValue, Color.red);
+        //Debug.DrawRay(startingPos, ray.direction * ((transform.position - mPrevPos).magnitude) * int.MaxValue, Color.red);
         Debug.DrawRay(startingPos, raystart.direction * ((transform.position - mPrevPos).magnitude) * int.MaxValue, Color.green);
 
         //Debug.DrawLine(startingPos, robot.transform.position, Color.green);
@@ -127,7 +127,7 @@ public class Bullet_Movement_Script : MonoBehaviour
             for (int i = 0; i < hits.Length; i++)
             {
                 hitname = hits[i].collider.gameObject.name;
-                if (IsRobothittedandLog(hitname))
+                if (IsRobothitandLog(hitname))
                 {
 
                     Debug.Log($"Bullet ID: {this_ID} Vector:{ray} Hit => {hitname}");
@@ -153,17 +153,19 @@ public class Bullet_Movement_Script : MonoBehaviour
         //Debug.DrawLine(startingPos, robot.transform.position, Color.green);
     }
 
-    private bool IsRobothittedandLog(string name)
+    private bool IsRobothitandLog(string name)
     {
-        bool ishitted = false;
+        
+        bool ishit = false;
         if (name != "Robot_Body")
         {
-           
+      
             foreach (BoxCollider item in GameObject.Find("Robot_Body").GetComponentsInChildren<BoxCollider>())
             {
+               
                 if (name == item.name)
                 {
-                    ishitted = true;
+                    ishit = true;
 
 
                 }
@@ -171,7 +173,7 @@ public class Bullet_Movement_Script : MonoBehaviour
         }
        
 
-        return ishitted;
+        return ishit;
 
     }
     private Vector3 FixDestinationGenerator()

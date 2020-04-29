@@ -56,10 +56,11 @@ MeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: a7e719e03c2b36e4b98797b825508758, type: 2}
+  - {fileID: 2100000, guid: 2a8f256105b067b4dba84dab5eb6cbaf, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -89,15 +90,18 @@ MonoBehaviour:
   m_GameObject: {fileID: 8028067841505303104}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a097c5399acc3ee449d9660d1fb8e4a4, type: 3}
+  m_Script: {fileID: 11500000, guid: 20a02eec8491148479dfff7cefeb864a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   this_ID: 0
   startingPos: {x: 0, y: 0, z: 0}
-  destination: {x: 0.99830425, y: 0.055738695, z: -0.0167865}
-  ResetDistance: 20
+  destination: {x: 0, y: 0, z: 0}
+  ResetDistance: 1000
   mSpeed: 5
-  ishit: 1
+  ishit: 0
+  isfired: 0
+  isrobothitted: 0
+  isreallyrobothitted: 0
   mPrevPos: {x: 0, y: 0, z: 0}
 --- !u!135 &5356440763280539787
 SphereCollider:
