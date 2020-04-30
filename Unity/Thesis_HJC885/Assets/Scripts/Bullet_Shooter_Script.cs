@@ -104,41 +104,7 @@ public class Bullet_Shooter_Script : MonoBehaviour
 
     }
 
-    private void InstantiateBulletOnlyOncewithDelay()
-    {
-
-        //GameObject.Find("Robot_Body").GetComponent<Robot>().DoMovement = true;
-
-
-
-        if (currentBullets < numberOfBullets)
-        {
-            var body = GameObject.Find("Robot_Body").transform;
-
-
-            this.Bullets.Add(Instantiate(Bullet, transform.position, this.transform.rotation));
-            SetDestination(Bullets[currentBullets]);
-
-            Bullets[currentBullets].transform.position = this.transform.position;
-            //robotobject.transform;
-
-            //Setting Bullet Size, Rotation, MSpeed,ResetDistance,Destination
-            Bullets[currentBullets].transform.localScale = body.GetChild(0).GetComponent<BoxCollider>().size * actualbulletsize;
-            Bullets[currentBullets].transform.rotation = this.transform.rotation;
-
-           
-
-            currentBullets++;
-        }
-
-      
-        ReGenerate(Bullets[0], false);
-        Bullets[0].mSpeed = mSpeed;
-        Bullets[0].ResetDistance = ResetDistance;
-
-      
-  
-    }
+ 
 
     private void GenerateBullets()
     { 
