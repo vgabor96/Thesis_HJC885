@@ -11,7 +11,7 @@ public class Bullet_Movement_Script : MonoBehaviour
     public Vector3 startingPos;
     public Vector3 destination;
     public float ResetDistance = 1000.0f;
-    public float mSpeed = 100.0f;
+    public float mSpeed = 1f;
     public bool ishit;
     private Ray ray;
     private Ray raystart;
@@ -38,7 +38,7 @@ public class Bullet_Movement_Script : MonoBehaviour
         //destination = RandomDestinationGenerator(min,max);
         //this.destination = transform.position;
         //this.RandomDestinationGenerator();
-        this.this_ID = Bullet_ID++;
+        this.this_ID = 0;
         this.ishit = true;
         //setting the bullet's hitbox!!
         GetComponent<SphereCollider>().radius *= transform.localScale.x ;
@@ -66,11 +66,11 @@ public class Bullet_Movement_Script : MonoBehaviour
         transform.Translate(destination * Time.deltaTime * mSpeed);
 
         ray = new Ray(mPrevPos, (transform.position - mPrevPos).normalized);
-        if (isfired)
-        {
+        //if (isfired)
+        //{
             raystart = new Ray(mPrevPos,(transform.position - mPrevPos)*int.MaxValue);
-        }
-        isfired = false;
+        //}
+        //isfired = false;
         RaycastHit[] hits = Physics.SphereCastAll(raystart, GetComponent<SphereCollider>().radius, (transform.position - mPrevPos).magnitude * int.MaxValue);
         if (ishit)
         {     
@@ -81,31 +81,39 @@ public class Bullet_Movement_Script : MonoBehaviour
                 hitname = hits[i].collider.gameObject.name;
                 if (IsRobothitandLog(hitname))
                 {
+                  
 
                     //Debug.Log($"Bullet ID: {this_ID} Vector:{destination * mSpeed} Hit => {hitname}");
                     Debug.Log($"Bullet ID: {this_ID} Vector:{destination * mSpeed} Hit => {hitname}");
+                
                     Debug.DrawRay(startingPos, raystart.direction * ((transform.position - mPrevPos).magnitude) * int.MaxValue, Color.green);
                     //Debug.Log($"Bullet ID: {this_ID} Vector:{ray} Hit => {hitname}");
-                    CameraShaker.Instance.ShakeOnce(4f, 4f, .1f, .1f);
-                    ishit = false;
+                    //CameraShaker.Instance.ShakeOnce(4f, 4f, .1f, .1f);
+                    
                     isrobothitted = true;
                     isreallyrobothitted = true;
                 }
 
             }
+         
+
+
             if (!isrobothitted)
             {
                 Debug.Log($"Bullet ID: {this_ID} Vector:{destination * mSpeed} Hit =>NONE");
-                ishit = false;
+             
                 isrobothitted = true;
                 isreallyrobothitted = false;
               
 
             }
 
-        
+            ishit = false;
+
+          
+
         }
-     
+
         //Debug.Log($"ID: {this_ID } Startpos: {startingPos}  RayDirection:{ray.direction} MPrepos:{mPrevPos}  transformPosition: {transform.position}");
         //Debug.DrawRay(startingPos, ray.direction * ((transform.position - mPrevPos).magnitude) * int.MaxValue, Color.red);
         Debug.DrawRay(startingPos, raystart.direction * ((transform.position - mPrevPos).magnitude) * int.MaxValue, Color.green);
@@ -168,8 +176,6 @@ public class Bullet_Movement_Script : MonoBehaviour
                 if (name == item.name)
                 {
                     ishit = true;
-
-
                 }
             }
         }
@@ -177,13 +183,6 @@ public class Bullet_Movement_Script : MonoBehaviour
 
         return ishit;
 
-    }
-    private Vector3 FixDestinationGenerator()
-    {
-        float x = 0;
-        float y = 1;
-        float z = 1;
-        return new Vector3(x * mSpeed, y * mSpeed, z * mSpeed);
     }
     private void OnDrawGizmos()
     {

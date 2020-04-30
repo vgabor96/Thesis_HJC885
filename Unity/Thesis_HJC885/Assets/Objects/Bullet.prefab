@@ -97,7 +97,7 @@ MonoBehaviour:
   startingPos: {x: 0, y: 0, z: 0}
   destination: {x: 0, y: 0, z: 0}
   ResetDistance: 1000
-  mSpeed: 5
+  mSpeed: 1
   ishit: 0
   isfired: 0
   isrobothitted: 0
