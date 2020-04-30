@@ -104,29 +104,6 @@ public class Bullet_Shooter_Script : MonoBehaviour
 
     }
 
-    private void InstantiateBulletAfterPreviousDone()
-    {
-        if (currentBullets < numberOfBullets)
-        {
-
-            this.Bullets.Add(Instantiate(Bullet, transform.position, this.transform.rotation));
-            SetDestination(Bullets[currentBullets]);
-
-            Bullets[currentBullets].transform.position = this.transform.position;
-            var body = GameObject.Find("Robot_Body").transform;
-
-            //Setting Bullet Size, Rotation, MSpeed,ResetDistance,Destination
-            Bullets[currentBullets].transform.localScale = body.GetChild(0).GetComponent<BoxCollider>().size*actualbulletsize;
-            Bullets[currentBullets].transform.rotation = this.transform.rotation;
-
-            ReGenerate(Bullets[currentBullets], true);
-            Bullets[currentBullets].mSpeed = mSpeed;
-            Bullets[currentBullets].ResetDistance = ResetDistance;
-
-            currentBullets++;
-        }
-    }
-
     private void InstantiateBulletAllatOnce()
     {
         if (currentBullets < numberOfBullets)
@@ -193,9 +170,6 @@ public class Bullet_Shooter_Script : MonoBehaviour
             case ShootTypeEnum.Continous:
                 SpawnBulletsContinous();
                 break;
-            case ShootTypeEnum.Afterpreviousregenerated:
-                SpawnBulletsAfterPreviousDone();
-                break;
             case ShootTypeEnum.AllAtOnce:
                 SpawnBulletsAllAtOnce();
                 break;
@@ -226,11 +200,6 @@ public class Bullet_Shooter_Script : MonoBehaviour
     private void SpawnBulletsContinous()
     {
         InvokeRepeating(nameof(InstianteBullet), 0, delay);
-    }
-
-    private void SpawnBulletsAfterPreviousDone()
-    {
-        InstantiateBulletAfterPreviousDone();
     }
 
     private void ReGenerate(Bullet_Movement_Script bullet, bool waitforall)
