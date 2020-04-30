@@ -81,7 +81,11 @@ public class Bullet_Shooter_Script : MonoBehaviour
          
             this.Bullet= Instantiate(Bullet, transform.position,this.transform.rotation);
             this.Bullet.destination = Fixedshootvector;
-            SetDestination(this.Bullet);
+            if (this.ShootTypeenum == ShootTypeEnum.Random)
+            {
+                SetDestination(this.Bullet);
+            }
+           
 
             this.Bullet.transform.position = this.transform.position;
             var body = GameObject.Find("Robot_Body").transform;
