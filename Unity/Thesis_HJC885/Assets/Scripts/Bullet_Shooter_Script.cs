@@ -44,10 +44,8 @@ public class Bullet_Shooter_Script : MonoBehaviour
     {
 
         //Move the object to the same position as the parent:
-        //robot = robotobject.GetComponent<Robot>();
         robot = robotobject.transform.Find("Robot_Body").GetComponent<Robot>();
-        //robot.DoMovement = true;
-        
+      
         transform.rotation = Quaternion.Euler(new Vector3(0, 0, 0));
         this.ResetDistance = Vector3.Distance(this.robotobject.transform.position, this.transform.position);//+10f;
         this.gen_robot_vector = robotobject.transform.position - this.transform.position;
