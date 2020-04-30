@@ -39,7 +39,7 @@ public class Bullet_Shooter_Script : MonoBehaviour
     public ShootTypeEnum ShootTypeenum = ShootTypeEnum.Random;
 
 
-    private List<Bullet_Movement_Script> Bullets;
+
 
 
     
@@ -54,7 +54,6 @@ public class Bullet_Shooter_Script : MonoBehaviour
         transform.rotation = Quaternion.Euler(new Vector3(0, 0, 0));
         this.ResetDistance = Vector3.Distance(this.robotobject.transform.position, this.transform.position);//+10f;
         this.gen_robot_vector = robotobject.transform.position - this.transform.position;
-        this.Bullets = new List<Bullet_Movement_Script>();
         Debug.DrawLine(transform.localPosition, robotobject.transform.localPosition);
 
         GenerateBullets();
@@ -65,13 +64,10 @@ public class Bullet_Shooter_Script : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
-
-        foreach (Bullet_Movement_Script item in this.Bullets)
-        {
-            if (item != null && Vector3.Distance(item.startingPos, item.mPrevPos) >= ResetDistance)
+       
+            if (this.Bullet != null && Vector3.Distance(this.Bullet.startingPos, this.Bullet.mPrevPos) >= ResetDistance)
             {
-                ReGenerate(item, false);
+                ReGenerate(this.Bullet, false);
 
             }
 
@@ -79,12 +75,6 @@ public class Bullet_Shooter_Script : MonoBehaviour
             //{
             //    GameObject.Find("Robot_Body").GetComponent<Robot>().DoMovement = true;
             //}
-
-
-
-
-        }
-
     }
 
     private void InstianteBullet()
@@ -94,19 +84,19 @@ public class Bullet_Shooter_Script : MonoBehaviour
         if (currentBullets < numberOfBullets)
         {
          
-            this.Bullets.Add(Instantiate(Bullet, transform.position,this.transform.rotation));
-            SetDestination(Bullets[currentBullets]);
-     
-            Bullets[currentBullets].transform.position = this.transform.position;
+            this.Bullet= Instantiate(Bullet, transform.position,this.transform.rotation);
+            SetDestination(this.Bullet);
+
+            this.Bullet.transform.position = this.transform.position;
             var body = GameObject.Find("Robot_Body").transform;
 
             //Setting Bullet Size, Rotation, MSpeed,ResetDistance,Destination
-            Bullets[currentBullets].transform.localScale = body.GetChild(0).GetComponent<BoxCollider>().size*actualbulletsize;
-            Bullets[currentBullets].transform.rotation = this.transform.rotation;
+            this.Bullet.transform.localScale = body.GetChild(0).GetComponent<BoxCollider>().size*actualbulletsize;
+            this.Bullet.transform.rotation = this.transform.rotation;
           
-            ReGenerate(Bullets[currentBullets],false);
-            Bullets[currentBullets].mSpeed = mSpeed;
-            Bullets[currentBullets].ResetDistance = ResetDistance;
+            ReGenerate(this.Bullet, false);
+            this.Bullet.mSpeed = mSpeed;
+            this.Bullet.ResetDistance = ResetDistance;
 
             currentBullets++;
         }
