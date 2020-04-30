@@ -104,8 +104,6 @@ public class Bullet_Shooter_Script : MonoBehaviour
 
     }
 
- 
-
     private void GenerateBullets()
     { 
         switch (ShootTypeenum)
@@ -128,17 +126,7 @@ public class Bullet_Shooter_Script : MonoBehaviour
        
     }
 
-    private void SpawnBulletsAllAtOnce()
-    {
-        InvokeRepeating(nameof(InstantiateBulletAllatOnce), 0, 0.0001f);
-      
-    }
-
-    private void SpawnOnlyOneBulletWithDelay()
-    {
-       
-        InvokeRepeating(nameof(InstantiateBulletOnlyOncewithDelay), 0, delay);
-    }
+ 
 
     private void SpawnBulletsContinous()
     {
