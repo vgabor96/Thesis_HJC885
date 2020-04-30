@@ -14,6 +14,8 @@ public class Bullet_Shooter_Script : MonoBehaviour
     public float mSpeed = 10f;
     private float ResetDistance = 100f;
 
+    public Vector3 Fixedshootvector= new Vector3(0,0,0);
+
     public Bullet_Movement_Script Bullet;
    
 
@@ -37,12 +39,7 @@ public class Bullet_Shooter_Script : MonoBehaviour
     }
     public WhereToShootEnum Wheretoshootenum = WhereToShootEnum.random;
     public ShootTypeEnum ShootTypeenum = ShootTypeEnum.Random;
-
-
-
-
-
-    
+ 
     void Start()
     {
 
@@ -56,7 +53,7 @@ public class Bullet_Shooter_Script : MonoBehaviour
         this.gen_robot_vector = robotobject.transform.position - this.transform.position;
         Debug.DrawLine(transform.localPosition, robotobject.transform.localPosition);
 
-        GenerateBullets();
+        InstianteBullet();
       
 
     }
@@ -67,7 +64,7 @@ public class Bullet_Shooter_Script : MonoBehaviour
        
             if (this.Bullet != null && Vector3.Distance(this.Bullet.startingPos, this.Bullet.mPrevPos) >= ResetDistance)
             {
-                ReGenerate(this.Bullet, false);
+                ReGenerate(this.Bullet);
 
             }
 
@@ -85,6 +82,7 @@ public class Bullet_Shooter_Script : MonoBehaviour
         {
          
             this.Bullet= Instantiate(Bullet, transform.position,this.transform.rotation);
+            this.Bullet.destination = Fixedshootvector;
             SetDestination(this.Bullet);
 
             this.Bullet.transform.position = this.transform.position;
@@ -94,82 +92,31 @@ public class Bullet_Shooter_Script : MonoBehaviour
             this.Bullet.transform.localScale = body.GetChild(0).GetComponent<BoxCollider>().size*actualbulletsize;
             this.Bullet.transform.rotation = this.transform.rotation;
           
-            ReGenerate(this.Bullet, false);
+            ReGenerate(this.Bullet);
             this.Bullet.mSpeed = mSpeed;
             this.Bullet.ResetDistance = ResetDistance;
+
 
             currentBullets++;
         }
 
 
     }
-
-    private void GenerateBullets()
-    { 
-        switch (ShootTypeenum)
-        {
-            case ShootTypeEnum.Continous:
-                SpawnBulletsContinous();
-                break;
-            case ShootTypeEnum.AllAtOnce:
-                SpawnBulletsAllAtOnce();
-                break;
-            case ShootTypeEnum.OnlyOnewithDelay:
-                numberOfBullets = 1;
-                SpawnOnlyOneBulletWithDelay();
-                break;
-            default:
-                break;
-        }
-       
-               
-       
-    }
-
  
-
-    private void SpawnBulletsContinous()
-    {
-        InvokeRepeating(nameof(InstianteBullet), 0, delay);
-    }
-
-    private void ReGenerate(Bullet_Movement_Script bullet, bool waitforall)
-    {
-    
-            //Debug.Log($"BUllet ID: {bullet.this_ID} Vector:{bullet.destination} Hit => NONE");
-        
-        GameObject.Find("Robot_Body").GetComponent<Robot>().Reset();
-        bullet.isfired = true;
-        bullet.isreallyrobothitted = false;
-
-        //Debug.Log(bullet.this_ID.ToString()+robot + " MOOOOVE");
-
-        if (waitforall)
-        {
-            if (this.Bullets.FindAll(x => x.ishit == false).Count == 0) 
-             {
-                bullet.transform.position = this.transform.position;
-                bullet.ishit = true;
-                SetDestination(bullet);
-              
-             
-            }
-        }
-        else
-        {
-            ReGenerate(bullet);
-        
-           
-        }
-        GameObject.Find("RobotCamera").GetComponent<HiResScreenShots>().TakeHiResShot(bullet);
-
-    }
-
     private void ReGenerate(Bullet_Movement_Script bullet)
     {
+        GameObject.Find("Robot_Body").GetComponent<Robot>().Reset();
+        bullet.this_ID++;
+        bullet.isfired = true;
+        bullet.isreallyrobothitted = false;
         bullet.transform.position = this.transform.position;
-                bullet.ishit = true;
-                SetDestination(bullet);
+        bullet.ishit = true;
+        if (ShootTypeenum == ShootTypeEnum.Random)
+        {
+            SetDestination(this.Bullet);
+        }
+    
+        GameObject.Find("RobotCamera").GetComponent<HiResScreenShots>().TakeHiResShot(bullet);
 
     }
 
