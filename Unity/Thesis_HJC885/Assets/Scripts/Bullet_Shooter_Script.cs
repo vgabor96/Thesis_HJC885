@@ -31,15 +31,12 @@ public class Bullet_Shooter_Script : MonoBehaviour
 }
     public enum ShootTypeEnum
     { 
-        Continous,
-        Afterpreviousregenerated,
-        AllAtOnce,
-        OnlyOnewithDelay
-
-
+        FixedBullet,
+        Random
+       
     }
     public WhereToShootEnum Wheretoshootenum = WhereToShootEnum.random;
-    public ShootTypeEnum ShootTypeenum = ShootTypeEnum.Continous;
+    public ShootTypeEnum ShootTypeenum = ShootTypeEnum.Random;
 
 
     private List<Bullet_Movement_Script> Bullets;
@@ -55,7 +52,7 @@ public class Bullet_Shooter_Script : MonoBehaviour
         //robot.DoMovement = true;
         
         transform.rotation = Quaternion.Euler(new Vector3(0, 0, 0));
-        this.ResetDistance = Vector3.Distance(this.robotobject.transform.position, this.transform.position)+10f;
+        this.ResetDistance = Vector3.Distance(this.robotobject.transform.position, this.transform.position);//+10f;
         this.gen_robot_vector = robotobject.transform.position - this.transform.position;
         this.Bullets = new List<Bullet_Movement_Script>();
         Debug.DrawLine(transform.localPosition, robotobject.transform.localPosition);

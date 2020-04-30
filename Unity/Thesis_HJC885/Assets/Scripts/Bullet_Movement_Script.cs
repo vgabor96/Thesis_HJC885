@@ -84,6 +84,7 @@ public class Bullet_Movement_Script : MonoBehaviour
 
                     //Debug.Log($"Bullet ID: {this_ID} Vector:{destination * mSpeed} Hit => {hitname}");
                     Debug.Log($"Bullet ID: {this_ID} Vector:{destination * mSpeed} Hit => {hitname}");
+                    Debug.DrawRay(startingPos, raystart.direction * ((transform.position - mPrevPos).magnitude) * int.MaxValue, Color.green);
                     //Debug.Log($"Bullet ID: {this_ID} Vector:{ray} Hit => {hitname}");
                     CameraShaker.Instance.ShakeOnce(4f, 4f, .1f, .1f);
                     ishit = false;
@@ -95,13 +96,14 @@ public class Bullet_Movement_Script : MonoBehaviour
             if (!isrobothitted)
             {
                 Debug.Log($"Bullet ID: {this_ID} Vector:{destination * mSpeed} Hit =>NONE");
+                ishit = false;
                 isrobothitted = true;
                 isreallyrobothitted = false;
-                ishit = false;
+              
 
             }
-           
 
+        
         }
      
         //Debug.Log($"ID: {this_ID } Startpos: {startingPos}  RayDirection:{ray.direction} MPrepos:{mPrevPos}  transformPosition: {transform.position}");
