@@ -26,7 +26,7 @@ public class Robot : MonoBehaviour
         foreach (Transform item in this.transform)
         {
             childrenstartpos.Add(item.localPosition);
-            Debug.Log(item.localRotation);
+            //Debug.Log(item.localRotation);
         }
 
         //InvokeRepeating(nameof(RandomMovement), 0, 0.5f);
@@ -74,6 +74,7 @@ public class Robot : MonoBehaviour
         float next_z = Random.Range(0, 2) == 0 ? radius / 5 : -radius / 5;
         Vector3 newpos = new Vector3(next_x, 0,next_z);
         float distance = Vector3.Distance(this.startpos,this.transform.localPosition + newpos/* * Time.deltaTime*/);
+        Debug.Log(distance);
         if (distance <radius)
         {
             //Debug.LogError(startpos+" "+newpos+" "+distance);
@@ -92,8 +93,14 @@ public class Robot : MonoBehaviour
     public void RandomMovement()
     {
         //transform.Translate(RandomMovement_Vector3() /* * Time.deltaTime*/);
+       MoveHead(RandomMovement_Vector3());
         RotateHead(RandomMovement_Vector3());
-        
+        MoveBody(RandomMovement_Vector3());
+        RotateBody(RandomMovement_Vector3());
+          MoveLeg(RandomMovement_Vector3());
+          RotateLeg(RandomMovement_Vector3());
+
+
     }
 
     public void MoveHead(Vector3 vector)
@@ -106,11 +113,19 @@ public class Robot : MonoBehaviour
     }
     public void MoveBody(Vector3 vector)
     {
-        this.gameObject.transform.Find("Head").gameObject.transform.Translate(vector);
+        this.gameObject.transform.Find("Body").gameObject.transform.Translate(vector);
     }
     public void RotateBody(Vector3 vector)
     {
-        this.gameObject.transform.Find("Head").gameObject.transform.Rotate(vector);
+        this.gameObject.transform.Find("Body").gameObject.transform.Rotate(vector);
+    }
+    public void MoveLeg(Vector3 vector)
+    {
+        this.gameObject.transform.Find("Legs").gameObject.transform.Translate(vector);
+    }
+    public void RotateLeg(Vector3 vector)
+    {
+        this.gameObject.transform.Find("Legs").gameObject.transform.Rotate(vector);
     }
     public void Reset()
     {
