@@ -336,27 +336,32 @@ PrefabInstance:
     - target: {fileID: 1970259060286674570, guid: 185ae6ccb4fe8714cba6bca8a234ebee,
         type: 3}
       propertyPath: ShootTypeenum
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1970259060286674570, guid: 185ae6ccb4fe8714cba6bca8a234ebee,
         type: 3}
       propertyPath: Wheretoshootenum
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1970259060286674570, guid: 185ae6ccb4fe8714cba6bca8a234ebee,
         type: 3}
       propertyPath: Fixedshootvector.x
-      value: 200
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 1970259060286674570, guid: 185ae6ccb4fe8714cba6bca8a234ebee,
         type: 3}
       propertyPath: Fixedshootvector.y
-      value: 20
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1970259060286674570, guid: 185ae6ccb4fe8714cba6bca8a234ebee,
         type: 3}
       propertyPath: Fixedshootvector.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1970259060286674570, guid: 185ae6ccb4fe8714cba6bca8a234ebee,
+        type: 3}
+      propertyPath: recoil
+      value: 0.1
       objectReference: {fileID: 0}
     - target: {fileID: 2989247873272443177, guid: 185ae6ccb4fe8714cba6bca8a234ebee,
         type: 3}
@@ -559,11 +564,21 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 809414335303675687, guid: e3596bcd47336c0438a3b5dc47ad3f38,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1540750023445142643, guid: e3596bcd47336c0438a3b5dc47ad3f38,
         type: 3}
       propertyPath: camera
       value: 
       objectReference: {fileID: 1350476787}
+    - target: {fileID: 2052137055510878946, guid: e3596bcd47336c0438a3b5dc47ad3f38,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2890907727918429041, guid: e3596bcd47336c0438a3b5dc47ad3f38,
         type: 3}
       propertyPath: radius
@@ -573,6 +588,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_projectionMatrixMode
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4687461498883024453, guid: e3596bcd47336c0438a3b5dc47ad3f38,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5378812863680380868, guid: e3596bcd47336c0438a3b5dc47ad3f38,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5988825579087905722, guid: e3596bcd47336c0438a3b5dc47ad3f38,
         type: 3}
@@ -593,6 +618,21 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Robot
+      objectReference: {fileID: 0}
+    - target: {fileID: 6790511235177514559, guid: e3596bcd47336c0438a3b5dc47ad3f38,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7204832103836282353, guid: e3596bcd47336c0438a3b5dc47ad3f38,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8024331564978514898, guid: e3596bcd47336c0438a3b5dc47ad3f38,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 9062283000640831868, guid: e3596bcd47336c0438a3b5dc47ad3f38,
         type: 3}

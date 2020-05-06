@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class Robot : MonoBehaviour
@@ -7,6 +8,7 @@ public class Robot : MonoBehaviour
     // Start is called before the first frame update
     public float radius;
     private Vector3 startpos;
+    private List<Vector3> childrenstartpos;
 
     public bool DoMovement { get; set; }
     public bool DoReset { get; set; }
@@ -18,8 +20,13 @@ public class Robot : MonoBehaviour
 
     void Start()
     {
-
+        childrenstartpos = new List<Vector3>();
         startpos = transform.localPosition;
+        foreach (Transform item in this.transform)
+        {
+            childrenstartpos.Add(item.localPosition);
+            Debug.Log(item.name);
+        }
 
         //InvokeRepeating(nameof(RandomMovement), 0, 0.5f);
        
@@ -83,12 +90,25 @@ public class Robot : MonoBehaviour
 
     public void RandomMovement()
     {
-        transform.Translate(RandomMovement_Vector3() /* * Time.deltaTime*/);
+        //transform.Translate(RandomMovement_Vector3() /* * Time.deltaTime*/);
+        this.gameObject.transform.Find("Head").gameObject.transform.Translate(RandomMovement_Vector3());
+    }
+
+    public void MoveHead(Vector3 vector)
+    {
+        GameObject.Find("Head").GetComponent<BoxCollider>().transform.Translate(vector);
     }
     public void Reset()
     {
         //Debug.LogError("Robot position reseted");
         this.transform.localPosition = startpos;
+        int i = 0;
+        foreach (Transform item in this.transform.GetComponentsInChildren<Transform>())
+        {
+
+            item.transform.localPosition = childrenstartpos[i];
+            i++;
+        }
         //this.transform.position = startpos;
     }
 }
