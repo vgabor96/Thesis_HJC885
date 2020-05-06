@@ -84,7 +84,7 @@ public class Bullet_Movement_Script : MonoBehaviour
                   
 
                     //Debug.Log($"Bullet ID: {this_ID} Vector:{destination * mSpeed} Hit => {hitname}");
-                    Debug.Log($"Bullet ID: {this_ID} Vector:{destination * mSpeed} Hit => {hitname}");
+                    Debug.Log($"Bullet ID: {this_ID} Vector:{destination * mSpeed} Length: {destination.magnitude} Hit => {hitname}");
                 
                     Debug.DrawRay(startingPos, raystart.direction * ((transform.position - mPrevPos).magnitude) * int.MaxValue, Color.green);
                     //Debug.Log($"Bullet ID: {this_ID} Vector:{ray} Hit => {hitname}");

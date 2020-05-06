@@ -11,7 +11,7 @@ public class Bullet_Shooter_Script : MonoBehaviour
     private int currentBullets = 0;
     public int numberOfBullets = 8;
     private Vector3 gen_robot_vector;
-    public float mSpeed = 10f;
+    private float mSpeed = 10f;
     private float ResetDistance = 1000f;
 
     public Vector3 Fixedshootvector= new Vector3(0,0,0);
@@ -63,7 +63,7 @@ public class Bullet_Shooter_Script : MonoBehaviour
             if (this.Bullet != null && Vector3.Distance(this.Bullet.startingPos, this.Bullet.mPrevPos) >= ResetDistance)
             {
                 ReGenerate(this.Bullet);
-
+              
             }
 
             //if (item.isfired)
@@ -80,7 +80,8 @@ public class Bullet_Shooter_Script : MonoBehaviour
         {
          
             this.Bullet= Instantiate(Bullet, transform.position,this.transform.rotation);
-            this.Bullet.destination = Fixedshootvector;
+            //setting the bullet's length to fix mSpeed
+            this.Bullet.destination = Fixedshootvector.normalized* mSpeed;
             if (this.ShootTypeenum == ShootTypeEnum.Random)
             {
                 SetDestination(this.Bullet);
@@ -95,7 +96,7 @@ public class Bullet_Shooter_Script : MonoBehaviour
             this.Bullet.transform.rotation = this.transform.rotation;
           
             ReGenerate(this.Bullet);
-            this.Bullet.mSpeed = this.mSpeed;
+            //this.Bullet.mSpeed = this.mSpeed;
             this.Bullet.ResetDistance = this.ResetDistance;
 
 
