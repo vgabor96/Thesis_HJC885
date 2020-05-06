@@ -126,7 +126,7 @@ public class Bullet_Shooter_Script : MonoBehaviour
     private void SetDestination(Bullet_Movement_Script bullet)
     {
        
-        bullet.destination = (DestinationRandomize() - transform.position).normalized;
+        bullet.destination = (DestinationRandomize() - transform.position).normalized*mSpeed;
     }
 
     private Vector3 DestinationRandomize()
@@ -151,7 +151,7 @@ public class Bullet_Shooter_Script : MonoBehaviour
     private Vector3 Random_Shootaround(BoxCollider bodypart)
     {
         
-        float x = bodypart.transform.position.x + Random.Range(-bodypart.size.x*recoil, bodypart.size.x*recoil);
+        float x = bodypart.transform.position.x + Random.Range(-bodypart.size.x * recoil, bodypart.size.x * recoil);
         float y = bodypart.transform.position.y + Random.Range(-bodypart.size.y * recoil, bodypart.size.y * recoil);
         float z = bodypart.transform.position.z + Random.Range(-bodypart.size.z * recoil, bodypart.size.z * recoil);
 
