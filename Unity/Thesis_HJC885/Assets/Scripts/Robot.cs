@@ -9,6 +9,7 @@ public class Robot : MonoBehaviour
     public float radius;
     private Vector3 startpos;
     private List<Vector3> childrenstartpos;
+    
 
     public bool DoMovement { get; set; }
     public bool DoReset { get; set; }
@@ -25,7 +26,7 @@ public class Robot : MonoBehaviour
         foreach (Transform item in this.transform)
         {
             childrenstartpos.Add(item.localPosition);
-            Debug.Log(item.name);
+            Debug.Log(item.localRotation);
         }
 
         //InvokeRepeating(nameof(RandomMovement), 0, 0.5f);
@@ -91,22 +92,29 @@ public class Robot : MonoBehaviour
     public void RandomMovement()
     {
         //transform.Translate(RandomMovement_Vector3() /* * Time.deltaTime*/);
-        this.gameObject.transform.Find("Head").gameObject.transform.Translate(RandomMovement_Vector3());
+        RotateHead(RandomMovement_Vector3());
+        
     }
 
     public void MoveHead(Vector3 vector)
     {
-        GameObject.Find("Head").GetComponent<BoxCollider>().transform.Translate(vector);
+        this.gameObject.transform.Find("Head").gameObject.transform.Translate(vector);
+    }
+    public void RotateHead(Vector3 vector)
+    {
+        this.gameObject.transform.Find("Head").gameObject.transform.Rotate(vector);
     }
     public void Reset()
     {
         //Debug.LogError("Robot position reseted");
         this.transform.localPosition = startpos;
+        this.transform.rotation = new Quaternion(0, 0, 0, 0);
         int i = 0;
         foreach (Transform item in this.transform)
         {
 
             item.transform.localPosition = childrenstartpos[i];
+            item.transform.rotation = new Quaternion(0, 0, 0, 0);
             i++;
         }
         //this.transform.position = startpos;
