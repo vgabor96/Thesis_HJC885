@@ -564,6 +564,11 @@ PrefabInstance:
       propertyPath: camera
       value: 
       objectReference: {fileID: 1350476787}
+    - target: {fileID: 2890907727918429041, guid: e3596bcd47336c0438a3b5dc47ad3f38,
+        type: 3}
+      propertyPath: radius
+      value: 10
+      objectReference: {fileID: 0}
     - target: {fileID: 4421160343359496891, guid: e3596bcd47336c0438a3b5dc47ad3f38,
         type: 3}
       propertyPath: m_projectionMatrixMode

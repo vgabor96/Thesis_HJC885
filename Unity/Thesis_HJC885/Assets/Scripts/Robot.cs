@@ -28,31 +28,31 @@ public class Robot : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //DoMovement |= Input.GetKeyDown(KeyCode.W);
+        DoMovement |= Input.GetKeyDown(KeyCode.W);
 
-        //DoReset |= Input.GetKeyDown(KeyCode.R);
-        //if (DoReset)
-        //{
-        //    Debug.Log("RESET");
-        //    Reset();
-        //    DoReset = false;
+        DoReset |= Input.GetKeyDown(KeyCode.R);
+        if (DoReset)
+        {
+            Debug.Log("RESET");
+            Reset();
+            DoReset = false;
 
-        //}
-        //if (DoReset)
-        //{
-        //    Debug.Log("RESET");
-        //    Reset();
-        //    DoReset = false;
-        //    //DoReset = true;
+        }
+        if (DoReset)
+        {
+            Debug.Log("RESET");
+            Reset();
+            DoReset = false;
+            //DoReset = true;
 
-        //}
-        //if (DoMovement)
-        //{
-        //    Debug.Log("mooooooove");
-        //    RandomMovement();
-        //    DoMovement = false;
-        //    //Time.timeScale = 1;
-        //}
+        }
+        if (DoMovement)
+        {
+            Debug.Log("mooooooove");
+            RandomMovement();
+            DoMovement = false;
+            //Time.timeScale = 1;
+        }
 
 
     }
