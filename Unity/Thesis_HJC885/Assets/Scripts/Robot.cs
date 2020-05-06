@@ -103,7 +103,7 @@ public class Robot : MonoBehaviour
         //Debug.LogError("Robot position reseted");
         this.transform.localPosition = startpos;
         int i = 0;
-        foreach (Transform item in this.transform.GetComponentsInChildren<Transform>())
+        foreach (Transform item in this.transform)
         {
 
             item.transform.localPosition = childrenstartpos[i];
