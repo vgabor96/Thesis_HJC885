@@ -104,6 +104,14 @@ public class Robot : MonoBehaviour
     {
         this.gameObject.transform.Find("Head").gameObject.transform.Rotate(vector);
     }
+    public void MoveBody(Vector3 vector)
+    {
+        this.gameObject.transform.Find("Head").gameObject.transform.Translate(vector);
+    }
+    public void RotateBody(Vector3 vector)
+    {
+        this.gameObject.transform.Find("Head").gameObject.transform.Rotate(vector);
+    }
     public void Reset()
     {
         //Debug.LogError("Robot position reseted");
