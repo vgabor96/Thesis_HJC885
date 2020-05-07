@@ -46,14 +46,6 @@ public class Robot : MonoBehaviour
             DoReset = false;
 
         }
-        if (DoReset)
-        {
-            Debug.Log("RESET");
-            Reset();
-            DoReset = false;
-            //DoReset = true;
-
-        }
         if (DoMovement)
         {
             Debug.Log("mooooooove");
@@ -74,9 +66,10 @@ public class Robot : MonoBehaviour
         float next_z = Random.Range(0, 2) == 0 ? radius / 5 : -radius / 5;
         Vector3 newpos = new Vector3(next_x, 0,next_z);
         float distance = Vector3.Distance(this.startpos,this.transform.localPosition + newpos/* * Time.deltaTime*/);
-        Debug.Log(distance);
+       
         if (distance <radius)
         {
+            Debug.Log("TAV: " + distance + "Radius: " + radius);
             //Debug.LogError(startpos+" "+newpos+" "+distance);
             return newpos;
         }
@@ -92,20 +85,37 @@ public class Robot : MonoBehaviour
 
     public void RandomMovement()
     {
-        //transform.Translate(RandomMovement_Vector3() /* * Time.deltaTime*/);
-       MoveHead(RandomMovement_Vector3());
-        RotateHead(RandomMovement_Vector3());
-        MoveBody(RandomMovement_Vector3());
-        RotateBody(RandomMovement_Vector3());
-          MoveLeg(RandomMovement_Vector3());
-          RotateLeg(RandomMovement_Vector3());
+        //transform.Translate(new Vector3(0, 0, 4));//RandomMovement_Vector3() /* * Time.deltaTime*/);
+        MoveFullBody(RandomMovement_Vector3());
+       //MoveHead(RandomMovement_Vector3());
+     //   RotateHead(RandomMovement_Vector3());
+      //  MoveBody(RandomMovement_Vector3());
+     //   RotateBody(RandomMovement_Vector3());
+       //   MoveLeg(RandomMovement_Vector3());
+        //  RotateLeg(RandomMovement_Vector3());
 
 
+    }
+
+    public void MoveFullBody(Vector3 vector)
+    {
+        if (AcceptedMoveFullBodyVector(vector))
+        {
+            transform.Translate(vector);
+        }
+    
+    }
+
+    private bool AcceptedMoveFullBodyVector(Vector3 newvector)
+    {
+        return Vector3.Distance(this.startpos, transform.localPosition + newvector) < radius;
+        
     }
 
     public void MoveHead(Vector3 vector)
     {
         this.gameObject.transform.Find("Head").gameObject.transform.Translate(vector);
+        //this.gameObject.transform.Find("Head").GetComponent<Rigidbody>().MovePosition(vector);
     }
     public void RotateHead(Vector3 vector)
     {
