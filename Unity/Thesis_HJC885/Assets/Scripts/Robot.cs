@@ -8,7 +8,11 @@ public class Robot : MonoBehaviour
     // Start is called before the first frame update
     public float radius;
     private Vector3 startpos;
-    private List<Vector3> childrenstartpos;
+    private float headradius;
+    private Dictionary<string,Vector3> childrenstartpos;
+    private Dictionary<string,Transform> childrenobjects;
+    private GameObject body;
+
     
 
     public bool DoMovement { get; set; }
@@ -21,16 +25,22 @@ public class Robot : MonoBehaviour
 
     void Start()
     {
-        childrenstartpos = new List<Vector3>();
+        childrenstartpos = new Dictionary<string, Vector3>();
+        childrenobjects = new Dictionary<string, Transform>();
+        
         startpos = transform.localPosition;
         foreach (Transform item in this.transform)
         {
-            childrenstartpos.Add(item.localPosition);
+            //childrenstartpos.Add(item.localPosition);
+            childrenstartpos.Add(item.name, item.transform.localPosition);
+            childrenobjects.Add(item.name, item);
+
             //Debug.Log(item.localRotation);
         }
-
+        headradius = childrenobjects["Head"].GetComponent<Collider>().bounds.size.magnitude / 2;
+        Debug.Log(headradius);
         //InvokeRepeating(nameof(RandomMovement), 0, 0.5f);
-       
+
     }
 
     // Update is called once per frame
@@ -58,36 +68,62 @@ public class Robot : MonoBehaviour
     }
 
 
-    private Vector3 RandomMovement_Vector3()
+    private Vector3 RandomMovement_Vector3(Transform bodypart)
     {
-        // float next_x = Random.Range(-radius, radius);
-        //float next_z = Random.Range(-radius, radius);
-        float next_x = Random.Range(0,2) == 0 ? radius/5 : -radius/5;
-        float next_z = Random.Range(0, 2) == 0 ? radius / 5 : -radius / 5;
-        Vector3 newpos = new Vector3(next_x, 0,next_z);
-        float distance = Vector3.Distance(this.startpos,this.transform.localPosition + newpos/* * Time.deltaTime*/);
-       
-        if (distance <radius)
+        float next_x = 0;
+        float next_z = 0;
+        Vector3 newpos;
+        if (bodypart == this.transform)
         {
-            Debug.Log("TAV: " + distance + "Radius: " + radius);
-            //Debug.LogError(startpos+" "+newpos+" "+distance);
-            return newpos;
+            next_x = Random.Range(0, 2) == 0 ? radius / 5 : -radius / 5;
+            next_z = Random.Range(0, 2) == 0 ? radius / 5 : -radius / 5;
+        }
+        else if (bodypart == childrenobjects["Head"])
+        {
+            next_x = Random.Range(0, 2) == 0 ? headradius / 5 : -headradius / 5;
+            next_z = Random.Range(0, 2) == 0 ? headradius / 5 : -headradius / 5;       
+        }
+        else if (bodypart == childrenobjects["Body"])
+        {
+            next_x = Random.Range(0, 2) == 0 ? headradius / 5 : -headradius / 5;
+            next_z = Random.Range(0, 2) == 0 ? headradius / 5 : -headradius / 5;
+        }
+        else if (bodypart == childrenobjects["Legs"])
+        {
+            next_x = Random.Range(0, 2) == 0 ? headradius / 5 : -headradius / 5;
+            next_z = Random.Range(0, 2) == 0 ? headradius / 5 : -headradius / 5;
         }
 
-        return new Vector3(0, 0, 0);
+
+        newpos = new Vector3(next_x, 0, next_z);
+        //// float next_x = Random.Range(-radius, radius);
+        ////float next_z = Random.Range(-radius, radius);
+        //float next_x = Random.Range(0,2) == 0 ? radius/5 : -radius/5;
+        //float next_z = Random.Range(0, 2) == 0 ? radius / 5 : -radius / 5;
+        //Vector3 newpos = new Vector3(next_x, 0,next_z);
+        //float distance = Vector3.Distance(this.startpos,this.transform.localPosition + newpos/* * Time.deltaTime*/);
+
+        //if (distance <radius)
+        //{
+        //    Debug.Log("TAV: " + distance + "Radius: " + radius);
+        //    //Debug.LogError(startpos+" "+newpos+" "+distance);
+        //    return newpos;
+        //}
+
+        return newpos;
     }
 
-    private void RandomMovement_Repeating()
-    {
+    //private void RandomMovement_Repeating()
+    //{
        
-        transform.Translate(RandomMovement_Vector3() * Time.deltaTime);
-    }
+    //    transform.Translate(RandomMovement_Vector3() * Time.deltaTime);
+    //}
 
     public void RandomMovement()
     {
         //transform.Translate(new Vector3(0, 0, 4));//RandomMovement_Vector3() /* * Time.deltaTime*/);
-        MoveFullBody(RandomMovement_Vector3());
-       //MoveHead(RandomMovement_Vector3());
+        //MoveFullBody(RandomMovement_Vector3());
+       MoveHead(RandomMovement_Vector3(childrenobjects["Head"]));
      //   RotateHead(RandomMovement_Vector3());
       //  MoveBody(RandomMovement_Vector3());
      //   RotateBody(RandomMovement_Vector3());
@@ -114,8 +150,18 @@ public class Robot : MonoBehaviour
 
     public void MoveHead(Vector3 vector)
     {
-        this.gameObject.transform.Find("Head").gameObject.transform.Translate(vector);
+        if (AcceptedMoveHeadvector(vector))
+        {
+            childrenobjects["Head"].transform.Translate(vector);
+          
+        }
+     
         //this.gameObject.transform.Find("Head").GetComponent<Rigidbody>().MovePosition(vector);
+    }
+
+    private bool AcceptedMoveHeadvector(Vector3 vector3)
+    {
+        return Vector3.Distance(this.childrenstartpos["Head"], childrenobjects["Head"].transform.localPosition + vector3) < headradius;
     }
     public void RotateHead(Vector3 vector)
     {
@@ -146,7 +192,7 @@ public class Robot : MonoBehaviour
         foreach (Transform item in this.transform)
         {
 
-            item.transform.localPosition = childrenstartpos[i];
+            item.transform.localPosition = childrenstartpos[item.name];
             item.transform.rotation = new Quaternion(0, 0, 0, 0);
             i++;
         }
