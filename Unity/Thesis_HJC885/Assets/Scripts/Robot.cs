@@ -37,7 +37,8 @@ public class Robot : MonoBehaviour
 
             //Debug.Log(item.localRotation);
         }
-        headradius = childrenobjects["Head"].GetComponent<Collider>().bounds.size.magnitude / 2;
+        //Half of width
+        headradius = childrenobjects["Head"].transform.localScale.x / 2;
         Debug.Log(headradius);
         //InvokeRepeating(nameof(RandomMovement), 0, 0.5f);
 
