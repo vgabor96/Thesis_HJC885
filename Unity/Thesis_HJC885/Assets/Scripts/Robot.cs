@@ -113,8 +113,8 @@ public class Robot : MonoBehaviour
     public void RandomMovement()
     {
         //transform.Translate(new Vector3(0, 0, 4));//RandomMovement_Vector3() /* * Time.deltaTime*/);
-        //MoveFullBody(RandomMovement_Vector3());
-       MoveHead(new Vector3(0,0.2f,0));
+        MoveFullBody(new Vector3(0,0,0.4f));
+       //MoveHead(new Vector3(0,0.2f,0));
         //   RotateHead(RandomMovement_Vector3());
         //  MoveBody(RandomMovement_Vector3());
         //   RotateBody(RandomMovement_Vector3());
@@ -126,11 +126,14 @@ public class Robot : MonoBehaviour
 
     public void MoveFullBody(Vector3 vector)
     {
-        if (AcceptedMoveFullBodyVector(vector))
-        {
-            transform.Translate(vector);
+        //if (AcceptedMoveFullBodyVector(vector))
+        //{
+        //transform.Translate(vector);
+        MoveHead(vector);
+        MoveBody(vector);
+        MoveLeg(vector);
 
-        }
+        //}
     
     }
 
