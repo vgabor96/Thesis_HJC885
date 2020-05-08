@@ -20,11 +20,15 @@ public class Robot : MonoBehaviour
 
     public bool DoResetAfter { get; set; }
 
+    //How much energy the movements cost
+    public float MovementEnergyUsed { get; set; }
+
 
     // private GameObject body = GameObject.Find("Robot_Body");
 
     void Start()
     {
+        MovementEnergyUsed = 0;
         childrenstartpos = new Dictionary<string, Vector3>();
         childrenobjects = new Dictionary<string, Transform>();
         
@@ -97,20 +101,6 @@ public class Robot : MonoBehaviour
 
 
         newpos = new Vector3(next_x, 0, next_z);
-        //// float next_x = Random.Range(-radius, radius);
-        ////float next_z = Random.Range(-radius, radius);
-        //float next_x = Random.Range(0,2) == 0 ? radius/5 : -radius/5;
-        //float next_z = Random.Range(0, 2) == 0 ? radius / 5 : -radius / 5;
-        //Vector3 newpos = new Vector3(next_x, 0,next_z);
-        //float distance = Vector3.Distance(this.startpos,this.transform.localPosition + newpos/* * Time.deltaTime*/);
-
-        //if (distance <radius)
-        //{
-        //    Debug.Log("TAV: " + distance + "Radius: " + radius);
-        //    //Debug.LogError(startpos+" "+newpos+" "+distance);
-        //    return newpos;
-        //}
-
         return newpos;
     }
 
@@ -124,14 +114,14 @@ public class Robot : MonoBehaviour
     {
         //transform.Translate(new Vector3(0, 0, 4));//RandomMovement_Vector3() /* * Time.deltaTime*/);
         //MoveFullBody(RandomMovement_Vector3());
-       MoveHead(RandomMovement_Vector3(childrenobjects["Head"]));
-     //   RotateHead(RandomMovement_Vector3());
-      //  MoveBody(RandomMovement_Vector3());
-     //   RotateBody(RandomMovement_Vector3());
-       //   MoveLeg(RandomMovement_Vector3());
+       MoveHead(new Vector3(0,0.2f,0));
+        //   RotateHead(RandomMovement_Vector3());
+        //  MoveBody(RandomMovement_Vector3());
+        //   RotateBody(RandomMovement_Vector3());
+        //   MoveLeg(RandomMovement_Vector3());
         //  RotateLeg(RandomMovement_Vector3());
 
-
+        Debug.Log("Energy Used: " + MovementEnergyUsed);
     }
 
     public void MoveFullBody(Vector3 vector)
@@ -139,6 +129,7 @@ public class Robot : MonoBehaviour
         if (AcceptedMoveFullBodyVector(vector))
         {
             transform.Translate(vector);
+
         }
     
     }
@@ -151,11 +142,12 @@ public class Robot : MonoBehaviour
 
     public void MoveHead(Vector3 vector)
     {
-        if (AcceptedMoveHeadvector(vector))
-        {
+        //if (AcceptedMoveHeadvector(vector))
+        //{
             childrenobjects["Head"].transform.Translate(vector);
+            MovementEnergyUsed += vector.magnitude;
           
-        }
+        //}
      
         //this.gameObject.transform.Find("Head").GetComponent<Rigidbody>().MovePosition(vector);
     }
@@ -167,22 +159,27 @@ public class Robot : MonoBehaviour
     public void RotateHead(Vector3 vector)
     {
         this.gameObject.transform.Find("Head").gameObject.transform.Rotate(vector);
+        MovementEnergyUsed += vector.magnitude;
     }
     public void MoveBody(Vector3 vector)
     {
         this.gameObject.transform.Find("Body").gameObject.transform.Translate(vector);
+        MovementEnergyUsed += vector.magnitude;
     }
     public void RotateBody(Vector3 vector)
     {
         this.gameObject.transform.Find("Body").gameObject.transform.Rotate(vector);
+        MovementEnergyUsed += vector.magnitude;
     }
     public void MoveLeg(Vector3 vector)
     {
         this.gameObject.transform.Find("Legs").gameObject.transform.Translate(vector);
+        MovementEnergyUsed += vector.magnitude;
     }
     public void RotateLeg(Vector3 vector)
     {
         this.gameObject.transform.Find("Legs").gameObject.transform.Rotate(vector);
+        MovementEnergyUsed += vector.magnitude;
     }
     public void Reset()
     {
@@ -197,6 +194,7 @@ public class Robot : MonoBehaviour
             item.transform.rotation = new Quaternion(0, 0, 0, 0);
             i++;
         }
+        MovementEnergyUsed = 0;
         //this.transform.position = startpos;
     }
 }
