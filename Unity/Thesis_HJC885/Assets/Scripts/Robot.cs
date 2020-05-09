@@ -112,8 +112,10 @@ public class Robot : MonoBehaviour
 
     public void RandomMovement()
     {
+        
         //transform.Translate(new Vector3(0, 0, 4));//RandomMovement_Vector3() /* * Time.deltaTime*/);
         MoveFullBody(new Vector3(0,0,0.4f));
+        //MoveHead(new Vector3(0, 0, 0.4f));
        //MoveHead(new Vector3(0,0.2f,0));
         //   RotateHead(RandomMovement_Vector3());
         //  MoveBody(RandomMovement_Vector3());
