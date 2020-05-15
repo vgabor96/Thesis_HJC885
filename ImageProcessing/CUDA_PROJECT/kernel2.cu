@@ -17,8 +17,8 @@ using namespace std;
 using namespace cv;
 
 
-const int N = 768;
-const int M = 1024;
+const int N = 1080; //768
+const int M = 1920; //1024
 
 int main()
 {
@@ -36,14 +36,19 @@ int main()
 	int falsstring = 0;
 	
 	ofstream myfile;
-	//myfile.open("results.txt");
-	myfile.open("tests.txt");
+	myfile.open("results.txt");
+	//myfile.open("tests.txt");
 	
 	
 	for (size_t x = 0; x < filenames.size()-1; x+=2)
 	{
 		Mat img = imread(filenames[x]);
 		Mat img2 = imread(filenames[x+1]);
+
+
+		unsigned first = filenames[x].find("(");
+		unsigned last = filenames[x].find(")");
+		string nametoattach = filenames[x].substr(first, last - (first-1));
 
 		
 		////SHOW IMAGE
@@ -93,9 +98,9 @@ int main()
 		Mat img3 = imread("subpic.jpg");
 
 		//SHOW IAMGE
-	/*	namedWindow("subpic", WINDOW_NORMAL);
+		namedWindow("subpic", WINDOW_NORMAL);
 		resizeWindow("subpic", img3.cols, img3.rows);
-		imshow("subpic", img3);*/
+		imshow("subpic", img3);
 
 
 		//Makewhite and black only
@@ -122,9 +127,9 @@ int main()
 		imwrite("pic1_black.jpg", dest3);
 		Mat img4 = imread("pic1_black.jpg");
 		//SHOW IMAGE
-	/*	namedWindow("pic1_black", WINDOW_NORMAL);
-		resizeWindow("pic1_black", img4.cols, img4.rows);
-		imshow("pic1_black", img4);*/
+		//namedWindow("pic1_black", WINDOW_NORMAL);
+		//resizeWindow("pic1_black", img4.cols, img4.rows);
+		//imshow("pic1_black", img4);
 
 		Mat src, src_gray;
 
@@ -138,12 +143,12 @@ int main()
 
 		/// Convert it to gray
 		cvtColor(src, src_gray, COLOR_RGB2GRAY);
-		////SHOW IMAGE
+		//SHOW IMAGE
 		//namedWindow("Hough Circle Transform Gray", WINDOW_NORMAL);
 		//imshow("Hough Circle Transform Gray", src);
 
 		/// Reduce the noise so we avoid false circle detection
-		GaussianBlur(src_gray, src_gray, Size(9, 9), 2, 2);
+		GaussianBlur(src_gray, src_gray, Size(9,9), 2, 2); //Size(9, 9), 2, 2);
 		////SHOW IMAGE
 		//namedWindow("Hough Circle Transform Gauss", WINDOW_NORMAL);
 		//imshow("Hough Circle Transform Gauss", src);
@@ -154,7 +159,8 @@ int main()
 			/// Apply the Hough Transform to find the circles
 			//		WorkingHoughCircles(src_gray, circles, HOUGH_GRADIENT, 1, src_gray.rows / 100, 10, 10, 0, 100);
 			//HoughCircles(src_gray, circles, HOUGH_GRADIENT, 1,0.5, 10, 7, 0, 10);
-			HoughCircles(src_gray, circles, HOUGH_GRADIENT, 1,5, 10, 7, 1, 10);
+			//HoughCircles(src_gray, circles, HOUGH_GRADIENT, 1,5, 10, 7, 1, 10);
+		HoughCircles(src_gray, circles, HOUGH_GRADIENT, 1, src_gray.rows / 100, 10, 10, 0, 100);
 
 			/// Draw the circles detected
 			for (size_t i = 0; i < circles.size(); i++)
@@ -187,7 +193,7 @@ int main()
 					printf("%i,", center2.x);
 					printf("%i,", center2.y);
 					printf("%i\n",falsstring);
-					myfile << center1.x << "," << center1.y <<","<< center2.x << "," << center2.y<<","<<falsstring<<"\n";
+					myfile << nametoattach<< "\t" << center1.x << "\t" << center1.y <<"\t"<< center2.x << "\t" << center2.y<<"\t"<<falsstring<<"\n";
 					line(src, center1, center2, Scalar(0, 0, 255), 2, 8, 0);
 				}
 			}
@@ -195,11 +201,11 @@ int main()
 
 
 		/// Show your results
-	//	namedWindow("Hough Circle Transform", WINDOW_NORMAL);
-		//imshow("Hough Circle Transform", src);
+		namedWindow("Hough Circle Transform", WINDOW_NORMAL);
+		imshow("Hough Circle Transform", src);
 
 		//WAIT OR NOT
-		//waitKey(0);
+		waitKey(0);
 	}
 
 

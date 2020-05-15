@@ -119,8 +119,8 @@ public class Bullet_Shooter_Script : MonoBehaviour
         {
             SetDestination(this.Bullet);
         }
-    
-       GameObject.Find("RobotCamera").GetComponent<HiResScreenShots>().TakeHiResShot(bullet);
+
+        GameObject.Find("RobotCamera").GetComponent<HiResScreenShots>().TakeHiResShot(bullet);
 
     }
 
