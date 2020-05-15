@@ -386,7 +386,7 @@ MonoBehaviour:
   resWidth: 1024
   resHeight: 768
   Istakingpictures: 1
-  camera: {fileID: 0}
+  camera: {fileID: 4092648648463609956}
   timer: 3.4028235e+38
   capturedelay: 0.5
   secondcapturedelay: 5

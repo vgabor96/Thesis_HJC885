@@ -11,13 +11,14 @@ public class Bullet_Shooter_Script : MonoBehaviour
     private int currentBullets = 0;
     public int numberOfBullets = 8;
     private Vector3 gen_robot_vector;
-    private float mSpeed = 10f;
+    public float bulletspeed = 10f;
     private float ResetDistance = 1000f;
 
     public Vector3 Fixedshootvector= new Vector3(0,0,0);
 
     public Bullet_Movement_Script Bullet;
-   
+
+    List<Vector3> usedvectors;
 
     public GameObject robotobject;
     Robot robot;
@@ -42,7 +43,7 @@ public class Bullet_Shooter_Script : MonoBehaviour
  
     void Start()
     {
-
+        usedvectors = new List<Vector3>();
         //Move the object to the same position as the parent:
         robot = robotobject.transform.Find("Robot_Body").GetComponent<Robot>();
       
@@ -81,7 +82,7 @@ public class Bullet_Shooter_Script : MonoBehaviour
          
             this.Bullet= Instantiate(Bullet, transform.position,this.transform.rotation);
             //setting the bullet's length to fix mSpeed
-            this.Bullet.destination = Fixedshootvector.normalized* mSpeed;
+            this.Bullet.destination = Fixedshootvector.normalized* bulletspeed;
             if (this.ShootTypeenum == ShootTypeEnum.Random)
             {
                 SetDestination(this.Bullet);
@@ -119,14 +120,14 @@ public class Bullet_Shooter_Script : MonoBehaviour
             SetDestination(this.Bullet);
         }
     
-       // GameObject.Find("RobotCamera").GetComponent<HiResScreenShots>().TakeHiResShot(bullet);
+       GameObject.Find("RobotCamera").GetComponent<HiResScreenShots>().TakeHiResShot(bullet);
 
     }
 
     private void SetDestination(Bullet_Movement_Script bullet)
     {
        
-        bullet.destination = (DestinationRandomize() - transform.position).normalized*mSpeed;
+        bullet.destination = (DestinationRandomize() - transform.position).normalized*bulletspeed;
     }
 
     private Vector3 DestinationRandomize()
@@ -150,12 +151,22 @@ public class Bullet_Shooter_Script : MonoBehaviour
     }
     private Vector3 Random_Shootaround(BoxCollider bodypart)
     {
-        
-        float x = bodypart.transform.position.x + Random.Range(-bodypart.size.x * recoil, bodypart.size.x * recoil);
-        float y = bodypart.transform.position.y + Random.Range(-bodypart.size.y * recoil, bodypart.size.y * recoil);
-        float z = bodypart.transform.position.z + Random.Range(-bodypart.size.z * recoil, bodypart.size.z * recoil);
+        Vector3 vector;
+        float x;
+        float y;
+        float z;
 
-        return new Vector3(x, y, z);
+        do
+        {
+            x = bodypart.transform.position.x + Random.Range(-bodypart.size.x * recoil, bodypart.size.x * recoil);
+            y = bodypart.transform.position.y + Random.Range(-bodypart.size.y * recoil, bodypart.size.y * recoil);
+            z = bodypart.transform.position.z + Random.Range(-bodypart.size.z * recoil, bodypart.size.z * recoil);
+            vector = new Vector3(x, y, z);
+
+        } while (!usedvectors.Contains(vector));
+
+        usedvectors.Add(vector);
+        return vector;
     }
 
 }

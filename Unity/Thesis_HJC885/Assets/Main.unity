@@ -336,12 +336,12 @@ PrefabInstance:
     - target: {fileID: 1970259060286674570, guid: 185ae6ccb4fe8714cba6bca8a234ebee,
         type: 3}
       propertyPath: ShootTypeenum
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1970259060286674570, guid: 185ae6ccb4fe8714cba6bca8a234ebee,
         type: 3}
       propertyPath: Wheretoshootenum
-      value: 1
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 1970259060286674570, guid: 185ae6ccb4fe8714cba6bca8a234ebee,
         type: 3}
@@ -361,12 +361,22 @@ PrefabInstance:
     - target: {fileID: 1970259060286674570, guid: 185ae6ccb4fe8714cba6bca8a234ebee,
         type: 3}
       propertyPath: recoil
-      value: 0.1
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1970259060286674570, guid: 185ae6ccb4fe8714cba6bca8a234ebee,
         type: 3}
       propertyPath: actualbulletsize
-      value: 0.5
+      value: 0.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1970259060286674570, guid: 185ae6ccb4fe8714cba6bca8a234ebee,
+        type: 3}
+      propertyPath: delay
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1970259060286674570, guid: 185ae6ccb4fe8714cba6bca8a234ebee,
+        type: 3}
+      propertyPath: bulletspeed
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 1993461217568399573, guid: 185ae6ccb4fe8714cba6bca8a234ebee,
         type: 3}
@@ -496,12 +506,30 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 6825104376111006, guid: e3596bcd47336c0438a3b5dc47ad3f38, type: 3}
-      propertyPath: m_TargetDisplay
-      value: 2
+      propertyPath: m_NormalizedViewPortRect.y
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6825104376111006, guid: e3596bcd47336c0438a3b5dc47ad3f38, type: 3}
-      propertyPath: m_NormalizedViewPortRect.y
-      value: 0.5
+      propertyPath: m_NormalizedViewPortRect.width
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6825104376111006, guid: e3596bcd47336c0438a3b5dc47ad3f38, type: 3}
+      propertyPath: m_NormalizedViewPortRect.height
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6825104376111006, guid: e3596bcd47336c0438a3b5dc47ad3f38, type: 3}
+      propertyPath: field of view
+      value: 60
+      objectReference: {fileID: 0}
+    - target: {fileID: 2892143800732836182, guid: e3596bcd47336c0438a3b5dc47ad3f38,
+        type: 3}
+      propertyPath: secondcapturedelay
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2892143800732836182, guid: e3596bcd47336c0438a3b5dc47ad3f38,
+        type: 3}
+      propertyPath: capturedelay
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3262753733671782927, guid: e3596bcd47336c0438a3b5dc47ad3f38,
         type: 3}
@@ -512,6 +540,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Robot
+      objectReference: {fileID: 0}
+    - target: {fileID: 8957122997880494944, guid: e3596bcd47336c0438a3b5dc47ad3f38,
+        type: 3}
+      propertyPath: m_Name
+      value: RobotCamera
       objectReference: {fileID: 0}
     - target: {fileID: 9062283000640831868, guid: e3596bcd47336c0438a3b5dc47ad3f38,
         type: 3}

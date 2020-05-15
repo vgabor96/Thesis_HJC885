@@ -39,17 +39,19 @@ public class HiResScreenShots : MonoBehaviour
 
     public static string ScreenShotName(int width, int height, Bullet_Movement_Script bullet)
     {
-        return string.Format("{0}/screenshots/temp/screen_{1}x{2}_{4}_01_{3}.png",
+        return string.Format("{0}/screenshots/temp/{3}_{1}_01_{2}.png",
                              Application.dataPath,
-                             width, height,
-                              bullet.isreallyrobothitted,
+                             //width, height,
+                             bullet.destination,
+                             bullet.isreallyrobothitted,
                              System.DateTime.Now.ToString("yyyy-MM-dd_HH-mm-ss"));
     }
     public static string ScreenShotName2(int width, int height, Bullet_Movement_Script bullet)
     {
-        return string.Format("{0}/screenshots/temp/screen_{1}x{2}_{4}_02_{3}.png",
+        return string.Format("{0}/screenshots/temp/{3}_{1}_02_{2}.png",
                              Application.dataPath,
-                             width, height,
+                             //width, height,
+                             bullet.destination,
                              bullet.isreallyrobothitted,
                              System.DateTime.Now.ToString("yyyy-MM-dd_HH-mm-ss"));
     }
@@ -106,7 +108,7 @@ public class HiResScreenShots : MonoBehaviour
 
                 // robot.DoMovement = true;
                 //Time.timeScale = 0.5f;
-                GameObject.Find("Robot_Body").GetComponent<Robot>().RandomMovement();
+                //GameObject.Find("Robot_Body").GetComponent<Robot>().RandomMovement();
                 //Time.timeScale = 1;
 
             }
@@ -140,7 +142,7 @@ public class HiResScreenShots : MonoBehaviour
     }
     private void TakeHiResShot2()
     {
-        new WaitForSeconds(5);
+        //new WaitForSeconds(5);
         RenderTexture rt = new RenderTexture(resWidth, resHeight, 24);
         camera.targetTexture = rt;
         Texture2D screenShot = new Texture2D(resWidth, resHeight, TextureFormat.RGB24, false);
