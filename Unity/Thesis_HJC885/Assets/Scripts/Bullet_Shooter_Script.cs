@@ -11,7 +11,7 @@ public class Bullet_Shooter_Script : MonoBehaviour
     private int currentBullets = 0;
     public int numberOfBullets = 8;
     private Vector3 gen_robot_vector;
-    public float bulletspeed = 10f;
+    public float bulletspeed =0f;
     private float ResetDistance = 1000f;
 
     public Vector3 Fixedshootvector= new Vector3(0,0,0);
@@ -162,8 +162,8 @@ public class Bullet_Shooter_Script : MonoBehaviour
             y = bodypart.transform.position.y + Random.Range(-bodypart.size.y * recoil, bodypart.size.y * recoil);
             z = bodypart.transform.position.z + Random.Range(-bodypart.size.z * recoil, bodypart.size.z * recoil);
             vector = new Vector3(x, y, z);
-
-        } while (!usedvectors.Contains(vector));
+       
+        } while (usedvectors.Contains(vector));
 
         usedvectors.Add(vector);
         return vector;

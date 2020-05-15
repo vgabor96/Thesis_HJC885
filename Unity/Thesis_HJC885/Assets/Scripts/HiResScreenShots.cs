@@ -18,8 +18,11 @@ public class HiResScreenShots : MonoBehaviour
     public float capturedelay = .5f;
     public float secondcapturedelay = 5f;
     private bool start;
-    private Robot robot;
+    public float alltime;
+    private GameObject robot;
     private Bullet_Movement_Script bullet;
+    private GameObject bulletgenerator;
+    
 
 
     public static string ScreenShotName(int width, int height)
@@ -70,7 +73,18 @@ public class HiResScreenShots : MonoBehaviour
     }
     private void Start()
     {
-       robot = GameObject.Find("Robot_Body").GetComponent<Robot>();
+        robot = GameObject.Find("Robot_Body");
+        bulletgenerator = GameObject.Find("BulletGenerator");
+        Debug.Log("Robot pos" + robot.transform.position);
+        Debug.Log("bulletgen pos" + bulletgenerator.transform.position);
+        alltime = Vector3.Distance(robot.transform.position,bulletgenerator.transform.position)/bulletgenerator.GetComponent<Bullet_Shooter_Script>().bulletspeed;
+
+        Debug.Log("ALLTIME" + alltime);
+
+        capturedelay = 0;//alltime / 3;
+        secondcapturedelay = alltime / 2;
+
+
     }
 
     void LateUpdate()

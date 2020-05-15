@@ -524,12 +524,22 @@ PrefabInstance:
     - target: {fileID: 2892143800732836182, guid: e3596bcd47336c0438a3b5dc47ad3f38,
         type: 3}
       propertyPath: secondcapturedelay
-      value: 1
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 2892143800732836182, guid: e3596bcd47336c0438a3b5dc47ad3f38,
         type: 3}
       propertyPath: capturedelay
-      value: 1
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2892143800732836182, guid: e3596bcd47336c0438a3b5dc47ad3f38,
+        type: 3}
+      propertyPath: resWidth
+      value: 1920
+      objectReference: {fileID: 0}
+    - target: {fileID: 2892143800732836182, guid: e3596bcd47336c0438a3b5dc47ad3f38,
+        type: 3}
+      propertyPath: resHeight
+      value: 1080
       objectReference: {fileID: 0}
     - target: {fileID: 3262753733671782927, guid: e3596bcd47336c0438a3b5dc47ad3f38,
         type: 3}
