@@ -14,6 +14,7 @@ public class Robot : MonoBehaviour
     private GameObject body;
     public RaycastHit[] actbulletthits;
     public GeneticAlgorithm_ForMovement GA;
+    private float movementcostmultiplier=100;
 
 
 
@@ -181,7 +182,7 @@ public class Robot : MonoBehaviour
         //if (AcceptedMoveHeadvector(vector))
         //{
             childrenobjects["Head"].transform.Translate(vector);
-            MovementEnergyUsed += vector.magnitude;
+            MovementEnergyUsed += vector.magnitude* movementcostmultiplier;
           
         //}
      
@@ -200,7 +201,7 @@ public class Robot : MonoBehaviour
     public void MoveBody(Vector3 vector)
     {
         this.gameObject.transform.Find("Body").gameObject.transform.Translate(vector);
-        MovementEnergyUsed += vector.magnitude;
+        MovementEnergyUsed += vector.magnitude * movementcostmultiplier;
     }
     public void RotateBody(Vector3 vector)
     {
@@ -210,7 +211,7 @@ public class Robot : MonoBehaviour
     public void MoveLeg(Vector3 vector)
     {
         this.gameObject.transform.Find("Legs").gameObject.transform.Translate(vector);
-        MovementEnergyUsed += vector.magnitude;
+        MovementEnergyUsed += vector.magnitude * movementcostmultiplier;
     }
     public void RotateLeg(Vector3 vector)
     {
@@ -235,7 +236,7 @@ public class Robot : MonoBehaviour
             {
                 if (!(Vector3.Distance(childrenobjects[item.collider.gameObject.name].GetComponent<BoxCollider>().ClosestPoint(item.point), item.point) > GameObject.Find("BulletGenerator").GetComponent<Bullet_Shooter_Script>().actualbulletsize))
                 {
-                    sum += (1/Vector3.Distance(childrenobjects[item.collider.gameObject.name].position, item.point)) *10;
+                    sum += (1/Vector3.Distance(childrenobjects[item.collider.gameObject.name].position, item.point)) *1000000;
                 }
               
                 
@@ -246,7 +247,7 @@ public class Robot : MonoBehaviour
         double temp = MovementEnergyUsed;
 
         Reset();
-        Debug.Log(sum + temp);
+        Debug.Log("Sum: "+ sum +" Energy: "+temp+" => Fitness: "+ (sum+temp));
         //Time.timeScale = 1;
         return sum + temp;
     }

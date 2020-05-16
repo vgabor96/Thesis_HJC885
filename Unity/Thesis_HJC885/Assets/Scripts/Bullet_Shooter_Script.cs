@@ -109,7 +109,7 @@ public class Bullet_Shooter_Script : MonoBehaviour
  
     private void ReGenerate(Bullet_Movement_Script bullet)
     {
-        GameObject.Find("Robot_Body").GetComponent<Robot>().Reset();
+       // GameObject.Find("Robot_Body").GetComponent<Robot>().Reset();
         bullet.this_ID++;
         //bullet.isfired = true;
         bullet.isrobothitted = false;

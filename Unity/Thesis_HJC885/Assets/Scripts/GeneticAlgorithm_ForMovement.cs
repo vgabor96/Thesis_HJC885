@@ -44,7 +44,7 @@ public class GeneticAlgorithm_ForMovement : MonoBehaviour
 	}
 
 	int populationlimit = 100; //200
-	double achivefitness = 400;
+	double achivefitness = 200;
 	double bestfitness = double.MaxValue;
 	//double previousfitness = double.MaxValue;
 	double mutationrate = 8; //30
@@ -81,6 +81,7 @@ public class GeneticAlgorithm_ForMovement : MonoBehaviour
 			appendConsoleLog(Pbest, iteration);
 
 		}
+		fitness(Pbest.movement);
 		return GPM(Pbest);
 	}
 
@@ -133,13 +134,13 @@ public class GeneticAlgorithm_ForMovement : MonoBehaviour
 		//{
 		//	bestfitness = previousbestfitness;
 		//}
-		//if (pbest.fitness < bestfitness)
-		//{
-		Debug.Log("Iteration" + "\t" + actiteration);
+		if (pbest.fitness < bestfitness)
+		{
+			Debug.Log("Iteration" + "\t" + actiteration);
 		//Console.WriteLine("Fitness" + "\t" + pbest.fitness + System.Environment.NewLine);
 		Debug.Log("BEST Fitness:" + "\t" + bestfitness + System.Environment.NewLine);
-		//	bestfitness = pbest.fitness;
-		//}
+			bestfitness = pbest.fitness;
+		}
 
 
 	}
@@ -257,7 +258,8 @@ public class GeneticAlgorithm_ForMovement : MonoBehaviour
 	private bool STOPCONDITION()
 	{
 		actiteration++;
-		return iteration < actiteration || bestfitness <= achivefitness;
+		//iteration < actiteration ||
+		return  bestfitness <= achivefitness;
 	}
 
 	private Member Selectbest(List<Member> P)
@@ -285,7 +287,8 @@ public class GeneticAlgorithm_ForMovement : MonoBehaviour
 
 	private List<Member> INITIALIZEPOPULATION()
 	{
-	
+		bestfitness = double.MaxValue;
+		actiteration = 0;
 		List<Member> S = generateRandomMembers();
 
 
