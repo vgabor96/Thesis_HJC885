@@ -130,7 +130,7 @@ public class Robot : MonoBehaviour
 
         //Reset();
        
-        List<Vector3> onemovement2 = new List<Vector3>() { new Vector3(0, 0.2f, 0), new Vector3(0, 0, 0), new Vector3(0, 0, 0), new Vector3(0, 0, 0), new Vector3(0, 0, 0), new Vector3(0, 0, 0) };
+        List<Vector3> onemovement2 = new List<Vector3>() { new Vector3(0, 1, 0), new Vector3(0, 0, 0), new Vector3(0, 0, 0), new Vector3(0, 0, 0), new Vector3(0, 0, 0), new Vector3(0, 0, 0) };
      
         objective(onemovement2);
 
@@ -232,9 +232,14 @@ public class Robot : MonoBehaviour
                 
             }
         }
-        Debug.Log(sum + MovementEnergyUsed);
+
+
+        double temp = MovementEnergyUsed;
+
+        Reset();
+        Debug.Log(sum + temp);
         //Time.timeScale = 1;
-        return sum + MovementEnergyUsed;
+        return sum + temp;
     }
 
 
