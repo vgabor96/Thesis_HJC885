@@ -1,11 +1,18 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class GeneticAlgorithm_ForMovement : MonoBehaviour
 {
-	
+
+	public void Start()
+	{
+		
+	}
+
 	List<Vector3> movements;
 	public GeneticAlgorithm_ForMovement()
 	{
@@ -18,38 +25,41 @@ public class GeneticAlgorithm_ForMovement : MonoBehaviour
 		public Member()
 		{
 			this.ID = allID++;
-			route = new List<Vector3>();
+			movement = new List<Vector3>();
 		}
 
 		public Member(List<Vector3> towns)
 		{
 			this.ID = allID++;
-			route = new List<Vector3>();
+			movement = new List<Vector3>();
 			foreach (Vector3 item in towns)
 			{
-				route.Add(item);
+				movement.Add(item);
 			}
 		}
-		public List<Vector3> route;
+		public List<Vector3> movement;
 		public double fitness;
 
 		public int ID { get => id; set => id = value; }
 	}
 
-	int populationlimit = 1000; //200
+	int populationlimit = 100; //200
 	double achivefitness = 400;
 	double bestfitness = double.MaxValue;
 	//double previousfitness = double.MaxValue;
 	double mutationrate = 8; //30
-	int iteration = 1000000; //10000
+	int iteration = 100; //10000
 	int actiteration = 0;
-	int N = 30; //30
+	int N = 20; //30
+	int bodyparts = 3;
+	 float from = -5f;
+	 float to = 5f;
 	List<Member> M = new List<Member>();
 
-	public string Start(List<Vector3> S)
+	public List<Vector3> Startsolve(Func<List<Vector3>,double> fitness)
 	{
-		List<Member> P = INITIALIZEPOPULATION(S);
-		EVALUATION(P);
+		List<Member> P = INITIALIZEPOPULATION();
+		EVALUATION(P,fitness);
 		Member Pbest = Selectbest(P);
 		while (!STOPCONDITION())
 		{
@@ -65,7 +75,7 @@ public class GeneticAlgorithm_ForMovement : MonoBehaviour
 			ModifyOldPopulation(P, Pnew);
 			P = Pnew;
 			noduplicatecheck(P);
-			EVALUATION(P);
+			EVALUATION(P,fitness);
 			Pbest = Selectbest(P);
 			//appendFileLog(Pbest, iteration);
 			appendConsoleLog(Pbest, iteration);
@@ -85,15 +95,11 @@ public class GeneticAlgorithm_ForMovement : MonoBehaviour
 
 	}
 
-	private string GPM(Member pbest)
+	private List<Vector3> GPM(Member pbest)
 	{
-		string result = "";
-		for (int i = 0; i < pbest.route.Count - 2; i++)
-		{
-			result += pbest.route[i].x + " " + pbest.route[i].y + " " + pbest.route[i + 1].x + " " + pbest.route[i + 1].y;
-		}
+
 		//log.log_file.Close();
-		return result;
+		return pbest.movement;
 	}
 
 	//private void appendFileLog(Member pbest, int iteration)
@@ -140,16 +146,16 @@ public class GeneticAlgorithm_ForMovement : MonoBehaviour
 
 	private Member MUTATE(Member c)
 	{
-		for (int i = 0; i < c.route.Count; i++)
+		for (int i = 0; i < c.movement.Count; i++)
 		{
 
 
-			if (Random.Range(0, 100) <= this.mutationrate)
+			if (UnityEngine.Random.Range(0, 100) <= this.mutationrate/100)
 			{
 
 				//for (int i = 0; i < Utils.Utils.r.Next(1,3); i++) // (1,4)
 				//{
-				Swap(c.route, i, Random.Range(0, c.route.Count));
+				c.movement[i] = new Vector3(Random.Range(from,to), Random.Range(from, to), Random.Range(from, to));
 				//}
 			}
 		}
@@ -163,128 +169,32 @@ public class GeneticAlgorithm_ForMovement : MonoBehaviour
 
 		Member c = new Member();
 
-		//int i = 0;
-		//while (i < p1_pk[0].route.Count)
-		//{
-		//	int decision = Utils.Utils.r.Next(0, 3);
-		//	if (decision <= 1)
-		//	{
-		//		if (!isTownalreadyvisited(c, p1_pk[0].route[i]))
-		//		{
-		//			c.route.Add(p1_pk[0].route[i]);
+		
 
-		//		}
-		//		else if (!isTownalreadyvisited(c, p1_pk[1].route[i]))
-		//		{
-		//			c.route.Add(p1_pk[1].route[i]);
-
-		//		}
-		//		else
-		//		{
-		//			foreach (Town item in p1_pk[0].route)
-		//			{
-		//				if (!isTownalreadyvisited(c, item))
-		//				{
-		//					c.route.Add(item);
-		//					break;
-		//				}
-		//			}
-		//		}
-		//	}
-		//	else
-		//	{
-		//		if (!isTownalreadyvisited(c, p1_pk[1].route[i]))
-		//		{
-		//			c.route.Add(p1_pk[1].route[i]);
-
-		//		}
-		//		else if (!isTownalreadyvisited(c, p1_pk[0].route[i]))
-		//		{
-		//			c.route.Add(p1_pk[0].route[i]);
-
-		//		}
-		//		else
-		//		{
-		//			foreach (Town item in p1_pk[1].route)
-		//			{
-		//				if (!isTownalreadyvisited(c, item))
-		//				{
-		//					c.route.Add(item);
-		//					break;
-		//				}
-		//			}
-		//		}
-		//	}
-		//	i++;
-		//}
-
-
-		int rand1 =Random.Range(4, p1_pk[0].route.Count);
+		int rand1 = Random.Range(4, p1_pk[0].movement.Count);
 		int rand2 = rand1 - 2;
 
-		Vector3[] croute = new Vector3[p1_pk[0].route.Count];
+		Vector3[] croute = new Vector3[p1_pk[0].movement.Count];
 
-		List<Vector3> selectedtowns = new List<Vector3>();
-
-		if (p1_pk[0].fitness < p1_pk[1].fitness)
+		foreach (Vector3 item in p1_pk[0].movement)
 		{
-
-
-			for (int i = 0; i < 2; i++)
-			{
-				selectedtowns.Add(p1_pk[0].route[rand2 + i]);
-
-			}
-			for (int i = 0; i < 2; i++)
-			{
-				croute[rand2 + i] = selectedtowns[i];
-			}
-
-			for (int i = 0; i < p1_pk[1].route.Count; i++)
-			{
-				for (int j = 0; j < p1_pk[1].route.Count; j++)
-				{
-					if (croute[i] == null && !croute.Contains(p1_pk[1].route[j]))
-					{
-						croute[i] = p1_pk[1].route[j];
-
-					}
-				}
-			}
-
-
+			c.movement.Add(item);
 		}
-		else
+		
+		for (int i = 0; i < c.movement.Count; i++)
 		{
-
-			for (int i = 0; i < 2; i++)
+			int temp = Random.Range(0, 100) ;
+			if (temp <= 50)
 			{
-				selectedtowns.Add(p1_pk[1].route[rand2 + i]);
-
+				c.movement[i] = p1_pk[1].movement[i];
 			}
-			for (int i = 0; i < 2; i++)
+			else if (temp <= 75)
 			{
-				croute[rand2 + i] = selectedtowns[i];
-			}
-
-			for (int i = 0; i < p1_pk[0].route.Count; i++)
-			{
-				for (int j = 0; j < p1_pk[0].route.Count; j++)
-				{
-					if (croute[i] == null && !croute.Contains(p1_pk[0].route[j]))
-					{
-						croute[i] = p1_pk[0].route[j];
-
-					}
-				}
+				c.movement[i] = new Vector3(Random.Range(from, to), Random.Range(from, to), Random.Range(from, to));
 			}
 		}
 
 
-		for (int i = 0; i < croute.Length; i++)
-		{
-			c.route.Add(croute[i]);
-		}
 		return c;
 	}
 
@@ -293,7 +203,7 @@ public class GeneticAlgorithm_ForMovement : MonoBehaviour
 
 		List<Member> matingpool = new List<Member>();
 
-		if (Random.Range(0,2) == 0)
+		if (Random.Range(0,2) <= 1)
 		{
 			matingpool.Add(m.OrderBy(x => x.fitness).ToList()[0]);
 			for (int i = 0; i < 1; i++)
@@ -347,7 +257,7 @@ public class GeneticAlgorithm_ForMovement : MonoBehaviour
 	private bool STOPCONDITION()
 	{
 		actiteration++;
-		return /*iteration < actiteration ||*/ bestfitness <= achivefitness;
+		return iteration < actiteration || bestfitness <= achivefitness;
 	}
 
 	private Member Selectbest(List<Member> P)
@@ -365,18 +275,18 @@ public class GeneticAlgorithm_ForMovement : MonoBehaviour
 		return Pact;
 	}
 
-	private void EVALUATION(List<Member> p)
+	private void EVALUATION(List<Member> p, Func<List<Vector3>,double> fitness)
 	{
 		foreach (Member item in p)
 		{
-			item.fitness = objective(item.route);
+			item.fitness = fitness(item.movement);
 		}
 	}
 
-	private List<Member> INITIALIZEPOPULATION(List<Vector3> towns)
+	private List<Member> INITIALIZEPOPULATION()
 	{
-		movements = towns;
-		List<Member> S = generateFixnumberPermutations(towns);
+	
+		List<Member> S = generateRandomMembers();
 
 
 		List<Member> P = new List<Member>();
@@ -384,7 +294,7 @@ public class GeneticAlgorithm_ForMovement : MonoBehaviour
 		Member m = new Member();
 		while (i < populationlimit)
 		{
-			m = S[Random.Range(0, S.Count)];
+			m = S[UnityEngine.Random.Range(0, S.Count)];
 			if (!this.isMemberalreadyinPop(P, m))
 			{
 				P.Add(m);
@@ -406,7 +316,7 @@ public class GeneticAlgorithm_ForMovement : MonoBehaviour
 	{
 		foreach (Member item in p)
 		{
-			if (item.route.SequenceEqual(m.route))
+			if (item.movement.SequenceEqual(m.movement))
 			{
 				return true;
 			}
@@ -422,7 +332,7 @@ public class GeneticAlgorithm_ForMovement : MonoBehaviour
 		return list;
 	}
 
-	private List<Member> generateFixnumberPermutations(List<Vector3> towns)
+	private List<Member> generateRandomMembers()
 	{
 
 		int act = 0;
@@ -431,11 +341,11 @@ public class GeneticAlgorithm_ForMovement : MonoBehaviour
 		List<Member> S = new List<Member>();
 		while (act < populationlimit)
 		{
-			List<Vector3> randomroute = generateRandomroute(towns);
+			List<Vector3> randommovement = generateRandomMovement(from,to);
 			isdistinct = true;
 			foreach (Member item in S)
 			{
-				if (Enumerable.SequenceEqual(randomroute, item.route))
+				if (Enumerable.SequenceEqual(randommovement, item.movement))
 				{
 					isdistinct = false;
 					break;
@@ -443,7 +353,7 @@ public class GeneticAlgorithm_ForMovement : MonoBehaviour
 			}
 			if (isdistinct)
 			{
-				S.Add(new Member(randomroute));
+				S.Add(new Member(randommovement));
 				act++;
 			}
 
@@ -480,17 +390,17 @@ public class GeneticAlgorithm_ForMovement : MonoBehaviour
 			.SelectMany(t => list.Where(o => !t.Contains(o)),
 				(t1, t2) => t1.Concat(new T[] { t2 }));
 	}
-	private List<Vector3> generateRandomroute(List<Vector3> towns)
+	private List<Vector3> generateRandomMovement(float from, float to)
 	{
-		List<Vector3> randomroute = new List<Vector3>();
-		foreach (Vector3 item in towns)
+		List<Vector3> movement = new List<Vector3>();
+		for (int i = 0; i < bodyparts*2; i++)
 		{
-			randomroute.Add(item);
+			Vector3 temp = new Vector3(Random.Range(from, to), Random.Range(from, to), Random.Range(from, to));
+		
+			movement.Add(temp);
 		}
 
-		Shuffle(randomroute);
-
-		return randomroute;
+		return movement;
 
 
 	}
@@ -514,7 +424,7 @@ public class GeneticAlgorithm_ForMovement : MonoBehaviour
 		}
 		foreach (Member item in pop)
 		{
-			if (item.route.Distinct().ToList().Count < movements.Count)
+			if (item.movement.Distinct().ToList().Count < movements.Count)
 			{
 				isduplicated = true;
 				break;

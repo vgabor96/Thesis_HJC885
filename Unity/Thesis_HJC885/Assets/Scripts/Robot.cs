@@ -13,6 +13,7 @@ public class Robot : MonoBehaviour
     private Dictionary<string,Transform> childrenobjects;
     private GameObject body;
     public RaycastHit[] actbulletthits;
+    public GeneticAlgorithm_ForMovement GA;
 
 
 
@@ -20,6 +21,8 @@ public class Robot : MonoBehaviour
     public bool DoReset { get; set; }
 
     public bool DoResetAfter { get; set; }
+
+    public bool IsLearning;
 
     //How much energy the movements cost
     public float MovementEnergyUsed { get; set; }
@@ -129,10 +132,16 @@ public class Robot : MonoBehaviour
         //objective(onemovement);
 
         //Reset();
-       
-        List<Vector3> onemovement2 = new List<Vector3>() { new Vector3(0, 1, 0), new Vector3(0, 0, 0), new Vector3(0, 0, 0), new Vector3(0, 0, 0), new Vector3(0, 0, 0), new Vector3(0, 0, 0) };
-     
-        objective(onemovement2);
+
+        //List<Vector3> onemovement2 = new List<Vector3>() { new Vector3(0, 1, 0), new Vector3(0, 0, 0), new Vector3(0, 0, 0), new Vector3(0, 0, 0), new Vector3(0, 0, 0), new Vector3(0, 0, 0) };
+
+        //objective(onemovement2);
+
+        if (IsLearning)
+        {
+            DoOneMovement(GA.Startsolve(objective));
+        }
+      
 
 
         // Debug.Log("Energy Used: " + MovementEnergyUsed);
