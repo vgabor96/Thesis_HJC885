@@ -12,8 +12,9 @@ public class Robot : MonoBehaviour
     private Dictionary<string,Vector3> childrenstartpos;
     private Dictionary<string,Transform> childrenobjects;
     private GameObject body;
+    public RaycastHit[] actbulletthits;
 
-    
+
 
     public bool DoMovement { get; set; }
     public bool DoReset { get; set; }
@@ -43,7 +44,8 @@ public class Robot : MonoBehaviour
         }
         //Half of width
         headradius = childrenobjects["Head"].transform.localScale.x / 2;
-        Debug.Log(headradius);
+        //Debug.Log(headradius);
+
         //InvokeRepeating(nameof(RandomMovement), 0, 0.5f);
 
     }
@@ -122,11 +124,17 @@ public class Robot : MonoBehaviour
         //   RotateBody(RandomMovement_Vector3());
         //   MoveLeg(RandomMovement_Vector3());
         //  RotateLeg(RandomMovement_Vector3());
-        List<Vector3> onemovement = new List<Vector3>() { new Vector3(1, 1, 1), new Vector3(1, 1, 1), new Vector3(1, 1, 1), new Vector3(1, 1, 1), new Vector3(1, 1, 1), new Vector3(1, 1, 1) };
+        //List<Vector3> onemovement = new List<Vector3>() { new Vector3(1, 1, 1), new Vector3(1, 1, 1), new Vector3(1, 1, 1), new Vector3(1, 1, 1), new Vector3(1, 1, 1), new Vector3(1, 1, 1) };
 
-        DoOneMovement(onemovement);
+        //objective(onemovement);
 
-        Debug.Log("Energy Used: " + MovementEnergyUsed);
+        //Reset();
+
+        List<Vector3> onemovement2 = new List<Vector3>() { new Vector3(0, 1, 0), new Vector3(0, 0, 0), new Vector3(0, 0, 0), new Vector3(0, 0, 0), new Vector3(0, 0, 0), new Vector3(0, 0, 0) };
+        objective(onemovement2);
+
+
+        // Debug.Log("Energy Used: " + MovementEnergyUsed);
     }
 
     public void MoveFullBody(Vector3 vector)
@@ -199,6 +207,23 @@ public class Robot : MonoBehaviour
         this.gameObject.transform.Find("Legs").gameObject.transform.Rotate(vector);
         MovementEnergyUsed += vector.magnitude;
     }
+
+    public double objective(List<Vector3> solution)
+    {
+        DoOneMovement(solution);
+        double sum = 0;
+        foreach (RaycastHit item in actbulletthits)
+        {
+            if (childrenobjects.FirstOrDefault(x=>x.Key == item.collider.gameObject.name).Value != null)
+            {
+                sum += (1/Vector3.Distance(childrenobjects[item.collider.gameObject.name].position, item.point)) *10000;
+            }
+        }
+        Debug.Log(sum + MovementEnergyUsed);
+        return sum + MovementEnergyUsed;
+    }
+
+
     public void Reset()
     {
         //Debug.LogError("Robot position reseted");

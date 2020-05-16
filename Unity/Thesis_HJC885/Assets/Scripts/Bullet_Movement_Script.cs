@@ -18,13 +18,13 @@ public class Bullet_Movement_Script : MonoBehaviour
     public bool isfired;
     public bool isrobothitted;
     public bool isreallyrobothitted;
-
+    public RaycastHit[] hits;
 
     //public ParticleSystem explosion;
 
     //public Vector3 min;
     //public Vector3 max;
-  
+
 
     public Vector3 mPrevPos;
     // Start is called before the first frame update
@@ -71,7 +71,7 @@ public class Bullet_Movement_Script : MonoBehaviour
             raystart = new Ray(mPrevPos,(transform.position - mPrevPos)*int.MaxValue);
         //}
         //isfired = false;
-        RaycastHit[] hits = Physics.SphereCastAll(raystart, GetComponent<SphereCollider>().radius, (transform.position - mPrevPos).magnitude * int.MaxValue);
+        hits = Physics.SphereCastAll(raystart, GetComponent<SphereCollider>().radius, (transform.position - mPrevPos).magnitude * int.MaxValue);
         if (ishit)
         {     
             //Debug.Log($"{ this_ID} HITS:{hits.Length}");
@@ -79,6 +79,7 @@ public class Bullet_Movement_Script : MonoBehaviour
             for (i = 0; i < hits.Length; i++)
             {
                 hitname = hits[i].collider.gameObject.name;
+                //Debug.Log(hitname);
                 if (IsRobothitandLog(hitname))
                 {
                   

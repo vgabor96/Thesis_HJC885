@@ -346,17 +346,17 @@ PrefabInstance:
     - target: {fileID: 1970259060286674570, guid: 185ae6ccb4fe8714cba6bca8a234ebee,
         type: 3}
       propertyPath: Fixedshootvector.x
-      value: 4.9
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 1970259060286674570, guid: 185ae6ccb4fe8714cba6bca8a234ebee,
         type: 3}
       propertyPath: Fixedshootvector.y
-      value: 0.7
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 1970259060286674570, guid: 185ae6ccb4fe8714cba6bca8a234ebee,
         type: 3}
       propertyPath: Fixedshootvector.z
-      value: -0.1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1970259060286674570, guid: 185ae6ccb4fe8714cba6bca8a234ebee,
         type: 3}
@@ -505,42 +505,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 6825104376111006, guid: e3596bcd47336c0438a3b5dc47ad3f38, type: 3}
-      propertyPath: m_NormalizedViewPortRect.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6825104376111006, guid: e3596bcd47336c0438a3b5dc47ad3f38, type: 3}
-      propertyPath: m_NormalizedViewPortRect.width
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6825104376111006, guid: e3596bcd47336c0438a3b5dc47ad3f38, type: 3}
-      propertyPath: m_NormalizedViewPortRect.height
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6825104376111006, guid: e3596bcd47336c0438a3b5dc47ad3f38, type: 3}
-      propertyPath: field of view
-      value: 60
-      objectReference: {fileID: 0}
-    - target: {fileID: 2892143800732836182, guid: e3596bcd47336c0438a3b5dc47ad3f38,
-        type: 3}
-      propertyPath: secondcapturedelay
-      value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 2892143800732836182, guid: e3596bcd47336c0438a3b5dc47ad3f38,
-        type: 3}
-      propertyPath: capturedelay
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 2892143800732836182, guid: e3596bcd47336c0438a3b5dc47ad3f38,
-        type: 3}
-      propertyPath: resWidth
-      value: 1920
-      objectReference: {fileID: 0}
-    - target: {fileID: 2892143800732836182, guid: e3596bcd47336c0438a3b5dc47ad3f38,
-        type: 3}
-      propertyPath: resHeight
-      value: 1080
-      objectReference: {fileID: 0}
     - target: {fileID: 2892143800732836182, guid: e3596bcd47336c0438a3b5dc47ad3f38,
         type: 3}
       propertyPath: Istakingpictures

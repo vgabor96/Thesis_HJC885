@@ -74,8 +74,8 @@ public class HiResScreenShots : MonoBehaviour
     {
         robot = GameObject.Find("Robot_Body");
         bulletgenerator = GameObject.Find("BulletGenerator");
-        Debug.Log("Robot pos" + robot.transform.position);
-        Debug.Log("bulletgen pos" + bulletgenerator.transform.position);
+        //Debug.Log("Robot pos" + robot.transform.position);
+        //Debug.Log("bulletgen pos" + bulletgenerator.transform.position);
         alltime = Vector3.Distance(robot.transform.position,bulletgenerator.transform.position)/bulletgenerator.GetComponent<Bullet_Shooter_Script>().bulletspeed;
 
         Debug.Log("ALLTIME" + alltime);
