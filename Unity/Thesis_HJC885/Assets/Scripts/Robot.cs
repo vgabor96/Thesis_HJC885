@@ -129,8 +129,9 @@ public class Robot : MonoBehaviour
         //objective(onemovement);
 
         //Reset();
-
-        List<Vector3> onemovement2 = new List<Vector3>() { new Vector3(0, 1, 0), new Vector3(0, 0, 0), new Vector3(0, 0, 0), new Vector3(0, 0, 0), new Vector3(0, 0, 0), new Vector3(0, 0, 0) };
+       
+        List<Vector3> onemovement2 = new List<Vector3>() { new Vector3(0, 0.2f, 0), new Vector3(0, 0, 0), new Vector3(0, 0, 0), new Vector3(0, 0, 0), new Vector3(0, 0, 0), new Vector3(0, 0, 0) };
+     
         objective(onemovement2);
 
 
@@ -210,16 +211,29 @@ public class Robot : MonoBehaviour
 
     public double objective(List<Vector3> solution)
     {
+        //Time.timeScale = 0;   
+
         DoOneMovement(solution);
+       
+        GameObject.Find("BulletGenerator").GetComponent<Bullet_Shooter_Script>().RayCastBullet();
+      
         double sum = 0;
+
         foreach (RaycastHit item in actbulletthits)
         {
+           
             if (childrenobjects.FirstOrDefault(x=>x.Key == item.collider.gameObject.name).Value != null)
             {
-                sum += (1/Vector3.Distance(childrenobjects[item.collider.gameObject.name].position, item.point)) *10000;
+                if (!(Vector3.Distance(childrenobjects[item.collider.gameObject.name].GetComponent<BoxCollider>().ClosestPoint(item.point), item.point) > GameObject.Find("BulletGenerator").GetComponent<Bullet_Shooter_Script>().actualbulletsize))
+                {
+                    sum += (1/Vector3.Distance(childrenobjects[item.collider.gameObject.name].position, item.point)) *10;
+                }
+              
+                
             }
         }
         Debug.Log(sum + MovementEnergyUsed);
+        //Time.timeScale = 1;
         return sum + MovementEnergyUsed;
     }
 

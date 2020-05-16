@@ -164,6 +164,13 @@ public class Bullet_Movement_Script : MonoBehaviour
         //Debug.DrawLine(startingPos, robot.transform.position, Color.green);
     }
 
+    public void RAYCAST()
+    {
+        RaycastHit[] hitsa = Physics.SphereCastAll(raystart, GetComponent<SphereCollider>().radius, (transform.position - mPrevPos).magnitude * int.MaxValue);
+        //Debug.Log(hits);
+        GameObject.Find("Robot_Body").GetComponent<Robot>().actbulletthits = hitsa;
+    }
+
     private bool IsRobothitandLog(string name)
     {
         

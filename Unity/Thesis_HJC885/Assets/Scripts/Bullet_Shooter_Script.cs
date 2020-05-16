@@ -87,7 +87,7 @@ public class Bullet_Shooter_Script : MonoBehaviour
             {
                 SetDestination(this.Bullet);
             }
-           
+          
 
             this.Bullet.transform.position = this.transform.position;
             var body = GameObject.Find("Robot_Body").transform;
@@ -115,11 +115,12 @@ public class Bullet_Shooter_Script : MonoBehaviour
         bullet.isrobothitted = false;
         bullet.transform.position = this.transform.position;
         bullet.ishit = true;
+
         if (ShootTypeenum == ShootTypeEnum.Random)
         {
             SetDestination(this.Bullet);
         }
-        GameObject.Find("Robot_Body").GetComponent<Robot>().actbulletthits = bullet.hits;
+        //GameObject.Find("Robot_Body").GetComponent<Robot>().actbulletthits = bullet.hits;
         GameObject.Find("RobotCamera").GetComponent<HiResScreenShots>().TakeHiResShot(bullet);
 
     }
@@ -167,6 +168,11 @@ public class Bullet_Shooter_Script : MonoBehaviour
 
         usedvectors.Add(vector);
         return vector;
+    }
+
+    public void RayCastBullet()
+    {
+        this.Bullet.RAYCAST();
     }
 
 }
