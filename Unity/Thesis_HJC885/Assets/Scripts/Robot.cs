@@ -112,16 +112,19 @@ public class Robot : MonoBehaviour
 
     public void RandomMovement()
     {
-        
+
         //transform.Translate(new Vector3(0, 0, 4));//RandomMovement_Vector3() /* * Time.deltaTime*/);
-        MoveFullBody(new Vector3(0,0,0.4f));
+        //MoveFullBody(new Vector3(0,0,0.4f));
         //MoveHead(new Vector3(0, 0, 0.4f));
-       //MoveHead(new Vector3(0,0.2f,0));
+        //MoveHead(new Vector3(0,0.2f,0));
         //   RotateHead(RandomMovement_Vector3());
         //  MoveBody(RandomMovement_Vector3());
         //   RotateBody(RandomMovement_Vector3());
         //   MoveLeg(RandomMovement_Vector3());
         //  RotateLeg(RandomMovement_Vector3());
+        List<Vector3> onemovement = new List<Vector3>() { new Vector3(1, 1, 1), new Vector3(1, 1, 1), new Vector3(1, 1, 1), new Vector3(1, 1, 1), new Vector3(1, 1, 1), new Vector3(1, 1, 1) };
+
+        DoOneMovement(onemovement);
 
         Debug.Log("Energy Used: " + MovementEnergyUsed);
     }
@@ -143,6 +146,16 @@ public class Robot : MonoBehaviour
     {
         return Vector3.Distance(this.startpos, transform.localPosition + newvector) < radius;
         
+    }
+
+    public void DoOneMovement(List<Vector3> movementcomponents)
+    {
+        MoveHead(movementcomponents[0]);
+        RotateHead(movementcomponents[1]);
+        MoveBody(movementcomponents[2]);
+        RotateBody(movementcomponents[3]);
+        MoveLeg(movementcomponents[4]);
+        RotateLeg(movementcomponents[5]);
     }
 
     public void MoveHead(Vector3 vector)

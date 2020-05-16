@@ -341,8 +341,8 @@ Camera:
     serializedVersion: 2
     x: 0
     y: 0
-    width: 0.5
-    height: 0.5
+    width: 1
+    height: 1
   near clip plane: 0.3
   far clip plane: 1000
   field of view: 60
@@ -383,13 +383,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: faaa4feb96d052d4dbe09a6e460f5365, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  resWidth: 1024
-  resHeight: 768
+  resWidth: 1920
+  resHeight: 1080
   Istakingpictures: 1
   camera: {fileID: 4092648648463609956}
   timer: 3.4028235e+38
-  capturedelay: 0.5
-  secondcapturedelay: 5
+  capturedelay: 2
+  secondcapturedelay: 0.5
   alltime: 0
 --- !u!1 &5706762655560314139
 GameObject:
