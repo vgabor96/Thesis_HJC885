@@ -336,7 +336,7 @@ PrefabInstance:
     - target: {fileID: 1970259060286674570, guid: 185ae6ccb4fe8714cba6bca8a234ebee,
         type: 3}
       propertyPath: ShootTypeenum
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1970259060286674570, guid: 185ae6ccb4fe8714cba6bca8a234ebee,
         type: 3}
@@ -361,7 +361,7 @@ PrefabInstance:
     - target: {fileID: 1970259060286674570, guid: 185ae6ccb4fe8714cba6bca8a234ebee,
         type: 3}
       propertyPath: recoil
-      value: 1
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 1970259060286674570, guid: 185ae6ccb4fe8714cba6bca8a234ebee,
         type: 3}
@@ -376,7 +376,7 @@ PrefabInstance:
     - target: {fileID: 1970259060286674570, guid: 185ae6ccb4fe8714cba6bca8a234ebee,
         type: 3}
       propertyPath: bulletspeed
-      value: 5
+      value: 4.3
       objectReference: {fileID: 0}
     - target: {fileID: 1993461217568399573, guid: 185ae6ccb4fe8714cba6bca8a234ebee,
         type: 3}
@@ -510,10 +510,15 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 1539584345111154260, guid: e3596bcd47336c0438a3b5dc47ad3f38,
+        type: 3}
+      propertyPath: IsLearning
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2892143800732836182, guid: e3596bcd47336c0438a3b5dc47ad3f38,
         type: 3}
       propertyPath: Istakingpictures
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3262753733671782927, guid: e3596bcd47336c0438a3b5dc47ad3f38,
         type: 3}

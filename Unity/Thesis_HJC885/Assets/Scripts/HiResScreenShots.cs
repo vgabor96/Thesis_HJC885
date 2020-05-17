@@ -22,6 +22,10 @@ public class HiResScreenShots : MonoBehaviour
     private GameObject robot;
     private Bullet_Movement_Script bullet;
     private GameObject bulletgenerator;
+
+    private int truecounter = 0;
+
+    private int trueflag = 30;
     
 
 
@@ -50,12 +54,19 @@ public class HiResScreenShots : MonoBehaviour
     }
     public static string ScreenShotName2(int width, int height, Bullet_Movement_Script bullet)
     {
-        return string.Format("{0}/screenshots/temp/{1}_{2}_02.png",
-                             Application.dataPath,
-                             //width, height,
-                             bullet.destination,
-                             bullet.isreallyrobothitted);
-                             //,System.DateTime.Now.ToString("yyyy-MM-dd_HH-mm-ss"));
+        //return string.Format("{0}/screenshots/temp/{1}_{2}_02.png",
+        //                     Application.dataPath,
+        //                     //width, height,
+        //                     bullet.destination,
+        //                     bullet.isreallyrobothitted);
+        ////,System.DateTime.Now.ToString("yyyy-MM-dd_HH-mm-ss"));
+
+        return string.Format("{0}/screenshots/temp/{1}_{2}.png",
+                           Application.dataPath,
+                           //width, height,
+                           bullet.destination,
+                           bullet.isreallyrobothitted);
+        //,System.DateTime.Now.ToString("yyyy-MM-dd_HH-mm-ss"));
     }
 
     public void TakeHiResShot()
@@ -96,7 +107,7 @@ public class HiResScreenShots : MonoBehaviour
                 if (Time.time > timer)
                 {
                     Debug.Log("TakeHiResShot11111111111111");
-                    TakeHiResShot1();
+                   // TakeHiResShot1();
 
                     cantakeshot2 = true;
                     takeHiResShot = false;
@@ -173,6 +184,21 @@ public class HiResScreenShots : MonoBehaviour
 
         System.IO.File.WriteAllBytes(filename, bytes);
         Debug.Log(string.Format("Took screenshot to: {0}", filename));
+
+        if (filename.Contains("True"))
+        {
+            truecounter++;
+
+            if (truecounter>= trueflag)
+            {
+                GameObject.Find("BulletGenerator").GetComponent<Bullet_Shooter_Script>().bulletspeed += 0.1f;
+                if (GameObject.Find("BulletGenerator").GetComponent<Bullet_Shooter_Script>().bulletspeed > 6.3)
+                {
+                    Application.Quit();
+                }
+                truecounter = 0;
+            }
+        }
 
     }
 
