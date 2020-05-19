@@ -14,11 +14,12 @@ public class Bullet_Movement_Script : MonoBehaviour
     public float mSpeed = 1f;
     public bool ishit;
     private Ray ray;
-    private Ray raystart;
+    public Ray raystart;
     public bool isfired;
     public bool isrobothitted;
     public bool isreallyrobothitted;
     public RaycastHit[] hits;
+    public bool israydone = false;
 
     //public ParticleSystem explosion;
 
@@ -70,6 +71,13 @@ public class Bullet_Movement_Script : MonoBehaviour
         //{
             raystart = new Ray(mPrevPos,(transform.position - mPrevPos)*int.MaxValue);
         //}
+
+        if (!israydone)
+        {
+            GameObject.Find("Robot_Body").GetComponent<Robot>().bullettododge = this;
+            israydone = true;
+            GameObject.Find("Robot_Body").GetComponent<Robot>().DoMovement = true;
+        }
         //isfired = false;
         hits = Physics.SphereCastAll(raystart, GetComponent<SphereCollider>().radius, (transform.position - mPrevPos).magnitude * int.MaxValue);
         if (ishit)

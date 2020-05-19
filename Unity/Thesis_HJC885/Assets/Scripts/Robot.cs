@@ -1,7 +1,10 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.UIElements;
+using static Utils;
 
 public class Robot : MonoBehaviour
 {
@@ -14,7 +17,11 @@ public class Robot : MonoBehaviour
     private GameObject body;
     public RaycastHit[] actbulletthits;
     public GeneticAlgorithm_ForMovement GA;
+    public Bullet_Movement_Script bullettododge;
     private float movementcostmultiplier=100;
+
+    private List<GameObject> ghostbodyparts = new List<GameObject>();
+    //private Dictionary<string,BoxCollider> ghostbodyparts = new Dictionary<string, BoxCollider>();
 
 
 
@@ -36,23 +43,68 @@ public class Robot : MonoBehaviour
         MovementEnergyUsed = 0;
         childrenstartpos = new Dictionary<string, Vector3>();
         childrenobjects = new Dictionary<string, Transform>();
-        
+
+
+       // ghostbodyparts = new Dictionary<string, BoxCollider>();
+
         startpos = transform.localPosition;
         foreach (Transform item in this.transform)
         {
             //childrenstartpos.Add(item.localPosition);
             childrenstartpos.Add(item.name, item.transform.localPosition);
             childrenobjects.Add(item.name, item);
-
+            
+           
             //Debug.Log(item.localRotation);
         }
+
+     //   GetGhostBodyparts();
         //Half of width
         headradius = childrenobjects["Head"].transform.localScale.x / 2;
+
+
+
+
         //Debug.Log(headradius);
 
         //InvokeRepeating(nameof(RandomMovement), 0, 0.5f);
 
     }
+
+    //private void GetGhostBodyparts()
+    //{
+    //    BoxCollider head = gameObject.AddComponent<BoxCollider>();
+    //    head.size = childrenobjects["Head"].GetComponent<BoxCollider>().size;
+    //    head.center = childrenobjects["Head"].GetComponent<BoxCollider>().center;
+    //    head.transform.localPosition = childrenobjects["Head"].GetComponent<BoxCollider>().transform.localPosition;
+    //    head.transform.rotation = childrenobjects["Head"].GetComponent<BoxCollider>().transform.rotation;
+    //    head.isTrigger = true;
+    //    head.enabled = true;
+    //    head.name = "ghosthead";
+
+    //    BoxCollider body = gameObject.AddComponent<BoxCollider>();
+
+    //    body.size = childrenobjects["Body"].GetComponent<BoxCollider>().size;
+    //    body.center = childrenobjects["Body"].GetComponent<BoxCollider>().center;
+    //    body.transform.localPosition = childrenobjects["Body"].GetComponent<BoxCollider>().transform.localPosition;
+    //    body.transform.rotation = childrenobjects["Body"].GetComponent<BoxCollider>().transform.rotation;
+    //    body.isTrigger = true;
+    //    body.enabled = true;
+    //    body.name = "ghostbody";
+
+    //    BoxCollider leg = gameObject.AddComponent<BoxCollider>();
+
+    //    leg.size = childrenobjects["Legs"].GetComponent<BoxCollider>().size;
+    //    leg.center = childrenobjects["Legs"].GetComponent<BoxCollider>().center;
+    //    leg.transform.localPosition = childrenobjects["Legs"].GetComponent<BoxCollider>().transform.localPosition;
+    //    leg.transform.rotation = childrenobjects["Legs"].GetComponent<BoxCollider>().transform.rotation;
+    //    leg.isTrigger = true;
+    //    leg.enabled = true;
+    //    leg.name = "ghostleggs";
+    //    this.ghostbodyparts.Add("Head", head);
+    //    this.ghostbodyparts.Add("Body", body);
+    //    this.ghostbodyparts.Add("Legs", leg);
+    //}
 
     // Update is called once per frame
     void Update()
@@ -70,7 +122,8 @@ public class Robot : MonoBehaviour
         if (DoMovement)
         {
             Debug.Log("mooooooove");
-            RandomMovement();
+            //RandomMovement();
+            MovementToDodge(GameObject.Find("BulletGenerator").GetComponent<Bullet_Shooter_Script>().Bullet.destination);
             DoMovement = false;
             //Time.timeScale = 1;
         }
@@ -86,23 +139,23 @@ public class Robot : MonoBehaviour
         Vector3 newpos;
         if (bodypart == this.transform)
         {
-            next_x = Random.Range(0, 2) == 0 ? radius / 5 : -radius / 5;
-            next_z = Random.Range(0, 2) == 0 ? radius / 5 : -radius / 5;
+            next_x = UnityEngine.Random.Range(0, 2) == 0 ? radius / 5 : -radius / 5;
+            next_z = UnityEngine.Random.Range(0, 2) == 0 ? radius / 5 : -radius / 5;
         }
         else if (bodypart == childrenobjects["Head"])
         {
-            next_x = Random.Range(0, 2) == 0 ? headradius / 5 : -headradius / 5;
-            next_z = Random.Range(0, 2) == 0 ? headradius / 5 : -headradius / 5;       
+            next_x = UnityEngine.Random.Range(0, 2) == 0 ? headradius / 5 : -headradius / 5;
+            next_z = UnityEngine.Random.Range(0, 2) == 0 ? headradius / 5 : -headradius / 5;       
         }
         else if (bodypart == childrenobjects["Body"])
         {
-            next_x = Random.Range(0, 2) == 0 ? headradius / 5 : -headradius / 5;
-            next_z = Random.Range(0, 2) == 0 ? headradius / 5 : -headradius / 5;
+            next_x = UnityEngine.Random.Range(0, 2) == 0 ? headradius / 5 : -headradius / 5;
+            next_z = UnityEngine.Random.Range(0, 2) == 0 ? headradius / 5 : -headradius / 5;
         }
         else if (bodypart == childrenobjects["Legs"])
         {
-            next_x = Random.Range(0, 2) == 0 ? headradius / 5 : -headradius / 5;
-            next_z = Random.Range(0, 2) == 0 ? headradius / 5 : -headradius / 5;
+            next_x = UnityEngine.Random.Range(0, 2) == 0 ? headradius / 5 : -headradius / 5;
+            next_z = UnityEngine.Random.Range(0, 2) == 0 ? headradius / 5 : -headradius / 5;
         }
 
 
@@ -138,14 +191,19 @@ public class Robot : MonoBehaviour
 
         //objective(onemovement2);
 
-        if (IsLearning)
-        {
-            DoOneMovement(GA.Startsolve(objective));
-        }
+       
       
 
 
         // Debug.Log("Energy Used: " + MovementEnergyUsed);
+    }
+
+    public void MovementToDodge(Vector3 bullet)
+    {
+        if (IsLearning)
+        {
+            DoOneMovement(GA.StartFindingMovement(bullet,objective));
+        }
     }
 
     public void MoveFullBody(Vector3 vector)
@@ -182,6 +240,7 @@ public class Robot : MonoBehaviour
         //if (AcceptedMoveHeadvector(vector))
         //{
             childrenobjects["Head"].transform.Translate(vector);
+            //ghostbodyparts["Head"].transform.Translate(vector);
             MovementEnergyUsed += vector.magnitude* movementcostmultiplier;
           
         //}
@@ -196,52 +255,179 @@ public class Robot : MonoBehaviour
     public void RotateHead(Vector3 vector)
     {
         this.gameObject.transform.Find("Head").gameObject.transform.Rotate(vector);
+        //ghostbodyparts["Head"].transform.Rotate(vector);
         MovementEnergyUsed += vector.magnitude;
     }
     public void MoveBody(Vector3 vector)
     {
         this.gameObject.transform.Find("Body").gameObject.transform.Translate(vector);
+        //ghostbodyparts["Body"].transform.Translate(vector);
         MovementEnergyUsed += vector.magnitude * movementcostmultiplier;
     }
     public void RotateBody(Vector3 vector)
     {
         this.gameObject.transform.Find("Body").gameObject.transform.Rotate(vector);
+        //ghostbodyparts["Head"].transform.Rotate(vector);
         MovementEnergyUsed += vector.magnitude;
     }
     public void MoveLeg(Vector3 vector)
     {
         this.gameObject.transform.Find("Legs").gameObject.transform.Translate(vector);
+        //ghostbodyparts["Legs"].transform.Translate(vector);
         MovementEnergyUsed += vector.magnitude * movementcostmultiplier;
     }
     public void RotateLeg(Vector3 vector)
     {
         this.gameObject.transform.Find("Legs").gameObject.transform.Rotate(vector);
+        //ghostbodyparts["Legs"].transform.Rotate(vector);
         MovementEnergyUsed += vector.magnitude;
     }
 
     public double objective(List<Vector3> solution)
     {
         //Time.timeScale = 0;   
-
+        RaycastHit[] hits1 = Physics.SphereCastAll(bullettododge.raystart, bullettododge.GetComponent<SphereCollider>().radius, (bullettododge.transform.position - bullettododge.mPrevPos).magnitude * int.MaxValue);
         DoOneMovement(solution);
        
-        GameObject.Find("BulletGenerator").GetComponent<Bullet_Shooter_Script>().RayCastBullet();
+       // GameObject.Find("BulletGenerator").GetComponent<Bullet_Shooter_Script>().RayCastBullet();
       
         double sum = 0;
 
-        foreach (RaycastHit item in actbulletthits)
+        //foreach (RaycastHit item in actbulletthits)
+        //{
+
+        //    if (childrenobjects.FirstOrDefault(x=>x.Key == item.collider.gameObject.name).Value != null)
+        //    {
+        //        double dist1 = Vector3.Distance(childrenobjects[item.collider.gameObject.name].GetComponent<BoxCollider>().ClosestPoint(item.point), item.point);
+        //        double dist2 = GameObject.Find("BulletGenerator").GetComponent<Bullet_Shooter_Script>().actualbulletsize;
+        //        if (!(dist1> dist2))
+        //        {
+        //            sum += (1/Vector3.Distance(childrenobjects[item.collider.gameObject.name].position, item.point)) *1000000;
+        //        }
+
+
+        //    }
+        //}
+        //MeshFilter mf = GetComponent<MeshFilter>();
+        //if (mf && mf.sharedMesh)
+        //{
+        //    Bounds bounds = mf.sharedMesh.bounds;
+        //    BoxCollider collider = mf.gameObject.AddComponent<BoxCollider>();
+        //    collider.center = bounds.center;
+        //    collider.size = bounds.size;
+        //}
+
+
+
+        //GameObject ghosthead = Instantiate(childrenobjects["Head"].gameObject);
+
+        //ghosthead.GetComponent<BoxCollider>().name = "ghosthead";
+        //GameObject ghostbody = Instantiate(childrenobjects["Body"].gameObject);
+
+        //ghostbody.GetComponent<BoxCollider>().name = "ghostbody";
+        //GameObject ghostlegs = Instantiate(childrenobjects["Legs"].gameObject);
+
+        //ghostlegs.GetComponent<BoxCollider>().name = "ghostlegs";
+
+        //BoxCollider box = gameObject.AddComponent<BoxCollider>();
+        //box.size = childrenobjects["Head"].GetComponent<BoxCollider>().size;
+        //box.center = childrenobjects["Head"].GetComponent<BoxCollider>().center;
+        //box.transform.position = childrenobjects["Head"].GetComponent<BoxCollider>().transform.position;
+        //box.transform.rotation = childrenobjects["Head"].GetComponent<BoxCollider>().transform.rotation;
+        //box.isTrigger = true;
+        //box.enabled = true;
+        //box.name = "ghosthead";
+
+        //BoxCollider box1 = gameObject.AddComponent<BoxCollider>();
+        //box1.size = childrenobjects["Body"].GetComponent<BoxCollider>().size;
+        //box1.center = childrenobjects["Body"].GetComponent<BoxCollider>().center;
+        //box1.transform.position = childrenobjects["Body"].GetComponent<BoxCollider>().transform.position;
+        //box1.transform.rotation = childrenobjects["Body"].GetComponent<BoxCollider>().transform.rotation;
+        //box1.isTrigger = true;
+        //box1.enabled = true;
+        //box1.name = "ghostbody";
+
+        //BoxCollider box2 = gameObject.AddComponent<BoxCollider>();
+        //box2.size = childrenobjects["Legs"].GetComponent<BoxCollider>().size;
+        //box2.center = childrenobjects["Legs"].GetComponent<BoxCollider>().center;
+        //box2.transform.position = childrenobjects["Legs"].GetComponent<BoxCollider>().transform.position;
+        //box2.transform.rotation = childrenobjects["Legs"].GetComponent<BoxCollider>().transform.rotation;
+        //box2.isTrigger = true;
+        //box2.enabled = true;
+        //box2.name = "ghostleg";
+        //Utils.GetCopyOf(box, childrenobjects["Head"].GetComponent<BoxCollider>());
+
+
+        RaycastHit[] hits = Physics.SphereCastAll(bullettododge.raystart, bullettododge.GetComponent<SphereCollider>().radius, (bullettododge.transform.position - bullettododge.mPrevPos).magnitude * int.MaxValue);
+
+        bool isa = hits.Equals(hits1);
+
+
+        //foreach (RaycastHit item in hits)
+        //{
+
+        //    if (childrenobjects.FirstOrDefault(x => x.Key == item.collider.gameObject.name).Value != null)
+        //    {
+        //        foreach (Transform bodypart in this.childrenobjects.Values)
+        //        {
+        //            if (bodypart.GetComponent<BoxCollider>() != null)
+        //            {
+
+        //                double dist1 = Vector3.Distance(bodypart.GetComponent<BoxCollider>().ClosestPoint(item.point), item.point);
+        //                double dist2 = GameObject.Find("BulletGenerator").GetComponent<Bullet_Shooter_Script>().actualbulletsize*2;
+        //                if (!(dist1 > dist2))
+        //                {
+        //                    // sum += (1 / Vector3.Distance(childrenobjects[item.collider.gameObject.name].position, item.point)) * 1000000;
+        //                    sum += 1000000;
+        //                }
+        //                //double dist1 = Vector3.Distance(childrenobjects[item2.collider.gameObject.name].GetComponent<BoxCollider>().ClosestPoint(item.point), item.point);
+        //                //double dist2 = GameObject.Find("BulletGenerator").GetComponent<Bullet_Shooter_Script>().actualbulletsize * 2;
+        //                //if (!(dist1 > dist2))
+        //                //{
+        //                //    // sum += (1 / Vector3.Distance(childrenobjects[item.collider.gameObject.name].position, item.point)) * 1000000;
+        //                //    sum += 1000000;
+        //                //}
+        //            }
+
+        //        }
+
+
+
+        //    }
+        //    //if (item.collider.name == "ghosthead")
+        //    //{
+        //    //    sum += 1000000;
+        //    //}
+        //    //if (item.collider.name == "ghostbody")
+        //    //{
+        //    //    sum += 1000000;
+        //    //}
+        //    //if (item.collider.name == "ghostleg")
+        //    //{
+        //    //    sum += 1000000;
+        //    //}
+        //}
+
+
+       
+        foreach (Transform bodypart in childrenobjects.Values)
         {
-           
-            if (childrenobjects.FirstOrDefault(x=>x.Key == item.collider.gameObject.name).Value != null)
+            if (bodypart.GetComponent<BoxCollider>() != null)
             {
-                if (!(Vector3.Distance(childrenobjects[item.collider.gameObject.name].GetComponent<BoxCollider>().ClosestPoint(item.point), item.point) > GameObject.Find("BulletGenerator").GetComponent<Bullet_Shooter_Script>().actualbulletsize))
+                float dist1 = DistanceToRay(bullettododge.raystart, bodypart.GetComponent<BoxCollider>().transform.position);
+                if (dist1 < (GameObject.Find("BulletGenerator").GetComponent<Bullet_Shooter_Script>().actualbulletsize*0.75 + (bodypart.GetComponent<BoxCollider>().size.x*0.75)))
                 {
-                    sum += (1/Vector3.Distance(childrenobjects[item.collider.gameObject.name].position, item.point)) *1000000;
+                    sum += (1 / dist1) * 100000;
                 }
-              
-                
             }
+
+          
         }
+
+        //Destroy(ghosthead);
+        //Destroy(ghostbody);
+        //Destroy(ghostlegs);
+
 
 
         double temp = MovementEnergyUsed;
@@ -252,7 +438,10 @@ public class Robot : MonoBehaviour
         return sum + temp;
     }
 
-
+    public static float DistanceToRay(Ray ray, Vector3 point)
+    {
+        return Vector3.Cross(ray.direction, point - ray.origin).magnitude;
+    }
     public void Reset()
     {
         //Debug.LogError("Robot position reseted");
@@ -266,8 +455,21 @@ public class Robot : MonoBehaviour
             item.transform.rotation = new Quaternion(0, 0, 0, 0);
             i++;
         }
+
+
+
+        //foreach (string item in ghostbodyparts.Keys)
+        //{
+        //    ghostbodyparts[item].size = childrenobjects[item].GetComponent<BoxCollider>().size;
+        //    ghostbodyparts[item].center = childrenobjects[item].GetComponent<BoxCollider>().center;
+        //    ghostbodyparts[item].transform.localPosition = childrenobjects[item].GetComponent<BoxCollider>().transform.localPosition;
+        //    ghostbodyparts[item].transform.rotation = childrenobjects[item].GetComponent<BoxCollider>().transform.rotation;
+
+        //}
         MovementEnergyUsed = 0;
         //this.transform.position = startpos;
     }
+
+
 }
 

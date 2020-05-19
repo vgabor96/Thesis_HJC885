@@ -98,6 +98,21 @@ PrefabInstance:
       propertyPath: m_Name
       value: Robot_Body
       objectReference: {fileID: 0}
+    - target: {fileID: 6431492495122014922, guid: 72a8518a694a26d4a84c9243be942b43,
+        type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1.25
+      objectReference: {fileID: 0}
+    - target: {fileID: 8617983638113623744, guid: 72a8518a694a26d4a84c9243be942b43,
+        type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1.274
+      objectReference: {fileID: 0}
+    - target: {fileID: 8940057038114097954, guid: 72a8518a694a26d4a84c9243be942b43,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.389
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 72a8518a694a26d4a84c9243be942b43, type: 3}
 --- !u!4 &2394091231966423003 stripped

@@ -1,6 +1,8 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class Bullet_Shooter_Script : MonoBehaviour
 {
@@ -46,9 +48,11 @@ public class Bullet_Shooter_Script : MonoBehaviour
         usedvectors = new List<Vector3>();
         //Move the object to the same position as the parent:
         robot = robotobject.transform.Find("Robot_Body").GetComponent<Robot>();
-      
+
+       // robot = gameObject.GetComponent<Robot>();
+
         transform.rotation = Quaternion.Euler(new Vector3(0, 0, 0));
-        this.ResetDistance = Vector3.Distance(this.robotobject.transform.position, this.transform.position);//+10f;
+        this.ResetDistance = Vector3.Distance(this.robotobject.transform.position, this.transform.position)+5f;//+10f;
         this.gen_robot_vector = robotobject.transform.position - this.transform.position;
         Debug.DrawLine(transform.localPosition, robotobject.transform.localPosition);
 
@@ -83,6 +87,9 @@ public class Bullet_Shooter_Script : MonoBehaviour
             this.Bullet= Instantiate(Bullet, transform.position,this.transform.rotation);
             //setting the bullet's length to fix mSpeed
             this.Bullet.destination = Fixedshootvector.normalized* bulletspeed;
+            this.Bullet.destination.x = (float)Math.Round(this.Bullet.destination.x, 1);
+            this.Bullet.destination.y = (float)Math.Round(this.Bullet.destination.y, 1);
+            this.Bullet.destination.z = (float)Math.Round(this.Bullet.destination.z, 1);
             if (this.ShootTypeenum == ShootTypeEnum.Random)
             {
                 SetDestination(this.Bullet);
@@ -100,7 +107,7 @@ public class Bullet_Shooter_Script : MonoBehaviour
             //this.Bullet.mSpeed = this.mSpeed;
             this.Bullet.ResetDistance = this.ResetDistance;
 
-
+           
             currentBullets++;
         }
 
@@ -109,7 +116,9 @@ public class Bullet_Shooter_Script : MonoBehaviour
  
     private void ReGenerate(Bullet_Movement_Script bullet)
     {
-       // GameObject.Find("Robot_Body").GetComponent<Robot>().Reset();
+        GameObject.Find("Robot_Body").GetComponent<Robot>().DoReset = true;
+        // GameObject.Find("Robot_Body").GetComponent<Robot>().Reset();
+        bullet.israydone = false;
         bullet.this_ID++;
         //bullet.isfired = true;
         bullet.isrobothitted = false;
@@ -121,7 +130,10 @@ public class Bullet_Shooter_Script : MonoBehaviour
             SetDestination(this.Bullet);
         }
         //GameObject.Find("Robot_Body").GetComponent<Robot>().actbulletthits = bullet.hits;
+     
+       
         GameObject.Find("RobotCamera").GetComponent<HiResScreenShots>().TakeHiResShot(bullet);
+
 
     }
 
@@ -162,6 +174,10 @@ public class Bullet_Shooter_Script : MonoBehaviour
             x = bodypart.transform.position.x + Random.Range(-bodypart.size.x * recoil, bodypart.size.x * recoil);
             y = bodypart.transform.position.y + Random.Range(-bodypart.size.y * recoil, bodypart.size.y * recoil);
             z = bodypart.transform.position.z + Random.Range(-bodypart.size.z * recoil, bodypart.size.z * recoil);
+            x = (float)Math.Round(x, 1);
+            y = (float)Math.Round(y, 1);
+            z = (float)Math.Round(z, 1);
+
             vector = new Vector3(x, y, z);
        
         } while (usedvectors.Contains(vector));
