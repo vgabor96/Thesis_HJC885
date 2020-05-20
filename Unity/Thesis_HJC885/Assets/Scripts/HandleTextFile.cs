@@ -84,7 +84,7 @@ public class HandleTextFile : MonoBehaviour
         TextAsset asset = (TextAsset)Resources.Load("test");
 
         //Print the text from the file
-        Debug.Log(asset.text);
+       // Debug.Log(asset.text);
     }
 
     [MenuItem("Tools/Read file")]

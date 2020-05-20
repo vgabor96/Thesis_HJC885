@@ -46,7 +46,8 @@ MonoBehaviour:
   delay: 1
   recoil: 1
   numberOfBullets: 1
-  mSpeed: 5
+  bulletspeed: 0
+  Fixedshootvector: {x: 0, y: 0, z: 0}
   Bullet: {fileID: 5510428482363700592, guid: 168f64e27c185894f800448a1750063e, type: 3}
   robotobject: {fileID: 6790511235177514559, guid: e3596bcd47336c0438a3b5dc47ad3f38,
     type: 3}

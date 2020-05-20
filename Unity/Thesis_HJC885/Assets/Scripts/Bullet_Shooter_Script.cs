@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
+using System.Net.Http.Headers;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -15,6 +17,11 @@ public class Bullet_Shooter_Script : MonoBehaviour
     private Vector3 gen_robot_vector;
     public float bulletspeed =0f;
     private float ResetDistance = 1000f;
+
+    private int Learnedbulletcountact = 0;
+    private int Learnedbulletcountsmax = 0;
+
+    private List<Vector3> learnedbulletvectors;
 
     public Vector3 Fixedshootvector= new Vector3(0,0,0);
 
@@ -37,7 +44,8 @@ public class Bullet_Shooter_Script : MonoBehaviour
     public enum ShootTypeEnum
     { 
         FixedBullet,
-        Random
+        Random,
+        LearnedBullets
        
     }
     public WhereToShootEnum Wheretoshootenum = WhereToShootEnum.random;
@@ -45,10 +53,20 @@ public class Bullet_Shooter_Script : MonoBehaviour
  
     void Start()
     {
+        Learnedbulletcountact = 0;
+        learnedbulletvectors = new List<Vector3>();
         usedvectors = new List<Vector3>();
         //Move the object to the same position as the parent:
         robot = robotobject.transform.Find("Robot_Body").GetComponent<Robot>();
 
+        if (this.ShootTypeenum == ShootTypeEnum.LearnedBullets)
+        {
+            foreach (Vector3 item in HandleTextFile.ReadSolutions().Keys)
+            {
+                learnedbulletvectors.Add(item);
+            }
+            Learnedbulletcountsmax = learnedbulletvectors.Count;
+        }
        // robot = gameObject.GetComponent<Robot>();
 
         transform.rotation = Quaternion.Euler(new Vector3(0, 0, 0));
@@ -90,10 +108,9 @@ public class Bullet_Shooter_Script : MonoBehaviour
             this.Bullet.destination.x = (float)Math.Round(this.Bullet.destination.x, 1);
             this.Bullet.destination.y = (float)Math.Round(this.Bullet.destination.y, 1);
             this.Bullet.destination.z = (float)Math.Round(this.Bullet.destination.z, 1);
-            if (this.ShootTypeenum == ShootTypeEnum.Random)
-            {
-                SetDestination(this.Bullet);
-            }
+          
+            SetDestination(this.Bullet);
+          
           
 
             this.Bullet.transform.position = this.transform.position;
@@ -118,17 +135,23 @@ public class Bullet_Shooter_Script : MonoBehaviour
     {
         GameObject.Find("Robot_Body").GetComponent<Robot>().DoReset = true;
         // GameObject.Find("Robot_Body").GetComponent<Robot>().Reset();
+
         bullet.israydone = false;
         bullet.this_ID++;
         //bullet.isfired = true;
-        bullet.isrobothitted = false;
+        if (!bullet.ishittedrobot)
+        {
+            Debug.Log($"Bullet ID: {bullet.this_ID} Vector:{bullet.destination} Length: {bullet.destination.magnitude} Hit => NONE");
+        }
+        bullet.ishittedrobot = false;
+        //bullet.isrobothitted = false;
         bullet.transform.position = this.transform.position;
         bullet.ishit = true;
 
-        if (ShootTypeenum == ShootTypeEnum.Random)
-        {
-            SetDestination(this.Bullet);
-        }
+     
+        SetDestination(this.Bullet);
+        
+
         //GameObject.Find("Robot_Body").GetComponent<Robot>().actbulletthits = bullet.hits;
      
        
@@ -139,9 +162,25 @@ public class Bullet_Shooter_Script : MonoBehaviour
 
     private void SetDestination(Bullet_Movement_Script bullet)
     {
+        if (this.ShootTypeenum == ShootTypeEnum.Random)
+        {
+            bullet.destination = (DestinationRandomize() - transform.position).normalized * bulletspeed;
+        }
+        else if (this.ShootTypeenum == ShootTypeEnum.LearnedBullets)
+        {
+            if (Learnedbulletcountact>= Learnedbulletcountsmax)
+            {
+                Learnedbulletcountact = 0;
+
+            }
+            bullet.destination = learnedbulletvectors[Learnedbulletcountact];
+            Learnedbulletcountact++;
+        }
        
-        bullet.destination = (DestinationRandomize() - transform.position).normalized*bulletspeed;
+     
     }
+
+   
 
     private Vector3 DestinationRandomize()
     {

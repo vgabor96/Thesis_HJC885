@@ -47,15 +47,15 @@ public class GeneticAlgorithm_ForMovement : MonoBehaviour
 		public int ID { get => id; set => id = value; }
 	}
 
-	int populationlimit = 1000; //200
-	double achivefitness = 99999;
+	int populationlimit = 5000; //200
+	double achivefitness = 500;//99999;
 	double bestfitness = double.MaxValue;
 	//double previousfitness = double.MaxValue;
-	double mutationrate = 5; //30
-	int iteration = 10000; //10000
-	int iterationneedstochangesignificantlymax = 7000;
+	double mutationrate = 10; //30
+	int iteration = 500000; //10000
+	int iterationneedstochangesignificantlymax = 10000;
 	int iterationneedstochangesignificantly = 0;
-	double needstochangevalue = 500;
+	double needstochangevalue = 50;
 	double previousbest = double.MaxValue;
 	int actiteration = 0;
 	int N = 20; //30
@@ -88,11 +88,11 @@ public class GeneticAlgorithm_ForMovement : MonoBehaviour
 	}
 	public List<Vector3> StartFindingMovement(Vector3 bulletdest,Func<List<Vector3>, double> fitness)
 	{
-		List<Vector3> v = new List<Vector3>() { new Vector3(0, 0, 0), new Vector3(0, 0, 0), new Vector3(0, 0, 0), new Vector3(0, 0, 0), new Vector3(0, 0, 0), new Vector3(0, 0, 0) };
-		fitness(v);
+		//List<Vector3> v = new List<Vector3>() { new Vector3(0, 0, 0), new Vector3(0, 0, 0), new Vector3(0, 0, 0), new Vector3(0, 0, 0), new Vector3(0, 0, 0), new Vector3(0, 0, 0), new Vector3(0, 0, 0) };
+		//fitness(v);
 		if (isVectorcontained(bulletdest))
 		{
-			fitness(solvedmovements[bulletdest]);
+			//fitness(solvedmovements[bulletdest]);
 			return solvedmovements[bulletdest];
 		}
 		this.bulletdest = bulletdest;
@@ -104,35 +104,49 @@ public class GeneticAlgorithm_ForMovement : MonoBehaviour
 	public List<Vector3> Startsolve(Func<List<Vector3>,double> fitness)
 	{
 		List<Member> P = INITIALIZEPOPULATION();
-		EVALUATION(P,fitness);
+		EVALUATION(P, fitness);
 		Member Pbest = Selectbest(P);
-		while (!STOPCONDITION())
+		while (fitness(Pbest.movement)>achivefitness)
 		{
-			List<Member> Pnew = SELECTPARENTS(P);
-			while (Pnew.Count < N)
+			previousbest = double.MaxValue;
+			bestfitness = double.MaxValue;
+			actiteration = 0;
+			iterationneedstochangesignificantly = 0;
+
+
+			P = INITIALIZEPOPULATION();
+			P.OrderByDescending(x => x.fitness).ToList().RemoveRange(0, 1);
+			P.Add(Pbest);
+			EVALUATION(P, fitness);
+			 Pbest = Selectbest(P);
+			while (!STOPCONDITION())
 			{
-				List<Member> p1_pk = SELECTION(M);
-				Member c = CROSSOVER(p1_pk);
-				c = MUTATE(c);
-				Addchild(Pnew, c);
+				List<Member> Pnew = SELECTPARENTS(P);
+				while (Pnew.Count < N)
+				{
+					List<Member> p1_pk = SELECTION(M);
+					Member c = CROSSOVER(p1_pk);
+					c = MUTATE(c);
+					Addchild(Pnew, c);
+				}
+
+				ModifyOldPopulation(P, Pnew);
+				P = Pnew;
+				noduplicatecheck(P);
+				EVALUATION(P, fitness);
+				Pbest = Selectbest(P);
+				//appendFileLog(Pbest, iteration);
+				appendConsoleLog(Pbest, iteration);
+
 			}
-
-			ModifyOldPopulation(P, Pnew);
-			P = Pnew;
-			noduplicatecheck(P);
-			EVALUATION(P,fitness);
-			Pbest = Selectbest(P);
-			//appendFileLog(Pbest, iteration);
-			appendConsoleLog(Pbest, iteration);
-
+			//fitness(Pbest.movement);
 		}
-		fitness(Pbest.movement);
 		return GPM(Pbest);
 	}
 
 	private void ModifyOldPopulation(List<Member> p, List<Member> pnew)
 	{
-		p.OrderBy(x => x.fitness).ToList().RemoveRange(0, pnew.Count);
+		p.OrderByDescending(x => x.fitness).ToList().RemoveRange(0, pnew.Count);
 		foreach (Member item in pnew)
 		{
 			p.Add(item);
@@ -145,6 +159,7 @@ public class GeneticAlgorithm_ForMovement : MonoBehaviour
 	{
 
 		//log.log_file.Close();
+		Debug.Log("fitness:" + pbest.fitness);
 		solvedmovements.Add(bulletdest, pbest.movement);
 		HandleTextFile.WriteSolution(bulletdest,pbest.movement);
 		return pbest.movement;
@@ -229,6 +244,9 @@ public class GeneticAlgorithm_ForMovement : MonoBehaviour
 						break;
 					case 5:
 						c.movement[i] = RandomLegrotation();
+						break;
+					case 6:
+						c.movement[i] = RandomFullBodyMovement();
 						break;
 					default:
 						break;
@@ -333,18 +351,18 @@ public class GeneticAlgorithm_ForMovement : MonoBehaviour
 	{
 		actiteration++;
 
-		if (actiteration % 1000 ==0)
+		if (actiteration % 1000 == 0)
 		{
 
 		}
 
-		if (previousbest <= bestfitness+ needstochangevalue)
+		if (previousbest <= bestfitness + needstochangevalue)
 		{
 			iterationneedstochangesignificantly++;
 		}
-	
-		//iteration < actiteration ||
-		return  bestfitness <= achivefitness || iterationneedstochangesignificantly>iterationneedstochangesignificantlymax;
+
+		//
+		return iteration < actiteration || bestfitness <= achivefitness || iterationneedstochangesignificantly > iterationneedstochangesignificantlymax;
 	}
 
 	private Member Selectbest(List<Member> P)
@@ -379,9 +397,22 @@ public class GeneticAlgorithm_ForMovement : MonoBehaviour
 
 		List<Member> P = new List<Member>();
 		int i = 0;
-		Member m = new Member() { movement=new List<Vector3>() {new Vector3(0,0,0), new Vector3(0, 0, 0), new Vector3(0, 0, 0), new Vector3(0, 0, 0), new Vector3(0, 0, 0), new Vector3(0, 0, 0) } };
+		Member m = new Member() { movement=new List<Vector3>() {new Vector3(0,0,0), new Vector3(0, 0, 0), new Vector3(0, 0, 0), new Vector3(0, 0, 0), new Vector3(0, 0, 0), new Vector3(0, 0, 0), new Vector3(0, 0, 0) } };
+		Member m2 = new Member();
+
+		if (Random.Range(0,2)==0)
+		{
+			m2.movement = new List<Vector3>() { new Vector3(0, 0, 0), new Vector3(0, 0, 0), new Vector3(0, 0, 0), new Vector3(0, 0, 0), new Vector3(0, 0, 0), new Vector3(0, 0, 0), new Vector3(0, 0, -0.5f) };
+		}
+		else
+		{
+			m2.movement = new List<Vector3>() { new Vector3(0, 0, 0), new Vector3(0, 0, 0), new Vector3(0, 0, 0), new Vector3(0, 0, 0), new Vector3(0, 0, 0), new Vector3(0, 0, 0), new Vector3(0, 0, +0.5f) };
+		}
+
+		
 		P.Add(m);
-		while (i < populationlimit-1)
+		P.Add(m2);
+		while (i < populationlimit-2)
 		{
 			m = S[UnityEngine.Random.Range(0, S.Count)];
 			if (!this.isMemberalreadyinPop(P, m))
@@ -505,9 +536,15 @@ public class GeneticAlgorithm_ForMovement : MonoBehaviour
 		movement.Add(RandomBodyrotation());
 		movement.Add(RandomLegMovement());
 		movement.Add(RandomLegrotation());
+		movement.Add(RandomFullBodyMovement());
 		return movement;
 
 
+	}
+
+	private Vector3 RandomFullBodyMovement()
+	{
+		return new Vector3(0, 0, Random.Range(-1, 1f));
 	}
 
 	private Vector3 RandomHeadrotation()
@@ -516,7 +553,7 @@ public class GeneticAlgorithm_ForMovement : MonoBehaviour
 	}
 	private Vector3 RandomHeadMovement()
 	{
-		return new Vector3(Random.Range(-0.2f, 0.5f), Random.Range(-0.2f, 0.2f), Random.Range(-1f, 1f));
+		return new Vector3(Random.Range(-0.2f, 0.3f), Random.Range(-0.2f, 0.2f), Random.Range(-0.3f, 0.3f));
 	}
 	private Vector3 RandomBodyrotation()
 	{

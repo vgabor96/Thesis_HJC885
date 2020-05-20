@@ -20,6 +20,8 @@ public class Robot : MonoBehaviour
     public Bullet_Movement_Script bullettododge;
     private float movementcostmultiplier=100;
 
+    public double actmovfitness = 0;
+
     private List<GameObject> ghostbodyparts = new List<GameObject>();
     //private Dictionary<string,BoxCollider> ghostbodyparts = new Dictionary<string, BoxCollider>();
 
@@ -114,16 +116,17 @@ public class Robot : MonoBehaviour
         DoReset |= Input.GetKeyDown(KeyCode.R);
         if (DoReset)
         {
-            Debug.Log("RESET");
+            //Debug.Log("RESET");
             Reset();
             DoReset = false;
 
         }
         if (DoMovement)
         {
-            Debug.Log("mooooooove");
+            //Debug.Log("mooooooove");
             //RandomMovement();
-            MovementToDodge(GameObject.Find("BulletGenerator").GetComponent<Bullet_Shooter_Script>().Bullet.destination);
+            MovementToDodge(GameObject.Find("BulletGenerator").GetComponent<Bullet_Shooter_Script>().Bullet);
+            //bullettododge.Raycasthits();
             DoMovement = false;
             //Time.timeScale = 1;
         }
@@ -198,11 +201,15 @@ public class Robot : MonoBehaviour
         // Debug.Log("Energy Used: " + MovementEnergyUsed);
     }
 
-    public void MovementToDodge(Vector3 bullet)
+    public void MovementToDodge(Bullet_Movement_Script bullet)
     {
+        this.bullettododge = bullet;
         if (IsLearning)
         {
-            DoOneMovement(GA.StartFindingMovement(bullet,objective));
+       
+
+            DoOneMovement(GA.StartFindingMovement(bullet.destination, objective));
+           
         }
     }
 
@@ -233,6 +240,7 @@ public class Robot : MonoBehaviour
         RotateBody(movementcomponents[3]);
         MoveLeg(movementcomponents[4]);
         RotateLeg(movementcomponents[5]);
+        MoveFullBody(movementcomponents[6]);
     }
 
     public void MoveHead(Vector3 vector)
@@ -286,136 +294,19 @@ public class Robot : MonoBehaviour
     public double objective(List<Vector3> solution)
     {
         //Time.timeScale = 0;   
-        RaycastHit[] hits1 = Physics.SphereCastAll(bullettododge.raystart, bullettododge.GetComponent<SphereCollider>().radius, (bullettododge.transform.position - bullettododge.mPrevPos).magnitude * int.MaxValue);
+        //RaycastHit[] hits1 = Physics.SphereCastAll(bullettododge.raystart, bullettododge.GetComponent<SphereCollider>().radius, (bullettododge.transform.position - bullettododge.mPrevPos).magnitude * int.MaxValue);
         DoOneMovement(solution);
        
        // GameObject.Find("BulletGenerator").GetComponent<Bullet_Shooter_Script>().RayCastBullet();
       
         double sum = 0;
 
-        //foreach (RaycastHit item in actbulletthits)
-        //{
-
-        //    if (childrenobjects.FirstOrDefault(x=>x.Key == item.collider.gameObject.name).Value != null)
-        //    {
-        //        double dist1 = Vector3.Distance(childrenobjects[item.collider.gameObject.name].GetComponent<BoxCollider>().ClosestPoint(item.point), item.point);
-        //        double dist2 = GameObject.Find("BulletGenerator").GetComponent<Bullet_Shooter_Script>().actualbulletsize;
-        //        if (!(dist1> dist2))
-        //        {
-        //            sum += (1/Vector3.Distance(childrenobjects[item.collider.gameObject.name].position, item.point)) *1000000;
-        //        }
-
-
-        //    }
-        //}
-        //MeshFilter mf = GetComponent<MeshFilter>();
-        //if (mf && mf.sharedMesh)
-        //{
-        //    Bounds bounds = mf.sharedMesh.bounds;
-        //    BoxCollider collider = mf.gameObject.AddComponent<BoxCollider>();
-        //    collider.center = bounds.center;
-        //    collider.size = bounds.size;
-        //}
-
-
-
-        //GameObject ghosthead = Instantiate(childrenobjects["Head"].gameObject);
-
-        //ghosthead.GetComponent<BoxCollider>().name = "ghosthead";
-        //GameObject ghostbody = Instantiate(childrenobjects["Body"].gameObject);
-
-        //ghostbody.GetComponent<BoxCollider>().name = "ghostbody";
-        //GameObject ghostlegs = Instantiate(childrenobjects["Legs"].gameObject);
-
-        //ghostlegs.GetComponent<BoxCollider>().name = "ghostlegs";
-
-        //BoxCollider box = gameObject.AddComponent<BoxCollider>();
-        //box.size = childrenobjects["Head"].GetComponent<BoxCollider>().size;
-        //box.center = childrenobjects["Head"].GetComponent<BoxCollider>().center;
-        //box.transform.position = childrenobjects["Head"].GetComponent<BoxCollider>().transform.position;
-        //box.transform.rotation = childrenobjects["Head"].GetComponent<BoxCollider>().transform.rotation;
-        //box.isTrigger = true;
-        //box.enabled = true;
-        //box.name = "ghosthead";
-
-        //BoxCollider box1 = gameObject.AddComponent<BoxCollider>();
-        //box1.size = childrenobjects["Body"].GetComponent<BoxCollider>().size;
-        //box1.center = childrenobjects["Body"].GetComponent<BoxCollider>().center;
-        //box1.transform.position = childrenobjects["Body"].GetComponent<BoxCollider>().transform.position;
-        //box1.transform.rotation = childrenobjects["Body"].GetComponent<BoxCollider>().transform.rotation;
-        //box1.isTrigger = true;
-        //box1.enabled = true;
-        //box1.name = "ghostbody";
-
-        //BoxCollider box2 = gameObject.AddComponent<BoxCollider>();
-        //box2.size = childrenobjects["Legs"].GetComponent<BoxCollider>().size;
-        //box2.center = childrenobjects["Legs"].GetComponent<BoxCollider>().center;
-        //box2.transform.position = childrenobjects["Legs"].GetComponent<BoxCollider>().transform.position;
-        //box2.transform.rotation = childrenobjects["Legs"].GetComponent<BoxCollider>().transform.rotation;
-        //box2.isTrigger = true;
-        //box2.enabled = true;
-        //box2.name = "ghostleg";
-        //Utils.GetCopyOf(box, childrenobjects["Head"].GetComponent<BoxCollider>());
-
-
-        RaycastHit[] hits = Physics.SphereCastAll(bullettododge.raystart, bullettododge.GetComponent<SphereCollider>().radius, (bullettododge.transform.position - bullettododge.mPrevPos).magnitude * int.MaxValue);
-
-        bool isa = hits.Equals(hits1);
-
-
-        //foreach (RaycastHit item in hits)
-        //{
-
-        //    if (childrenobjects.FirstOrDefault(x => x.Key == item.collider.gameObject.name).Value != null)
-        //    {
-        //        foreach (Transform bodypart in this.childrenobjects.Values)
-        //        {
-        //            if (bodypart.GetComponent<BoxCollider>() != null)
-        //            {
-
-        //                double dist1 = Vector3.Distance(bodypart.GetComponent<BoxCollider>().ClosestPoint(item.point), item.point);
-        //                double dist2 = GameObject.Find("BulletGenerator").GetComponent<Bullet_Shooter_Script>().actualbulletsize*2;
-        //                if (!(dist1 > dist2))
-        //                {
-        //                    // sum += (1 / Vector3.Distance(childrenobjects[item.collider.gameObject.name].position, item.point)) * 1000000;
-        //                    sum += 1000000;
-        //                }
-        //                //double dist1 = Vector3.Distance(childrenobjects[item2.collider.gameObject.name].GetComponent<BoxCollider>().ClosestPoint(item.point), item.point);
-        //                //double dist2 = GameObject.Find("BulletGenerator").GetComponent<Bullet_Shooter_Script>().actualbulletsize * 2;
-        //                //if (!(dist1 > dist2))
-        //                //{
-        //                //    // sum += (1 / Vector3.Distance(childrenobjects[item.collider.gameObject.name].position, item.point)) * 1000000;
-        //                //    sum += 1000000;
-        //                //}
-        //            }
-
-        //        }
-
-
-
-        //    }
-        //    //if (item.collider.name == "ghosthead")
-        //    //{
-        //    //    sum += 1000000;
-        //    //}
-        //    //if (item.collider.name == "ghostbody")
-        //    //{
-        //    //    sum += 1000000;
-        //    //}
-        //    //if (item.collider.name == "ghostleg")
-        //    //{
-        //    //    sum += 1000000;
-        //    //}
-        //}
-
-
-       
         foreach (Transform bodypart in childrenobjects.Values)
         {
             if (bodypart.GetComponent<BoxCollider>() != null)
             {
                 float dist1 = DistanceToRay(bullettododge.raystart, bodypart.GetComponent<BoxCollider>().transform.position);
-                if (dist1 < (GameObject.Find("BulletGenerator").GetComponent<Bullet_Shooter_Script>().actualbulletsize*0.75 + (bodypart.GetComponent<BoxCollider>().size.x*0.75)))
+                if (dist1 < (GameObject.Find("BulletGenerator").GetComponent<Bullet_Shooter_Script>().actualbulletsize + (bodypart.GetComponent<BoxCollider>().size.x*0.75)))
                 {
                     sum += (1 / dist1) * 100000;
                 }
@@ -433,7 +324,7 @@ public class Robot : MonoBehaviour
         double temp = MovementEnergyUsed;
 
         Reset();
-        Debug.Log("Sum: "+ sum +" Energy: "+temp+" => Fitness: "+ (sum+temp));
+        //Debug.Log("Sum: "+ sum +" Energy: "+temp+" => Fitness: "+ (sum+temp));
         //Time.timeScale = 1;
         return sum + temp;
     }

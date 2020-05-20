@@ -88,7 +88,7 @@ BoxCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1057362570160717304}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
@@ -244,8 +244,8 @@ GameObject:
   - component: {fileID: 1868352198232967201}
   - component: {fileID: 1868352198232967230}
   - component: {fileID: 1868352198232967231}
-  - component: {fileID: 1868352198232967228}
   - component: {fileID: -5942061104445709906}
+  - component: {fileID: 1903025147639945395}
   m_Layer: 0
   m_Name: Robot_Body
   m_TagString: Untagged
@@ -318,19 +318,6 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
---- !u!65 &1868352198232967228
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1868352198232967229}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1, y: 2.8623886, z: 1.0133729}
-  m_Center: {x: 0, y: -0.9, z: 0.006686449}
 --- !u!114 &-5942061104445709906
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -345,7 +332,22 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   radius: 0
   GA: {fileID: 7217647861803808300}
+  bullettododge: {fileID: 0}
+  actmovfitness: 0
   IsLearning: 1
+--- !u!65 &1903025147639945395
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1868352198232967229}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 3.437892, z: 1.1214256}
+  m_Center: {x: 0, y: -0.718946, z: 0}
 --- !u!1 &4943310607423468698
 GameObject:
   m_ObjectHideFlags: 0
@@ -538,7 +540,7 @@ BoxCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5706762655560314139}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
@@ -633,7 +635,7 @@ BoxCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7380180479278235438}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
