@@ -106,12 +106,15 @@ public class HandleTextFile : MonoBehaviour
 
         
             Vector3 key = StringToVector3(splittedvectors[0]);
-            List<Vector3> movement = new List<Vector3>();
-            for (int i = 1; i < splittedvectors.Length; i++)
-            {
-                movement.Add(StringToVector3(splittedvectors[i]));
-            }
-            solutions.Add(key, movement);
+            
+                    List<Vector3> movement = new List<Vector3>();
+                    for (int i = 1; i < splittedvectors.Length; i++)
+                    {
+                        movement.Add(StringToVector3(splittedvectors[i]));
+                    }
+                    solutions.Add(key, movement);
+            
+         
             }
             else
             {

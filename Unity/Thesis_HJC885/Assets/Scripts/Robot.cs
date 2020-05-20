@@ -18,7 +18,7 @@ public class Robot : MonoBehaviour
     public RaycastHit[] actbulletthits;
     public GeneticAlgorithm_ForMovement GA;
     public Bullet_Movement_Script bullettododge;
-    private float movementcostmultiplier=100;
+    private float movementcostmultiplier=120;
 
     public double actmovfitness = 0;
 
@@ -180,7 +180,9 @@ public class Robot : MonoBehaviour
         //MoveHead(new Vector3(0, 0, 0.4f));
         //MoveHead(new Vector3(0,0.2f,0));
         //   RotateHead(RandomMovement_Vector3());
-        //  MoveBody(RandomMovement_Vector3());
+        //MoveFullBody(new Vector3(0,0,0.5f));
+        //MoveHead(new Vector3(0, 0, 0.5f));
+
         //   RotateBody(RandomMovement_Vector3());
         //   MoveLeg(RandomMovement_Vector3());
         //  RotateLeg(RandomMovement_Vector3());

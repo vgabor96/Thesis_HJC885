@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -78,13 +79,27 @@ public class GeneticAlgorithm_ForMovement : MonoBehaviour
 
 	private bool AreVectorsEqual(Vector3 v1, Vector3 v2)
 	{
-		double x1 = (double)v1.x;
-		double y1 = (double)v1.y;
-		double z1 = (double)v1.z;
-		double x2 = (double)v2.x;
-		double y2 = (double)v2.y;
-		double z2 = (double)v2.z;
+		double x1 = Math.Round(v1.x,1);
+		double y1 = Math.Round(v1.y,1);
+		double z1 = Math.Round(v1.z,1);
+		double x2 = Math.Round(v2.x,1);
+		double y2 = Math.Round(v2.y,1);
+		double z2 = Math.Round(v2.z,1);
 		return (x1 == x2) && (y1 == y2) && (z1 == z2);
+	}
+
+	private List<Vector3> GetMovementWIthKey(Vector3 vec)
+	{
+		int i = 0;
+		for (i = 0; i < solvedmovements.Count; i++)
+		{
+			if (AreVectorsEqual(solvedmovements.Keys.ElementAt(i), vec))
+			{
+				break;
+			}
+		}
+	
+		return solvedmovements[solvedmovements.Keys.ElementAt(i)];
 	}
 	public List<Vector3> StartFindingMovement(Vector3 bulletdest,Func<List<Vector3>, double> fitness)
 	{
@@ -92,11 +107,16 @@ public class GeneticAlgorithm_ForMovement : MonoBehaviour
 		//fitness(v);
 		if (isVectorcontained(bulletdest))
 		{
+			
 			//fitness(solvedmovements[bulletdest]);
-			return solvedmovements[bulletdest];
+			return GetMovementWIthKey(bulletdest);
 		}
-		this.bulletdest = bulletdest;
-		return Startsolve(fitness);
+		else
+		{
+			this.bulletdest = bulletdest;
+			return Startsolve(fitness);
+		}
+	
 
 
 
