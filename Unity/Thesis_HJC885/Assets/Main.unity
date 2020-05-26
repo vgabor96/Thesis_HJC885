@@ -149,7 +149,7 @@ BoxCollider:
   m_GameObject: {fileID: 8990968}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
@@ -346,12 +346,12 @@ PrefabInstance:
     - target: {fileID: 1970259060286674570, guid: 185ae6ccb4fe8714cba6bca8a234ebee,
         type: 3}
       propertyPath: Fixedshootvector.y
-      value: -0.1
+      value: -0.4
       objectReference: {fileID: 0}
     - target: {fileID: 1970259060286674570, guid: 185ae6ccb4fe8714cba6bca8a234ebee,
         type: 3}
       propertyPath: Fixedshootvector.z
-      value: -0.2
+      value: 0.1
       objectReference: {fileID: 0}
     - target: {fileID: 1970259060286674570, guid: 185ae6ccb4fe8714cba6bca8a234ebee,
         type: 3}
@@ -376,7 +376,7 @@ PrefabInstance:
     - target: {fileID: 1970259060286674570, guid: 185ae6ccb4fe8714cba6bca8a234ebee,
         type: 3}
       propertyPath: ShootTypeenum
-      value: 0
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 1993461217568399573, guid: 185ae6ccb4fe8714cba6bca8a234ebee,
         type: 3}
@@ -526,7 +526,7 @@ CapsuleCollider:
   m_GameObject: {fileID: 704674299}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 1
+  m_Enabled: 0
   m_Radius: 0.5000001
   m_Height: 2
   m_Direction: 1
@@ -620,7 +620,7 @@ CapsuleCollider:
   m_GameObject: {fileID: 1182798077}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 1
+  m_Enabled: 0
   m_Radius: 0.5000001
   m_Height: 2
   m_Direction: 1
@@ -708,9 +708,9 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 1539584345111154260, guid: e3596bcd47336c0438a3b5dc47ad3f38,
+    - target: {fileID: 2503115651920803657, guid: e3596bcd47336c0438a3b5dc47ad3f38,
         type: 3}
-      propertyPath: IsLearning
+      propertyPath: m_Enabled
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2892143800732836182, guid: e3596bcd47336c0438a3b5dc47ad3f38,
@@ -898,8 +898,7 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents:
-    - {fileID: 1686351207975008370, guid: e3596bcd47336c0438a3b5dc47ad3f38, type: 3}
+    m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e3596bcd47336c0438a3b5dc47ad3f38, type: 3}
 --- !u!1 &1865688187 stripped
 GameObject:
@@ -935,7 +934,7 @@ MeshCollider:
   m_GameObject: {fileID: 2043750820}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
   m_Convex: 0
   m_CookingOptions: 14

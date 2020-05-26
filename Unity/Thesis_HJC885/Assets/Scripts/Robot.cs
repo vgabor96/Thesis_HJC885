@@ -250,6 +250,7 @@ public class Robot : MonoBehaviour
         //if (AcceptedMoveHeadvector(vector))
         //{
             childrenobjects["Head"].transform.Translate(vector);
+        //childrenobjects["Head"].gameObject.GetComponent<Rigidbody>().MovePosition(childrenobjects["Head"].gameObject.GetComponent<Rigidbody>().position + vector);
             //ghostbodyparts["Head"].transform.Translate(vector);
             MovementEnergyUsed += vector.magnitude* movementcostmultiplier;
           
@@ -265,30 +266,35 @@ public class Robot : MonoBehaviour
     public void RotateHead(Vector3 vector)
     {
         this.gameObject.transform.Find("Head").gameObject.transform.Rotate(vector);
+        //childrenobjects["Head"].gameObject.GetComponent<Rigidbody>().MoveRotation(Quaternion.Euler( childrenobjects["Head"].gameObject.GetComponent<Rigidbody>().rotation.eulerAngles + vector));
         //ghostbodyparts["Head"].transform.Rotate(vector);
         MovementEnergyUsed += vector.magnitude;
     }
     public void MoveBody(Vector3 vector)
     {
         this.gameObject.transform.Find("Body").gameObject.transform.Translate(vector);
+        //childrenobjects["Body"].gameObject.GetComponent<Rigidbody>().MovePosition(childrenobjects["Body"].gameObject.GetComponent<Rigidbody>().position + vector);
         //ghostbodyparts["Body"].transform.Translate(vector);
         MovementEnergyUsed += vector.magnitude * movementcostmultiplier;
     }
     public void RotateBody(Vector3 vector)
     {
         this.gameObject.transform.Find("Body").gameObject.transform.Rotate(vector);
+        //childrenobjects["Body"].gameObject.GetComponent<Rigidbody>().MoveRotation(Quaternion.Euler(childrenobjects["Body"].gameObject.GetComponent<Rigidbody>().rotation.eulerAngles + vector));
         //ghostbodyparts["Head"].transform.Rotate(vector);
         MovementEnergyUsed += vector.magnitude;
     }
     public void MoveLeg(Vector3 vector)
     {
         this.gameObject.transform.Find("Legs").gameObject.transform.Translate(vector);
+        //childrenobjects["Legs"].gameObject.GetComponent<Rigidbody>().MovePosition(childrenobjects["Legs"].gameObject.GetComponent<Rigidbody>().position + vector);
         //ghostbodyparts["Legs"].transform.Translate(vector);
         MovementEnergyUsed += vector.magnitude * movementcostmultiplier;
     }
     public void RotateLeg(Vector3 vector)
     {
-        this.gameObject.transform.Find("Legs").gameObject.transform.Rotate(vector);
+       this.gameObject.transform.Find("Legs").gameObject.transform.Rotate(vector);
+        //childrenobjects["Legs"].gameObject.GetComponent<Rigidbody>().MoveRotation(Quaternion.Euler(childrenobjects["Legs"].gameObject.GetComponent<Rigidbody>().rotation.eulerAngles + vector));
         //ghostbodyparts["Legs"].transform.Rotate(vector);
         MovementEnergyUsed += vector.magnitude;
     }
@@ -339,14 +345,23 @@ public class Robot : MonoBehaviour
     {
         //Debug.LogError("Robot position reseted");
         this.transform.localPosition = startpos;
+
+        //this.GetComponent<Rigidbody>().MovePosition(startpos);
+        //this.GetComponent<Rigidbody>().MoveRotation(new Quaternion(0, 0, 0, 0));
         this.transform.rotation = new Quaternion(0, 0, 0, 0);
         int i = 0;
         foreach (Transform item in this.transform)
         {
+            //if (item.GetComponent<Rigidbody>() !=null)
+            //{
+                item.transform.localPosition = childrenstartpos[item.name];
+                item.transform.rotation = new Quaternion(0, 0, 0, 0);
 
-            item.transform.localPosition = childrenstartpos[item.name];
-            item.transform.rotation = new Quaternion(0, 0, 0, 0);
-            i++;
+                //item.GetComponent<Rigidbody>().MovePosition(childrenstartpos[item.name]);
+                //item.GetComponent<Rigidbody>().MoveRotation(new Quaternion(0, 0, 0, 0).normalized);
+                i++;
+            //}
+           
         }
 
 
@@ -363,5 +378,10 @@ public class Robot : MonoBehaviour
         //this.transform.position = startpos;
     }
 
+    private void OnCollisionEnter(Collision collision)
+    {
+
+        //Debug.Log(collision.rigidbody);
+    }
 }
 

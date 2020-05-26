@@ -117,7 +117,7 @@ public class Bullet_Shooter_Script : MonoBehaviour
             var body = GameObject.Find("Robot_Body").transform;
 
             //Setting Bullet Size, Rotation, MSpeed,ResetDistance,Destination
-            this.Bullet.transform.localScale = body.GetChild(0).GetComponent<BoxCollider>().size*actualbulletsize;
+           // this.Bullet.transform.localScale = body.GetChild(0).GetComponent<BoxCollider>().size*actualbulletsize;
             this.Bullet.transform.rotation = this.transform.rotation;
           
             ReGenerate(this.Bullet);
@@ -135,7 +135,7 @@ public class Bullet_Shooter_Script : MonoBehaviour
     {
         GameObject.Find("Robot_Body").GetComponent<Robot>().DoReset = true;
         // GameObject.Find("Robot_Body").GetComponent<Robot>().Reset();
-
+        //this.Bullet.gameObject.transform.GetChild(0).transform.position = new Vector3(bullet.resetx, this.Bullet.gameObject.transform.GetChild(0).transform.position.y, this.Bullet.gameObject.transform.GetChild(0).transform.position.z);
         bullet.israydone = false;
         bullet.this_ID++;
         //bullet.isfired = true;
@@ -213,6 +213,7 @@ public class Bullet_Shooter_Script : MonoBehaviour
             x = bodypart.transform.position.x + Random.Range(-bodypart.size.x * recoil, bodypart.size.x * recoil);
             y = bodypart.transform.position.y + Random.Range(-bodypart.size.y * recoil, bodypart.size.y * recoil);
             z = bodypart.transform.position.z + Random.Range(-bodypart.size.z * recoil, bodypart.size.z * recoil);
+
             x = (float)Math.Round(x, 1);
             y = (float)Math.Round(y, 1);
             z = (float)Math.Round(z, 1);
