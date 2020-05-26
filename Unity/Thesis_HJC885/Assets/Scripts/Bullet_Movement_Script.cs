@@ -247,6 +247,10 @@ public class Bullet_Movement_Script : MonoBehaviour
         Gizmos.DrawWireSphere(transform.position, transform.GetComponent<SphereCollider>().radius);
     }
 
+    private void OnCollisionEnter(Collision collision)
+    {
+        Debug.Log(collision);
+    }
 
 
 }
