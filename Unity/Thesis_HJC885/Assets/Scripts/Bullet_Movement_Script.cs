@@ -30,6 +30,7 @@ public class Bullet_Movement_Script : MonoBehaviour
     float actx = 0f;
     float acty =0f;
     Vector3 destination2 = new Vector3();
+    GameObject bulletRay;
     //public ParticleSystem explosion;
 
     //public Vector3 min;
@@ -52,10 +53,15 @@ public class Bullet_Movement_Script : MonoBehaviour
         this.this_ID = 0;
         this.ishit = true;
         //setting the bullet's hitbox!!
-        this.GetComponent<SphereCollider>().radius *= transform.localScale.x ;
+        //this.GetComponent<SphereCollider>().radius *= transform.localScale.x ;
 
        
         robot = GameObject.Find("Robot_Body");
+
+        bulletRay = GameObject.Find("BulletRay");
+   
+
+
      
         //TODO min max according to robot distance!!
         //this.destination = RandoMDestinationGeneratorbasedonRobotdistance();
@@ -83,7 +89,7 @@ public class Bullet_Movement_Script : MonoBehaviour
             acty = 0f;
             this.gameObject.transform.GetChild(0).transform.localPosition = new Vector3(resetx, resety, this.gameObject.transform.GetChild(0).transform.localPosition.z);
         }
-     
+       
         //transform.Translate(mSpeed * Time.deltaTime,0.0f, 0.0f); 
         transform.Translate(destination * Time.deltaTime * mSpeed);
 
@@ -165,7 +171,7 @@ public class Bullet_Movement_Script : MonoBehaviour
             raystart = new Ray(mPrevPos,(transform.position - mPrevPos)*int.MaxValue);
         //}
 
-      
+
 
         //isfired = false;
         //Raycasthits();
@@ -196,11 +202,13 @@ public class Bullet_Movement_Script : MonoBehaviour
         //                }
         //            }
         //        }
-             
+
         //    }
         //}
         //Debug.Log($"ID: {this_ID } Startpos: {startingPos}  RayDirection:{ray.direction} MPrepos:{mPrevPos}  transformPosition: {transform.position}");
-        
+        bulletRay.transform.LookAt((transform.position - mPrevPos) * int.MaxValue);
+        bulletRay.transform.Rotate(90, 0, 0);
+        bulletRay.transform.localScale += new Vector3(0, 200, 0);
         Debug.DrawRay(startingPos, ray.direction * ((transform.position - mPrevPos).magnitude) * int.MaxValue, Color.red);
         Debug.DrawRay(startingPos, raystart.direction * ((transform.position - mPrevPos).magnitude) * int.MaxValue, Color.green);
 

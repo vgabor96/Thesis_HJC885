@@ -126,7 +126,7 @@ public class Robot : MonoBehaviour
         {
             //Debug.Log("mooooooove");
             //RandomMovement();
-            MovementToDodge(GameObject.Find("BulletGenerator").GetComponent<Bullet_Shooter_Script>().Bullet);
+            DoOneMovement(MovementToDodge(GameObject.Find("BulletGenerator").GetComponent<Bullet_Shooter_Script>().Bullet));
             //bullettododge.Raycasthits();
             DoMovement = false;
             //Time.timeScale = 1;
@@ -204,16 +204,17 @@ public class Robot : MonoBehaviour
         // Debug.Log("Energy Used: " + MovementEnergyUsed);
     }
 
-    public void MovementToDodge(Bullet_Movement_Script bullet)
+    public List<Vector3> MovementToDodge(Bullet_Movement_Script bullet)
     {
         this.bullettododge = bullet;
         if (IsLearning)
         {
-       
 
-            DoOneMovement(GA.StartFindingMovement(bullet.destination, objective));
-           
+
+            //DoOneMovement(GA.StartFindingMovement(bullet.destination, objective));
+           return GA.StartFindingMovement(bullet.destination, objective);
         }
+        return new List<Vector3>();
     }
 
     public void MoveFullBody(Vector3 vector)
@@ -308,6 +309,9 @@ public class Robot : MonoBehaviour
 
         // GameObject.Find("BulletGenerator").GetComponent<Bullet_Shooter_Script>().RayCastBullet();
 
+        Collider a = GameObject.Find("RayCollider").GetComponent<CapsuleCollider>();
+        a.transform.Translate(new Vector3(0,0,0.00001f));
+        
 
 
         foreach (Transform bodypart in childrenobjects.Values)
@@ -318,7 +322,7 @@ public class Robot : MonoBehaviour
 
 
                 //penalty for intersect
-                Collider[] collisions = Physics.OverlapSphere(bodypart.position, bodypart.GetComponent<BoxCollider>().size.x * 0.5f);//.50f);
+                Collider[] collisions = Physics.OverlapSphere(bodypart.position, bodypart.GetComponent<BoxCollider>().size.x*0.5f);//.50f);
                 foreach (Collider C in collisions)
                 {
 
@@ -326,6 +330,12 @@ public class Robot : MonoBehaviour
                     {
                         sum += 500;
                     }
+                    if (C.transform.gameObject.name == "RayCollider")
+                    {
+                        sum += 500111111;
+                    }
+
+
                 }
 
                 // penalty for moving to far
@@ -336,15 +346,27 @@ public class Robot : MonoBehaviour
                     sum += 500;
                 }
 
+               //double dist = Vector3.Distance(GameObject.Find("RayCollider").GetComponent<CapsuleCollider>().ClosestPoint(bodypart.transform.position), bodypart.transform.position);
 
+               
 
+               // if (dist < ((GameObject.Find("BulletGenerator").GetComponent<Bullet_Shooter_Script>().actualbulletsize) + bodypart.GetComponent<BoxCollider>().size.x/2))
+               // {
+               //     sum += (1 / DistanceToRay(bullettododge.raystart, bodypart.GetComponent<BoxCollider>().transform.position)) * 100000;
 
-                float dist1 = DistanceToRay(bullettododge.raystart, bodypart.GetComponent<BoxCollider>().transform.position);
+               // }
 
-                if (dist1 < (GameObject.Find("BulletGenerator").GetComponent<Bullet_Shooter_Script>().actualbulletsize + (bodypart.GetComponent<BoxCollider>().size.x * 0.5))) //
-                {
-                    sum += (1 / dist1) * 100000;
-                }
+                //float dist1 = DistanceToRay(bullettododge.raystart, bodypart.GetComponent<BoxCollider>().transform.position);
+
+              
+                //double temps = (bodypart.GetComponent<BoxCollider>().size.x * 0.75) +(GameObject.Find("BulletGenerator").GetComponent<Bullet_Shooter_Script>().actualbulletsize);
+
+                //if (dist1 < temps) //
+                //{
+                //    sum += (1 / dist1) * 100000;
+                //}
+
+                //GameObject.Find("RayCollider").GetComponent<SphereCollider>().
 
 
             }
@@ -357,7 +379,7 @@ public class Robot : MonoBehaviour
         //Destroy(ghostlegs);
 
 
-
+        a.transform.Translate(new Vector3(0, 0, -0.00001f));
         double temp = MovementEnergyUsed;
 
         double sum1 = sum;
@@ -415,8 +437,25 @@ public class Robot : MonoBehaviour
         //    Debug.Log($"Bullet ID: {b.this_ID} Vector:{b.destination * b.mSpeed} Hit => {other.gameObject.name}");
         //}
 
+        if (other.gameObject.name == "RayCollider")
+        {
+            //Bullet_Movement_Script b = other.gameObject.GetComponent<Bullet_Movement_Script>();
+            sum += 1000000000;
+        }
+
     }
-     private void OnCollisionEnter(Collision collision)
+
+
+    private void OnTriggerExit(Collider other)
+    {
+
+        if (other.gameObject.name == "RayCollider")
+        {
+            //Bullet_Movement_Script b = other.gameObject.GetComponent<Bullet_Movement_Script>();
+            sum = 0;
+        }
+    }
+    private void OnCollisionEnter(Collision collision)
     {
         
     }

@@ -49,7 +49,7 @@ public class GeneticAlgorithm_ForMovement : MonoBehaviour
 	}
 
 	int populationlimit = 5000; //200
-	double achivefitness = 460;//99999;
+	double achivefitness = 380;//99999;
 	double bestfitness = double.MaxValue;
 	//double previousfitness = double.MaxValue;
 	double mutationrate = 10; //30
@@ -59,7 +59,7 @@ public class GeneticAlgorithm_ForMovement : MonoBehaviour
 	double needstochangevalue = 50;
 	double previousbest = double.MaxValue;
 	int actiteration = 0;
-	int N = 20; //30
+	int N = 30; //30
 	int bodyparts = 3;
 	 float from = -2f;
 	 float to = 2f;
@@ -127,8 +127,11 @@ public class GeneticAlgorithm_ForMovement : MonoBehaviour
 		List<Member> P = INITIALIZEPOPULATION();
 		EVALUATION(P, fitness);
 		Member Pbest = Selectbest(P);
-		while (fitness(Pbest.movement)>achivefitness)
+		//while (fitness(Pbest.movement)>achivefitness)
+		double prevbestfit = Pbest.fitness;
+		while (Pbest.fitness > 50 && (Pbest.fitness > achivefitness || Pbest.fitness > prevbestfit*0.995))
 		{
+			prevbestfit = Pbest.fitness;
 			previousbest = double.MaxValue;
 			bestfitness = double.MaxValue;
 			actiteration = 0;
@@ -161,6 +164,7 @@ public class GeneticAlgorithm_ForMovement : MonoBehaviour
 
 			}
 			//fitness(Pbest.movement);
+		
 		}
 		return GPM(Pbest);
 	}
@@ -420,20 +424,18 @@ public class GeneticAlgorithm_ForMovement : MonoBehaviour
 		int i = 0;
 		Member m = new Member() { movement=new List<Vector3>() {new Vector3(0,0,0), new Vector3(0, 0, 0), new Vector3(0, 0, 0), new Vector3(0, 0, 0), new Vector3(0, 0, 0), new Vector3(0, 0, 0), new Vector3(0, 0, 0) } };
 		Member m2 = new Member();
+		Member m3 = new Member();
 
-		if (Random.Range(0,2)==0)
-		{
 			m2.movement = new List<Vector3>() { new Vector3(0, 0, 0), new Vector3(0, 0, 0), new Vector3(0, 0, 0), new Vector3(0, 0, 0), new Vector3(0, 0, 0), new Vector3(0, 0, 0), new Vector3(0, 0, -0.5f) };
-		}
-		else
-		{
-			m2.movement = new List<Vector3>() { new Vector3(0, 0, 0), new Vector3(0, 0, 0), new Vector3(0, 0, 0), new Vector3(0, 0, 0), new Vector3(0, 0, 0), new Vector3(0, 0, 0), new Vector3(0, 0, +0.5f) };
-		}
+
+			m3.movement = new List<Vector3>() { new Vector3(0, 0, 0), new Vector3(0, 0, 0), new Vector3(0, 0, 0), new Vector3(0, 0, 0), new Vector3(0, 0, 0), new Vector3(0, 0, 0), new Vector3(0, 0, +0.5f) };
+		
 
 		
 		P.Add(m);
 		P.Add(m2);
-		while (i < populationlimit-2)
+		P.Add(m3);
+		while (i < populationlimit-3)
 		{
 			m = S[UnityEngine.Random.Range(0, S.Count)];
 			if (!this.isMemberalreadyinPop(P, m))
