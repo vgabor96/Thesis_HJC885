@@ -132,14 +132,14 @@ public class Bullet_Movement_Script : MonoBehaviour
 
             this.gameObject.transform.GetChild(0).transform.rotation = Quaternion.Euler(new Vector3(this.destination.x, this.destination.y + 90, this.destination.z));
         }
-        if (dist<6 && dist >3)
+        if (dist<6 && dist >4)
         {
             Time.timeScale = 0.5f;
           
          
            
         }
-        else if (dist < 3 && dist>2)
+        else if (dist < 4 && dist>2)
         {
             if (!israydone)
             {

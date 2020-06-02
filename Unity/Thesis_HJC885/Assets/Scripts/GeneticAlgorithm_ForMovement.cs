@@ -49,7 +49,7 @@ public class GeneticAlgorithm_ForMovement : MonoBehaviour
 	}
 
 	int populationlimit = 5000; //200
-	double achivefitness = 450;//99999;
+	double achivefitness = 460;//99999;
 	double bestfitness = double.MaxValue;
 	//double previousfitness = double.MaxValue;
 	double mutationrate = 10; //30
@@ -107,8 +107,9 @@ public class GeneticAlgorithm_ForMovement : MonoBehaviour
 		//fitness(v);
 		if (isVectorcontained(bulletdest))
 		{
-			
+
 			//fitness(solvedmovements[bulletdest]);
+			Debug.Log("Fitness: " + fitness(GetMovementWIthKey(bulletdest)));
 			return GetMovementWIthKey(bulletdest);
 		}
 		else

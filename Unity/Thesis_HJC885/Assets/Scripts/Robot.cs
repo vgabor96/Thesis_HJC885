@@ -312,11 +312,36 @@ public class Robot : MonoBehaviour
 
         foreach (Transform bodypart in childrenobjects.Values)
         {
+
             if (bodypart.GetComponent<BoxCollider>() != null)
             {
+
+
+                //penalty for intersect
+                Collider[] collisions = Physics.OverlapSphere(bodypart.position, bodypart.GetComponent<BoxCollider>().size.x * 0.5f);//.50f);
+                foreach (Collider C in collisions)
+                {
+
+                    if (C.transform.name != bodypart.name)
+                    {
+                        sum += 500;
+                    }
+                }
+
+                // penalty for moving to far
+                Collider[] collisions2 = Physics.OverlapSphere(bodypart.position, bodypart.GetComponent<BoxCollider>().size.x);//.50f);
+
+                if (collisions2.Length < 1)
+                {
+                    sum += 500;
+                }
+
+
+
+
                 float dist1 = DistanceToRay(bullettododge.raystart, bodypart.GetComponent<BoxCollider>().transform.position);
-              
-                if (dist1 < (GameObject.Find("BulletGenerator").GetComponent<Bullet_Shooter_Script>().actualbulletsize + (bodypart.GetComponent<BoxCollider>().size.x)))
+
+                if (dist1 < (GameObject.Find("BulletGenerator").GetComponent<Bullet_Shooter_Script>().actualbulletsize + (bodypart.GetComponent<BoxCollider>().size.x * 0.5))) //
                 {
                     sum += (1 / dist1) * 100000;
                 }
