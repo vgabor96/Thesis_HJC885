@@ -19,6 +19,7 @@ public class Robot : MonoBehaviour
     public GeneticAlgorithm_ForMovement GA;
     public Bullet_Movement_Script bullettododge;
     private float movementcostmultiplier=120;
+    double sum = 0;
 
     public double actmovfitness = 0;
 
@@ -46,8 +47,8 @@ public class Robot : MonoBehaviour
         childrenstartpos = new Dictionary<string, Vector3>();
         childrenobjects = new Dictionary<string, Transform>();
 
-
-       // ghostbodyparts = new Dictionary<string, BoxCollider>();
+         sum = 0;
+        // ghostbodyparts = new Dictionary<string, BoxCollider>();
 
         startpos = transform.localPosition;
         foreach (Transform item in this.transform)
@@ -223,9 +224,9 @@ public class Robot : MonoBehaviour
         MoveHead(vector);
         MoveBody(vector);
         MoveLeg(vector);
-
+        MovementEnergyUsed += 50;
         //}
-    
+
     }
 
     private bool AcceptedMoveFullBodyVector(Vector3 newvector)
@@ -304,20 +305,23 @@ public class Robot : MonoBehaviour
         //Time.timeScale = 0;   
         //RaycastHit[] hits1 = Physics.SphereCastAll(bullettododge.raystart, bullettododge.GetComponent<SphereCollider>().radius, (bullettododge.transform.position - bullettododge.mPrevPos).magnitude * int.MaxValue);
         DoOneMovement(solution);
-       
-       // GameObject.Find("BulletGenerator").GetComponent<Bullet_Shooter_Script>().RayCastBullet();
-      
-        double sum = 0;
+
+        // GameObject.Find("BulletGenerator").GetComponent<Bullet_Shooter_Script>().RayCastBullet();
+
+
 
         foreach (Transform bodypart in childrenobjects.Values)
         {
             if (bodypart.GetComponent<BoxCollider>() != null)
             {
                 float dist1 = DistanceToRay(bullettododge.raystart, bodypart.GetComponent<BoxCollider>().transform.position);
-                if (dist1 < (GameObject.Find("BulletGenerator").GetComponent<Bullet_Shooter_Script>().actualbulletsize + (bodypart.GetComponent<BoxCollider>().size.x*0.75)))
+              
+                if (dist1 < (GameObject.Find("BulletGenerator").GetComponent<Bullet_Shooter_Script>().actualbulletsize + (bodypart.GetComponent<BoxCollider>().size.x)))
                 {
                     sum += (1 / dist1) * 100000;
                 }
+
+
             }
 
           
@@ -331,10 +335,11 @@ public class Robot : MonoBehaviour
 
         double temp = MovementEnergyUsed;
 
+        double sum1 = sum;
         Reset();
         //Debug.Log("Sum: "+ sum +" Energy: "+temp+" => Fitness: "+ (sum+temp));
         //Time.timeScale = 1;
-        return sum + temp;
+        return sum1 + temp;
     }
 
     public static float DistanceToRay(Ray ray, Vector3 point)
@@ -364,8 +369,7 @@ public class Robot : MonoBehaviour
            
         }
 
-
-
+        sum = 0;
         //foreach (string item in ghostbodyparts.Keys)
         //{
         //    ghostbodyparts[item].size = childrenobjects[item].GetComponent<BoxCollider>().size;
@@ -378,10 +382,18 @@ public class Robot : MonoBehaviour
         //this.transform.position = startpos;
     }
 
-    private void OnCollisionEnter(Collision collision)
+    private void OnTriggerEnter(Collider other)
     {
+        //if (other.gameObject.name == "Bullet(Clone)")
+        //{
+        //    Bullet_Movement_Script b = other.gameObject.GetComponent<Bullet_Movement_Script>();
+        //    Debug.Log($"Bullet ID: {b.this_ID} Vector:{b.destination * b.mSpeed} Hit => {other.gameObject.name}");
+        //}
 
-        //Debug.Log(collision.rigidbody);
+    }
+     private void OnCollisionEnter(Collision collision)
+    {
+        
     }
 }
 

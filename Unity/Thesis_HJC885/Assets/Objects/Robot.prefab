@@ -63,6 +63,11 @@ PrefabInstance:
       propertyPath: m_IsTrigger
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1554757947003069941, guid: 72a8518a694a26d4a84c9243be942b43,
+        type: 3}
+      propertyPath: m_NormalizedViewPortRect.x
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1868352198232967201, guid: 72a8518a694a26d4a84c9243be942b43,
         type: 3}
       propertyPath: m_RootOrder

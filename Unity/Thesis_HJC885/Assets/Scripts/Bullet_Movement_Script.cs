@@ -132,9 +132,15 @@ public class Bullet_Movement_Script : MonoBehaviour
 
             this.gameObject.transform.GetChild(0).transform.rotation = Quaternion.Euler(new Vector3(this.destination.x, this.destination.y + 90, this.destination.z));
         }
-        if (dist<5)
+        if (dist<6 && dist >3)
         {
             Time.timeScale = 0.5f;
+          
+         
+           
+        }
+        else if (dist < 3 && dist>2)
+        {
             if (!israydone)
             {
                 GameObject.Find("Robot_Body").GetComponent<Robot>().bullettododge = this;
@@ -143,10 +149,10 @@ public class Bullet_Movement_Script : MonoBehaviour
                 //GameObject.Find("Robot_Body").GetComponent<Robot>().MovementToDodge(this);
                 israydone = true;
             }
-            if (dist<=2)
-            {
-                Time.timeScale = 2f;
-            }
+        }
+        else if (dist <= 2)
+        {
+            Time.timeScale = 2f;
         }
         else
         {

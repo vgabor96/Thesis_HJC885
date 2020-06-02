@@ -49,7 +49,7 @@ public class GeneticAlgorithm_ForMovement : MonoBehaviour
 	}
 
 	int populationlimit = 5000; //200
-	double achivefitness = 500;//99999;
+	double achivefitness = 450;//99999;
 	double bestfitness = double.MaxValue;
 	//double previousfitness = double.MaxValue;
 	double mutationrate = 10; //30
@@ -585,11 +585,11 @@ public class GeneticAlgorithm_ForMovement : MonoBehaviour
 	}
 	private Vector3 RandomLegMovement()
 	{
-		return new Vector3(Random.Range(-0.2f, 0.2f), Random.Range(-0.2f, 0.2f), Random.Range(-0.5f, 0.5f));
+		return new Vector3(Random.Range(-0.2f, 0.2f), Random.Range(-0.2f, 0.2f), Random.Range(-0.3f, 0.3f));
 	}
 	private Vector3 RandomLegrotation()
 	{
-		return new Vector3(Random.Range(-20f, 20f), Random.Range(-90f, 90f), Random.Range(-40f, 40f));
+		return new Vector3(Random.Range(-20f, 20f), Random.Range(-40f, 40f), Random.Range(-40f, 40f));
 	}
 
 	private void Addchild(List<Member> population, Member newmember)
