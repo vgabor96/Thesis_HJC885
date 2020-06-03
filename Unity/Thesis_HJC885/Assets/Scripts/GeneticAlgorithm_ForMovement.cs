@@ -129,7 +129,7 @@ public class GeneticAlgorithm_ForMovement : MonoBehaviour
 		Member Pbest = Selectbest(P);
 		//while (fitness(Pbest.movement)>achivefitness)
 		double prevbestfit = Pbest.fitness;
-		while (Pbest.fitness > 50 && (Pbest.fitness > achivefitness || Pbest.fitness > prevbestfit*0.995))
+		while (Pbest.fitness > 50 && (Pbest.fitness > achivefitness && Pbest.fitness > prevbestfit*0.995))
 		{
 			prevbestfit = Pbest.fitness;
 			previousbest = double.MaxValue;

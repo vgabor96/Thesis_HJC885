@@ -109,10 +109,10 @@ public class Bullet_Movement_Script : MonoBehaviour
         {
             //this.gameObject.transform.GetChild(0).transform.position = new Vector3(-10f, this.gameObject.transform.GetChild(0).transform.position.y, this.gameObject.transform.GetChild(0).transform.position.z);
             //this.gameObject.transform.GetChild(0).transform.LookAt(vectortofollowcamera, Vector3.up);
-            if (this.gameObject.transform.GetChild(0).transform.localPosition.x + actx < -5f)
+          if (this.gameObject.transform.GetChild(0).transform.localPosition.x + actx < -5f)
             {
                 this.gameObject.transform.GetChild(0).transform.localPosition = new Vector3(this.gameObject.transform.GetChild(0).transform.localPosition.x + actx, this.gameObject.transform.GetChild(0).transform.localPosition.y, this.gameObject.transform.GetChild(0).transform.localPosition.z);
-                actx += 0.0004f;
+                actx += 0.00038f;
             }
 
         }
@@ -126,8 +126,8 @@ public class Bullet_Movement_Script : MonoBehaviour
             }
             else
             {
-                acty += 0.000000025f;
-              
+                acty += 0.0000001f;
+
             }
           
            
@@ -136,7 +136,9 @@ public class Bullet_Movement_Script : MonoBehaviour
         {
 
 
-            this.gameObject.transform.GetChild(0).transform.rotation = Quaternion.Euler(new Vector3(this.destination.x, this.destination.y + 90, this.destination.z));
+            this.gameObject.transform.GetChild(0).transform.rotation = Quaternion.Euler(new Vector3(this.destination.x, this.destination.y+90, this.destination.z));
+
+            //this.gameObject.transform.GetChild(0).transform.LookAt(destination * int.MaxValue);
         }
         if (dist<6 && dist >4)
         {
