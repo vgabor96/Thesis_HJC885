@@ -48,8 +48,8 @@ public class GeneticAlgorithm_ForMovement : MonoBehaviour
 		public int ID { get => id; set => id = value; }
 	}
 
-	int populationlimit = 5000; //200
-	double achivefitness = 380;//99999;
+	int populationlimit = 3000; //200
+	double achivefitness = 900;//99999;
 	double bestfitness = double.MaxValue;
 	//double previousfitness = double.MaxValue;
 	double mutationrate = 10; //30
@@ -59,7 +59,7 @@ public class GeneticAlgorithm_ForMovement : MonoBehaviour
 	double needstochangevalue = 50;
 	double previousbest = double.MaxValue;
 	int actiteration = 0;
-	int N = 30; //30
+	int N = 20; //30
 	int bodyparts = 3;
 	 float from = -2f;
 	 float to = 2f;

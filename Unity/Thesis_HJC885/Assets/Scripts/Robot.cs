@@ -305,14 +305,16 @@ public class Robot : MonoBehaviour
     {
         //Time.timeScale = 0;   
         //RaycastHit[] hits1 = Physics.SphereCastAll(bullettododge.raystart, bullettododge.GetComponent<SphereCollider>().radius, (bullettododge.transform.position - bullettododge.mPrevPos).magnitude * int.MaxValue);
+
         DoOneMovement(solution);
 
         // GameObject.Find("BulletGenerator").GetComponent<Bullet_Shooter_Script>().RayCastBullet();
 
         Collider a = GameObject.Find("RayCollider").GetComponent<CapsuleCollider>();
-        a.transform.Translate(new Vector3(0,0,0.00001f));
-        
+        //a.transform.Translate(new Vector3(0,0,0.00001f));
 
+
+        //RaycastHit[] hits1 = Physics.SphereCastAll(bullettododge.raystart, bullettododge.GetComponent<SphereCollider>().radius, (bullettododge.transform.position - bullettododge.mPrevPos).magnitude * int.MaxValue);
 
         foreach (Transform bodypart in childrenobjects.Values)
         {
@@ -328,12 +330,12 @@ public class Robot : MonoBehaviour
 
                     if (C.transform.name != bodypart.name)
                     {
-                        sum += 500;
+                        sum += 1000;
                     }
-                    if (C.transform.gameObject.name == "RayCollider")
-                    {
-                        sum += 500111111;
-                    }
+                    //if (C.transform.gameObject.name == "RayCollider")
+                    //{
+                    //    sum += 500111111;
+                    //}
 
 
                 }
@@ -343,30 +345,65 @@ public class Robot : MonoBehaviour
 
                 if (collisions2.Length < 1)
                 {
-                    sum += 500;
+                    sum += 1000;
                 }
 
-               //double dist = Vector3.Distance(GameObject.Find("RayCollider").GetComponent<CapsuleCollider>().ClosestPoint(bodypart.transform.position), bodypart.transform.position);
 
-               
+                //double dist = Vector3.Distance(GameObject.Find("RayCollider").GetComponent<CapsuleCollider>().ClosestPoint(bodypart.transform.position), bodypart.transform.position);
 
-               // if (dist < ((GameObject.Find("BulletGenerator").GetComponent<Bullet_Shooter_Script>().actualbulletsize) + bodypart.GetComponent<BoxCollider>().size.x/2))
-               // {
-               //     sum += (1 / DistanceToRay(bullettododge.raystart, bodypart.GetComponent<BoxCollider>().transform.position)) * 100000;
-
-               // }
-
-                //float dist1 = DistanceToRay(bullettododge.raystart, bodypart.GetComponent<BoxCollider>().transform.position);
-
-              
-                //double temps = (bodypart.GetComponent<BoxCollider>().size.x * 0.75) +(GameObject.Find("BulletGenerator").GetComponent<Bullet_Shooter_Script>().actualbulletsize);
-
-                //if (dist1 < temps) //
+                //if (dist < ((GameObject.Find("BulletGenerator").GetComponent<Bullet_Shooter_Script>().actualbulletsize) + bodypart.GetComponent<BoxCollider>().size.x / 2))
                 //{
-                //    sum += (1 / dist1) * 100000;
+                //    sum += (1 / DistanceToRay(bullettododge.raystart, bodypart.GetComponent<BoxCollider>().transform.position)) * 100000;
+
                 //}
 
+
+
+                Vector3 vec = a.ClosestPoint(bodypart.GetComponent<BoxCollider>().transform.position);
+
+                float dist1x = Math.Abs(vec.x - bodypart.GetComponent<BoxCollider>().transform.position.x);
+                double tempsx = (bodypart.GetComponent<BoxCollider>().size.x * 0.5);
+                double tempsumx = 0;
+                if (dist1x <= tempsx)
+                {
+                    tempsumx = (1 / dist1x) * 3000;
+                }
+
+                float dist1y = Math.Abs(vec.y - bodypart.GetComponent<BoxCollider>().transform.position.y);
+                double tempsy = (bodypart.GetComponent<BoxCollider>().size.y * 0.5);
+                double tempsumy = 0;
+                if (dist1y <= tempsy)
+                {
+                    tempsumy = (1 / dist1y) * 3000;
+                }
+
+                float dist1z = Math.Abs(vec.z- bodypart.GetComponent<BoxCollider>().transform.position.z);
+                double tempsz = (bodypart.GetComponent<BoxCollider>().size.z * 0.5);
+                double tempsumz = 0;
+                if (dist1z <= tempsz)
+                {
+                    tempsumz = (1 / dist1z) * 3000;
+                }
+
+                if ((tempsumx> 0) && (tempsumy > 0) && (tempsumz>0))
+                {
+                    sum += tempsumx + tempsumy + tempsumz;
+                }
+               
                 //GameObject.Find("RayCollider").GetComponent<SphereCollider>().
+
+                //foreach (RaycastHit item in hits1)
+                //{
+                //    if (item.collider.name == bodypart.GetComponent<BoxCollider>().name)
+                //    {
+                //        float dist1 = DistanceToRay(bullettododge.raystart, bodypart.GetComponent<BoxCollider>().transform.position);
+                //        if (dist1 < )
+                //        {
+
+                //        }
+                //        sum += (1 / dist1) * 100000;
+                //    }
+                //}
 
 
             }
@@ -374,12 +411,15 @@ public class Robot : MonoBehaviour
           
         }
 
+       
+
+      
         //Destroy(ghosthead);
         //Destroy(ghostbody);
         //Destroy(ghostlegs);
 
 
-        a.transform.Translate(new Vector3(0, 0, -0.00001f));
+        //a.transform.Translate(new Vector3(0, 0, -0.00001f));
         double temp = MovementEnergyUsed;
 
         double sum1 = sum;
@@ -393,6 +433,11 @@ public class Robot : MonoBehaviour
     {
         return Vector3.Cross(ray.direction, point - ray.origin).magnitude;
     }
+
+    //private double DistanceFromBodypart(BoxCollider)
+    //{
+
+    //}
     public void Reset()
     {
         //Debug.LogError("Robot position reseted");
