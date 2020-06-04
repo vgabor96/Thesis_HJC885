@@ -114,7 +114,7 @@ public class HiResScreenShots : MonoBehaviour
 
     }
 
-    void FixedUpdate()
+    void Update()
     {
         if (Istakingpictures)
         {
@@ -123,7 +123,7 @@ public class HiResScreenShots : MonoBehaviour
             {
                 if (Time.time > timer)
                 {
-                    Debug.Log("TakeHiResShot11111111111111");
+                    //Debug.Log("TakeHiResShot11111111111111");
                     TakeHiResShot1();
 
                     cantakeshot2 = true;
@@ -140,7 +140,7 @@ public class HiResScreenShots : MonoBehaviour
             }
             if (cantakeshot2 && Time.time > timer)
             {
-                Debug.Log("TakeHiResShot2222222");
+                //Debug.Log("TakeHiResShot2222222");
                 TakeHiResShot2();
                 cantakeshot2 = false;
                 timer = float.MaxValue;
@@ -173,17 +173,18 @@ public class HiResScreenShots : MonoBehaviour
         Destroy(rt);
         byte[] bytes = screenShot.EncodeToPNG();
 
-        GameObject.Find("RobotBrain").GetComponent<PictureToVector>().img1bytes = bytes;
         GameObject.Find("RobotBrain").GetComponent<PictureToVector>().text1 = screenShot;
-        string filename;
+        //Debug.Log("picshot1");
 
+
+        ////Saving to folder
+        ///  string filename;
         //filename = ScreenShotName(resWidth, resHeight,bullet);
-        filename = ScreenShotName();
+        //filename = ScreenShotName(resWidth, resHeight,bullet);
+        // System.IO.File.WriteAllBytes(filename, bytes);
+        // Debug.Log(string.Format("Took screenshot to: {0}", filename));
 
-
-
-        System.IO.File.WriteAllBytes(filename, bytes);
-        Debug.Log(string.Format("Took screenshot to: {0}", filename));
+        // //
 
     }
     private void TakeHiResShot2()
@@ -200,16 +201,20 @@ public class HiResScreenShots : MonoBehaviour
         Destroy(rt);
         byte[] bytes = screenShot.EncodeToPNG();
 
-        GameObject.Find("RobotBrain").GetComponent<PictureToVector>().img2bytes = bytes;
         GameObject.Find("RobotBrain").GetComponent<PictureToVector>().text2 = screenShot;
-        string filename;
 
-        // filename = ScreenShotName2(resWidth, resHeight,bullet);
-        filename = ScreenShotName2();
+        //Debug.Log("picshot2");
 
 
-        System.IO.File.WriteAllBytes(filename, bytes);
-        Debug.Log(string.Format("Took screenshot to: {0}", filename));
+
+        ////Saving to folder
+        ///   string filename;
+        /// filename = ScreenShotName2();
+        // System.IO.File.WriteAllBytes(filename, bytes);
+        // Debug.Log(string.Format("Took screenshot to: {0}", filename));
+
+        // //
+
 
         //if (filename.Contains("True"))
         //{
@@ -228,7 +233,7 @@ public class HiResScreenShots : MonoBehaviour
 
     }
 
-   
+
 
 
 
