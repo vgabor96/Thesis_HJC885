@@ -1,9 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
-using UnityEngine;
-using System.Collections;
 using System.Threading;
 
 public class HiResScreenShots : MonoBehaviour
@@ -69,6 +66,26 @@ public class HiResScreenShots : MonoBehaviour
         //,System.DateTime.Now.ToString("yyyy-MM-dd_HH-mm-ss"));
     }
 
+    public static string ScreenShotName()
+    {
+        return string.Format("{0}/screenshots/temp/1.png",
+                          Application.dataPath);
+    }
+
+    public static string ScreenShotName2()
+    {
+        //return string.Format("{0}/screenshots/temp/{1}_{2}_02.png",
+        //                     Application.dataPath,
+        //                     //width, height,
+        //                     bullet.destination,
+        //                     bullet.isreallyrobothitted);
+        ////,System.DateTime.Now.ToString("yyyy-MM-dd_HH-mm-ss"));
+
+        return string.Format("{0}/screenshots/temp/2.png",
+                           Application.dataPath );
+       
+    }
+
     public void TakeHiResShot()
     {
         takeHiResShot = true;
@@ -91,13 +108,13 @@ public class HiResScreenShots : MonoBehaviour
 
         Debug.Log("ALLTIME" + alltime);
 
-        capturedelay = 0.075f;//alltime / (alltime*5);//alltime / 3;
+        capturedelay = 0.2f;//alltime / (alltime*5);//alltime / 3;
         secondcapturedelay = alltime / 2 -capturedelay;
 
 
     }
 
-    void LateUpdate()
+    void FixedUpdate()
     {
         if (Istakingpictures)
         {
@@ -107,7 +124,7 @@ public class HiResScreenShots : MonoBehaviour
                 if (Time.time > timer)
                 {
                     Debug.Log("TakeHiResShot11111111111111");
-                   // TakeHiResShot1();
+                    TakeHiResShot1();
 
                     cantakeshot2 = true;
                     takeHiResShot = false;
@@ -155,11 +172,16 @@ public class HiResScreenShots : MonoBehaviour
         RenderTexture.active = null; // JC: added to avoid errors
         Destroy(rt);
         byte[] bytes = screenShot.EncodeToPNG();
+
+        GameObject.Find("RobotBrain").GetComponent<PictureToVector>().img1bytes = bytes;
+        GameObject.Find("RobotBrain").GetComponent<PictureToVector>().text1 = screenShot;
         string filename;
-     
-            filename = ScreenShotName(resWidth, resHeight,bullet);
-     
-       
+
+        //filename = ScreenShotName(resWidth, resHeight,bullet);
+        filename = ScreenShotName();
+
+
+
         System.IO.File.WriteAllBytes(filename, bytes);
         Debug.Log(string.Format("Took screenshot to: {0}", filename));
 
@@ -177,28 +199,32 @@ public class HiResScreenShots : MonoBehaviour
         RenderTexture.active = null; // JC: added to avoid errors
         Destroy(rt);
         byte[] bytes = screenShot.EncodeToPNG();
+
+        GameObject.Find("RobotBrain").GetComponent<PictureToVector>().img2bytes = bytes;
+        GameObject.Find("RobotBrain").GetComponent<PictureToVector>().text2 = screenShot;
         string filename;
-       
-            filename = ScreenShotName2(resWidth, resHeight,bullet);
-        
+
+        // filename = ScreenShotName2(resWidth, resHeight,bullet);
+        filename = ScreenShotName2();
+
 
         System.IO.File.WriteAllBytes(filename, bytes);
         Debug.Log(string.Format("Took screenshot to: {0}", filename));
 
-        if (filename.Contains("True"))
-        {
-            truecounter++;
+        //if (filename.Contains("True"))
+        //{
+        //    truecounter++;
 
-            if (truecounter>= trueflag)
-            {
-                GameObject.Find("BulletGenerator").GetComponent<Bullet_Shooter_Script>().bulletspeed += 0.1f;
-                if (GameObject.Find("BulletGenerator").GetComponent<Bullet_Shooter_Script>().bulletspeed > 6.3)
-                {
-                    Application.Quit();
-                }
-                truecounter = 0;
-            }
-        }
+        //    if (truecounter>= trueflag)
+        //    {
+        //        GameObject.Find("BulletGenerator").GetComponent<Bullet_Shooter_Script>().bulletspeed += 0.1f;
+        //        if (GameObject.Find("BulletGenerator").GetComponent<Bullet_Shooter_Script>().bulletspeed > 6.3)
+        //        {
+        //            Application.Quit();
+        //        }
+        //        truecounter = 0;
+        //    }
+        //}
 
     }
 

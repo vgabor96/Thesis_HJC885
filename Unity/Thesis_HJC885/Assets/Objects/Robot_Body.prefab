@@ -121,6 +121,7 @@ GameObject:
   - component: {fileID: 740261735502366158}
   - component: {fileID: 7217647861803808300}
   - component: {fileID: 1979024984993315563}
+  - component: {fileID: 5268531157300746918}
   m_Layer: 0
   m_Name: RobotBrain
   m_TagString: Untagged
@@ -164,6 +165,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f4fc0977b02470e4faedd84a24c2fe96, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &5268531157300746918
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1217559135394185396}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7a0eb4125a1c6bb4eb59d7ec11ed3dc3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &1451305271447038591
@@ -349,6 +362,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   radius: 0
   GA: {fileID: 7217647861803808300}
+  PTV: {fileID: 5268531157300746918}
   bullettododge: {fileID: 0}
   actmovfitness: 0
   IsLearning: 1

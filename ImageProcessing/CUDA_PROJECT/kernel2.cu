@@ -42,7 +42,8 @@ int main()
 	
 	for (size_t x = 0; x < filenames.size()-1; x+=2)
 	{
-		Mat img = imread(filenames[x]);
+		Mat img = imread("C:\\Users\\loahc\\Documents\\GitHub\\Thesis_HJC885\\Unity\\Thesis_HJC885\\Assets\\screenshots\\test\\(4.9, 0.7, -0.1)_False_01.png");
+	
 		Mat img2 = imread(filenames[x+1]);
 
 
@@ -53,9 +54,9 @@ int main()
 		
 		////SHOW IMAGE
 
-		//namedWindow("pic_1", WINDOW_NORMAL);
-		//resizeWindow("pic_1", img.cols, img.rows);
-		//imshow("pic_1", img);
+		namedWindow("pic_1", WINDOW_NORMAL);
+		resizeWindow("pic_1", img.cols, img.rows);
+		imshow("pic_1", img);
 
 		//namedWindow("pic_2", WINDOW_NORMAL);
 		//resizeWindow("pic_2", img2.cols, img2.rows);

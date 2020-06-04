@@ -17,6 +17,7 @@ public class Robot : MonoBehaviour
     private GameObject body;
     public RaycastHit[] actbulletthits;
     public GeneticAlgorithm_ForMovement GA;
+    public PictureToVector PTV;
     public Bullet_Movement_Script bullettododge;
     private float movementcostmultiplier=120;
     double sum = 0;
@@ -125,11 +126,13 @@ public class Robot : MonoBehaviour
         if (DoMovement)
         {
             //Debug.Log("mooooooove");
-            //RandomMovement();
-            DoOneMovement(MovementToDodge(GameObject.Find("BulletGenerator").GetComponent<Bullet_Shooter_Script>().Bullet));
-            //bullettododge.Raycasthits();
+
+            //DoOneMovement(MovementToDodge(GameObject.Find("BulletGenerator").GetComponent<Bullet_Shooter_Script>().Bullet));
+            
+            DoOneMovement(MovementToDodge(PTV.CalculateBulletDest()));
+
             DoMovement = false;
-            //Time.timeScale = 1;
+
         }
 
 
@@ -213,6 +216,19 @@ public class Robot : MonoBehaviour
 
             //DoOneMovement(GA.StartFindingMovement(bullet.destination, objective));
            return GA.StartFindingMovement(bullet.destination, objective);
+        }
+        return new List<Vector3>();
+    }
+
+    public List<Vector3> MovementToDodge(Vector3 vec)
+    {
+        this.bullettododge = GameObject.Find("BulletGenerator").GetComponent<Bullet_Shooter_Script>().Bullet;
+        if (IsLearning)
+        {
+
+
+            //DoOneMovement(GA.StartFindingMovement(bullet.destination, objective));
+            return GA.StartFindingMovement(vec, objective);
         }
         return new List<Vector3>();
     }

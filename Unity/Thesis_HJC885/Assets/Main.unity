@@ -410,7 +410,7 @@ PrefabInstance:
     - target: {fileID: 2892143800732836182, guid: e3596bcd47336c0438a3b5dc47ad3f38,
         type: 3}
       propertyPath: Istakingpictures
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3015279502367964163, guid: e3596bcd47336c0438a3b5dc47ad3f38,
         type: 3}
