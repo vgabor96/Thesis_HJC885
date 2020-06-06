@@ -86,7 +86,7 @@ public class Bullet_Shooter_Script : MonoBehaviour
             if (this.Bullet != null && Vector3.Distance(this.Bullet.startingPos, this.Bullet.mPrevPos) >= ResetDistance)
             {
                 ReGenerate(this.Bullet);
-              
+            Debug.Log("StartPos: "+this.Bullet.transform.position);
             }
 
             //if (item.isfired)
@@ -105,12 +105,12 @@ public class Bullet_Shooter_Script : MonoBehaviour
             this.Bullet= Instantiate(Bullet, transform.position,this.transform.rotation);
             //setting the bullet's length to fix mSpeed
             this.Bullet.destination = Fixedshootvector.normalized* bulletspeed;
-            this.Bullet.destination.x = (float)Math.Round(this.Bullet.destination.x, 1);
-            this.Bullet.destination.y = (float)Math.Round(this.Bullet.destination.y, 1);
-            this.Bullet.destination.z = (float)Math.Round(this.Bullet.destination.z, 1);
+            //this.Bullet.destination.x = (float)Math.Round(this.Bullet.destination.x, 1);
+            //this.Bullet.destination.y = (float)Math.Round(this.Bullet.destination.y, 1);
+            //this.Bullet.destination.z = (float)Math.Round(this.Bullet.destination.z, 1);
             this.Bullet.GetComponent<SphereCollider>().radius *= this.Bullet.transform.localScale.x;
             actualbulletsize = this.Bullet.GetComponent<SphereCollider>().radius;
-            SetDestination(this.Bullet);
+            //SetDestination(this.Bullet);
           
           
 

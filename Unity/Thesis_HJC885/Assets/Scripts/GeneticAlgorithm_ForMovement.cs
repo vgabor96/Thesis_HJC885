@@ -49,7 +49,7 @@ public class GeneticAlgorithm_ForMovement : MonoBehaviour
 	}
 
 	int populationlimit = 3000; //200
-	double achivefitness = 900;//99999;
+	double achivefitness = 310;//99999;
 	double bestfitness = double.MaxValue;
 	//double previousfitness = double.MaxValue;
 	double mutationrate = 10; //30
@@ -122,14 +122,24 @@ public class GeneticAlgorithm_ForMovement : MonoBehaviour
 
 
 	}
+
+	private bool outsideSTOPCONDITION(double pbestfitness, double prevbestfitness)
+	{
+		if (pbestfitness < achivefitness)
+		{
+
+			return pbestfitness <= 100 || pbestfitness > prevbestfitness * 0.995;
+		}
+		return false;
+	}
 	public List<Vector3> Startsolve(Func<List<Vector3>,double> fitness)
 	{
 		List<Member> P = INITIALIZEPOPULATION();
 		EVALUATION(P, fitness);
 		Member Pbest = Selectbest(P);
 		//while (fitness(Pbest.movement)>achivefitness)
-		double prevbestfit = Pbest.fitness;
-		while (Pbest.fitness > 50 && (Pbest.fitness > achivefitness && Pbest.fitness > prevbestfit*0.995))
+		double prevbestfit = double.MaxValue;
+		while (!outsideSTOPCONDITION(Pbest.fitness,prevbestfit))
 		{
 			prevbestfit = Pbest.fitness;
 			previousbest = double.MaxValue;
@@ -166,7 +176,7 @@ public class GeneticAlgorithm_ForMovement : MonoBehaviour
 			//fitness(Pbest.movement);
 		
 		}
-		return GPM(Pbest);
+		return GPM(Pbest,fitness);
 	}
 
 	private void ModifyOldPopulation(List<Member> p, List<Member> pnew)
@@ -180,11 +190,12 @@ public class GeneticAlgorithm_ForMovement : MonoBehaviour
 
 	}
 
-	private List<Vector3> GPM(Member pbest)
+	private List<Vector3> GPM(Member pbest, Func<List<Vector3>, double> fitness)
 	{
 
 		//log.log_file.Close();
-		Debug.Log("fitness:" + pbest.fitness);
+		Debug.Log("1fitness Function:" +fitness(pbest.movement));
+		Debug.Log("2fitness:" + pbest.fitness);
 		solvedmovements.Add(bulletdest, pbest.movement);
 		HandleTextFile.WriteSolution(bulletdest,pbest.movement);
 		return pbest.movement;
@@ -426,9 +437,9 @@ public class GeneticAlgorithm_ForMovement : MonoBehaviour
 		Member m2 = new Member();
 		Member m3 = new Member();
 
-			m2.movement = new List<Vector3>() { new Vector3(0, 0, 0), new Vector3(0, 0, 0), new Vector3(0, 0, 0), new Vector3(0, 0, 0), new Vector3(0, 0, 0), new Vector3(0, 0, 0), new Vector3(0, 0, -0.5f) };
+			m2.movement = new List<Vector3>() { new Vector3(0, 0, 0), new Vector3(0, 0, 0), new Vector3(0, 0, 0), new Vector3(0, 0, 0), new Vector3(0, 0, 0), new Vector3(0, 0, 0), new Vector3(0, 0, -0.5f) }; //-0.5
 
-			m3.movement = new List<Vector3>() { new Vector3(0, 0, 0), new Vector3(0, 0, 0), new Vector3(0, 0, 0), new Vector3(0, 0, 0), new Vector3(0, 0, 0), new Vector3(0, 0, 0), new Vector3(0, 0, +0.5f) };
+			m3.movement = new List<Vector3>() { new Vector3(0, 0, 0), new Vector3(0, 0, 0), new Vector3(0, 0, 0), new Vector3(0, 0, 0), new Vector3(0, 0, 0), new Vector3(0, 0, 0), new Vector3(0, 0, +0.5f) }; //+0.5
 		
 
 		
@@ -567,32 +578,32 @@ public class GeneticAlgorithm_ForMovement : MonoBehaviour
 
 	private Vector3 RandomFullBodyMovement()
 	{
-		return new Vector3(0, 0, Random.Range(-1, 1f));
+		return new Vector3(0, 0, (float)Math.Round(Random.Range(-1, 1f),1));
 	}
 
 	private Vector3 RandomHeadrotation()
 	{ 
-		return new Vector3(Random.Range(-90f, 90f), Random.Range(-90f, 90f), Random.Range(-90f, 30f));
+		return new Vector3((float)Math.Round(Random.Range(-90f, 90f),1), (float)Math.Round(Random.Range(-90f, 90f),1), (float)Math.Round(Random.Range(-90f, 30f),1));
 	}
 	private Vector3 RandomHeadMovement()
 	{
-		return new Vector3(Random.Range(-0.2f, 0.3f), Random.Range(-0.2f, 0.2f), Random.Range(-0.3f, 0.3f));
+		return new Vector3((float)Math.Round(Random.Range(-0.2f, 0.3f),1), (float)Math.Round(Random.Range(-0.2f, 0.2f),1), (float)Math.Round(Random.Range(-0.3f, 0.3f),1));
 	}
 	private Vector3 RandomBodyrotation()
 	{
-		return new Vector3(Random.Range(-15f, 15f), Random.Range(-90f, 90f), Random.Range(-90f, 90f));
+		return new Vector3((float)Math.Round(Random.Range(-15f, 15f),1), (float)Math.Round(Random.Range(-90f, 90f),1), (float)Math.Round(Random.Range(-90f, 90f),1));
 	}
 	private Vector3 RandomBodymovement()
 	{
-		return new Vector3(Random.Range(-0.5f, 0.5f), Random.Range(-0.1f, 0.1f), Random.Range(-0.2f, 0.2f));
+		return new Vector3((float)Math.Round(Random.Range(-0.5f, 0.5f),1), (float)Math.Round(Random.Range(-0.1f, 0.1f),1), (float)Math.Round(Random.Range(-0.2f, 0.2f),1));
 	}
 	private Vector3 RandomLegMovement()
 	{
-		return new Vector3(Random.Range(-0.2f, 0.2f), Random.Range(-0.2f, 0.2f), Random.Range(-0.3f, 0.3f));
+		return new Vector3((float)Math.Round(Random.Range(-0.2f, 0.2f),1), (float)Math.Round(Random.Range(-0.2f, 0.2f),1), (float)Math.Round(Random.Range(-0.3f, 0.3f),1));
 	}
 	private Vector3 RandomLegrotation()
 	{
-		return new Vector3(Random.Range(-20f, 20f), Random.Range(-40f, 40f), Random.Range(-40f, 40f));
+		return new Vector3((float)Math.Round(Random.Range(-20f, 20f),1), (float)Math.Round(Random.Range(-40f, 40f),1), (float)Math.Round(Random.Range(-40f, 40f),1));
 	}
 
 	private void Addchild(List<Member> population, Member newmember)

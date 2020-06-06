@@ -58,7 +58,7 @@ public class Bullet_Movement_Script : MonoBehaviour
        
         robot = GameObject.Find("Robot_Body");
 
-        bulletRay = GameObject.Find("BulletRay");
+        //bulletRay = GameObject.Find("BulletRay");
    
 
 
@@ -151,7 +151,7 @@ public class Bullet_Movement_Script : MonoBehaviour
         {
             if (!israydone)
             {
-                GameObject.Find("Robot_Body").GetComponent<Robot>().bullettododge = this;
+                //GameObject.Find("Robot_Body").GetComponent<Robot>().bullettododge = this;
 
                 GameObject.Find("Robot_Body").GetComponent<Robot>().DoMovement = true;
                 //GameObject.Find("Robot_Body").GetComponent<Robot>().MovementToDodge(this);
@@ -170,8 +170,9 @@ public class Bullet_Movement_Script : MonoBehaviour
         ray = new Ray(mPrevPos, (transform.position - mPrevPos).normalized);
         //if (isfired)
         //{
-            raystart = new Ray(mPrevPos,(transform.position - mPrevPos)*int.MaxValue);
+        //raystart = new Ray(mPrevPos,(transform.position - mPrevPos)*int.MaxValue);
         //}
+        raystart = new Ray(startingPos, destination.normalized * int.MaxValue);
 
 
 
@@ -208,9 +209,9 @@ public class Bullet_Movement_Script : MonoBehaviour
         //    }
         //}
         //Debug.Log($"ID: {this_ID } Startpos: {startingPos}  RayDirection:{ray.direction} MPrepos:{mPrevPos}  transformPosition: {transform.position}");
-        bulletRay.transform.LookAt((transform.position - mPrevPos) * int.MaxValue);
-        bulletRay.transform.Rotate(90, 0, 0);
-        bulletRay.transform.localScale += new Vector3(0, 200, 0);
+        //bulletRay.transform.LookAt((transform.position - mPrevPos) * int.MaxValue);
+        //bulletRay.transform.Rotate(90, 0, 0);
+        //bulletRay.transform.localScale += new Vector3(0, 200, 0);
         Debug.DrawRay(startingPos, ray.direction * ((transform.position - mPrevPos).magnitude) * int.MaxValue, Color.red);
         Debug.DrawRay(startingPos, raystart.direction * ((transform.position - mPrevPos).magnitude) * int.MaxValue, Color.green);
 

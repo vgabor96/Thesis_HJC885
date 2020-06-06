@@ -83,11 +83,23 @@ public class PictureToVector : MonoBehaviour
         Vector3 result = new Vector3();
 
         // CircleSegment[] circles = Cv2.HoughCircles(dst4, HoughMethods.Gradient, 1, 2, 30, 10, 3, 20);
-        CircleSegment[] circles = Cv2.HoughCircles(dst4, HoughMethods.Gradient, 1, 2, 30, 10, 3, 30);
+        CircleSegment[] circles = Cv2.HoughCircles(dst4, HoughMethods.Gradient, 1, 2, 20, 10, 3, 30);
+        int param1 = 20;
+        int param2 = 10;
+        while (circles.Length<2)
+        {
+            if (!(param1<2) && !(param2 <2))
+            {
+                param1--;
+                param2--;
+                circles = Cv2.HoughCircles(dst4, HoughMethods.Gradient, 1, 2, param1, param2, 3, 30);
+            }
+        
+        }
+     
 
 
         double maxdist = 10;
-        bool best = false;
         bool notgood = false;
        
         List<CircleSegment> circlesres = new List<CircleSegment>();
@@ -140,22 +152,26 @@ public class PictureToVector : MonoBehaviour
             if (circlesres.Count == 2)
             {
 
-                //Cv2.Circle(dst4, circlesres[0].Center, (int)circlesres[0].Radius, Scalar.Red, 2);
-                //Cv2.Circle(dst4, circlesres[1].Center, (int)circlesres[1].Radius, Scalar.Red, 2);
+                Cv2.Circle(dst4, circlesres[0].Center, (int)circlesres[0].Radius, Scalar.Red, 2);
+                Cv2.Circle(dst4, circlesres[1].Center, (int)circlesres[1].Radius, Scalar.Red, 2);
 
-                //Cv2.Line(dst4, circlesres[0].Center, circles[1].Center, Scalar.Red, 3);
+                Cv2.Line(dst4, circlesres[0].Center, circles[1].Center, Scalar.Red, 3);
                 Vector3 first = new Vector3(circlesres[0].Center.X, circlesres[0].Center.Y, 0);
-
+                Debug.Log("FIRST: "+first);
 
 
                 Vector3 second = new Vector3(circlesres[1].Center.X, circlesres[1].Center.Y, 0);
+                Debug.Log("SECOND:"+ second);
                 result = second - first;
+                //Cv2.NamedWindow("Circles");
+                //Cv2.ResizeWindow("Circles", 40, 40);
+                //Cv2.ImShow("Circles", dst4);
             }
 
 
         }
 
-        // Cv2.ImShow("Circles", dst4);
+      
 
         Debug.Log("Result "+result);
 

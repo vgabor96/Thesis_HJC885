@@ -109,9 +109,9 @@ public class HiResScreenShots : MonoBehaviour
         Debug.Log("ALLTIME" + alltime);
 
         capturedelay = 0.2f;//alltime / (alltime*5);//alltime / 3;
-        secondcapturedelay = alltime / 2 -capturedelay;
+        //secondcapturedelay = alltime / 2 -capturedelay;
 
-
+        secondcapturedelay = 2f - capturedelay;
     }
 
     void Update()
@@ -175,7 +175,7 @@ public class HiResScreenShots : MonoBehaviour
 
         GameObject.Find("RobotBrain").GetComponent<PictureToVector>().text1 = screenShot;
         //Debug.Log("picshot1");
-
+        Debug.Log("Time: "+ capturedelay + " firstPos"+bullet.gameObject.transform.position);
 
         ////Saving to folder
         ///  string filename;
@@ -203,6 +203,7 @@ public class HiResScreenShots : MonoBehaviour
 
         GameObject.Find("RobotBrain").GetComponent<PictureToVector>().text2 = screenShot;
 
+        Debug.Log("Time: " + (capturedelay + secondcapturedelay) + " secondPos" + bullet.gameObject.transform.position);
         //Debug.Log("picshot2");
 
 
