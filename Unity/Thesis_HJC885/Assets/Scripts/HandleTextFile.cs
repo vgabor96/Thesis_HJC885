@@ -76,7 +76,13 @@ public class HandleTextFile : MonoBehaviour
         string temp = string.Empty;
         foreach (Vector3 item in movement)
         {
-            temp += "\t" + '(' + (float)Math.Round(item.x, decimals) + ',' + ' ' + (float)Math.Round(item.y, decimals) + ',' + ' ' + (float)Math.Round(item.z, decimals) + ')';
+            string x = ((float)Math.Round(item.x, decimals)).ToString("0.000");
+            x = x.Replace(",", ".");
+            string y = ((float)Math.Round(item.y, decimals)).ToString("0.000");
+           y= y.Replace(",", ".");
+            string z = ((float)Math.Round(item.z, decimals)).ToString("0.000");
+          z = z.Replace(",", ".");
+            temp += "\t" + '(' + x + ',' + ' ' + y  + ',' + ' ' + z + ')';
         }
         writer.WriteLine(bulletdest+temp);
         writer.Close();
