@@ -63,6 +63,8 @@ public class GeneticAlgorithm_ForMovement : MonoBehaviour
 	int bodyparts = 3;
 	 float from = -2f;
 	 float to = 2f;
+
+	private int decimals = 3;
 	List<Member> M = new List<Member>();
 
 	private bool isVectorcontained(Vector3 bulletdest)
@@ -578,32 +580,32 @@ public class GeneticAlgorithm_ForMovement : MonoBehaviour
 
 	private Vector3 RandomFullBodyMovement()
 	{
-		return new Vector3(0, 0, (float)Math.Round(Random.Range(-1, 1f),1));
+		return new Vector3(0, 0, (float)Math.Round(Random.Range(-1, 1f), decimals));
 	}
 
 	private Vector3 RandomHeadrotation()
 	{ 
-		return new Vector3((float)Math.Round(Random.Range(-90f, 90f),1), (float)Math.Round(Random.Range(-90f, 90f),1), (float)Math.Round(Random.Range(-90f, 30f),1));
+		return new Vector3((float)Math.Round(Random.Range(-90f, 90f), decimals), (float)Math.Round(Random.Range(-90f, 90f), decimals), (float)Math.Round(Random.Range(-90f, 30f), decimals));
 	}
 	private Vector3 RandomHeadMovement()
 	{
-		return new Vector3((float)Math.Round(Random.Range(-0.2f, 0.3f),1), (float)Math.Round(Random.Range(-0.2f, 0.2f),1), (float)Math.Round(Random.Range(-0.3f, 0.3f),1));
+		return new Vector3((float)Math.Round(Random.Range(-0.2f, 0.3f), decimals), (float)Math.Round(Random.Range(-0.2f, 0.2f), decimals), (float)Math.Round(Random.Range(-0.3f, 0.3f), decimals));
 	}
 	private Vector3 RandomBodyrotation()
 	{
-		return new Vector3((float)Math.Round(Random.Range(-15f, 15f),1), (float)Math.Round(Random.Range(-90f, 90f),1), (float)Math.Round(Random.Range(-90f, 90f),1));
+		return new Vector3((float)Math.Round(Random.Range(-15f, 15f), decimals), (float)Math.Round(Random.Range(-90f, 90f), decimals), (float)Math.Round(Random.Range(-90f, 90f), decimals));
 	}
 	private Vector3 RandomBodymovement()
 	{
-		return new Vector3((float)Math.Round(Random.Range(-0.5f, 0.5f),1), (float)Math.Round(Random.Range(-0.1f, 0.1f),1), (float)Math.Round(Random.Range(-0.2f, 0.2f),1));
+		return new Vector3((float)Math.Round(Random.Range(-0.5f, 0.5f), decimals), (float)Math.Round(Random.Range(-0.1f, 0.1f), decimals), (float)Math.Round(Random.Range(-0.2f, 0.2f), decimals));
 	}
 	private Vector3 RandomLegMovement()
 	{
-		return new Vector3((float)Math.Round(Random.Range(-0.2f, 0.2f),1), (float)Math.Round(Random.Range(-0.2f, 0.2f),1), (float)Math.Round(Random.Range(-0.3f, 0.3f),1));
+		return new Vector3((float)Math.Round(Random.Range(-0.2f, 0.2f), decimals), (float)Math.Round(Random.Range(-0.2f, 0.2f), decimals), (float)Math.Round(Random.Range(-0.3f, 0.3f), decimals));
 	}
 	private Vector3 RandomLegrotation()
 	{
-		return new Vector3((float)Math.Round(Random.Range(-20f, 20f),1), (float)Math.Round(Random.Range(-40f, 40f),1), (float)Math.Round(Random.Range(-40f, 40f),1));
+		return new Vector3((float)Math.Round(Random.Range(-20f, 20f), decimals), (float)Math.Round(Random.Range(-40f, 40f), decimals), (float)Math.Round(Random.Range(-40f, 40f), decimals));
 	}
 
 	private void Addchild(List<Member> population, Member newmember)

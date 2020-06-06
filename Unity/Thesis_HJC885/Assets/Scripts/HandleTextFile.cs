@@ -3,9 +3,11 @@ using UnityEditor;
 using System.IO;
 using System.Collections.Generic;
 using System.Linq;
+using System;
 
 public class HandleTextFile : MonoBehaviour
 {
+   const int decimals = 3;
     [MenuItem("Tools/Write file")]
     public static void WriteString()
     {
@@ -49,7 +51,7 @@ public class HandleTextFile : MonoBehaviour
             temp = string.Empty;
             foreach (Vector3 item in solution.ElementAt(i).Value)
             {
-                temp += "\t"+item ;
+                temp += "\t"+'('+(float)Math.Round(item.x,decimals)+','+' '+ (float)Math.Round(item.y, decimals) + ',' + ' ' + (float)Math.Round(item.z, decimals)+')';
             }
             writer.WriteLine(solution.ElementAt(i).Key + temp);
         }
@@ -74,7 +76,7 @@ public class HandleTextFile : MonoBehaviour
         string temp = string.Empty;
         foreach (Vector3 item in movement)
         {
-            temp += "\t"+item;
+            temp += "\t" + '(' + (float)Math.Round(item.x, decimals) + ',' + ' ' + (float)Math.Round(item.y, decimals) + ',' + ' ' + (float)Math.Round(item.z, decimals) + ')';
         }
         writer.WriteLine(bulletdest+temp);
         writer.Close();

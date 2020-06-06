@@ -25,6 +25,8 @@ public class Robot : MonoBehaviour
 
     public double actmovfitness = 0;
 
+
+
     private List<GameObject> ghostbodyparts = new List<GameObject>();
     //private Dictionary<string,BoxCollider> ghostbodyparts = new Dictionary<string, BoxCollider>();
 
