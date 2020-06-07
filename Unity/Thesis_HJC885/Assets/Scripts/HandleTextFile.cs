@@ -76,11 +76,11 @@ public class HandleTextFile : MonoBehaviour
         string temp = string.Empty;
         foreach (Vector3 item in movement)
         {
-            string x = ((float)Math.Round(item.x, decimals)).ToString("0.000");
+            string x = item.x.ToString("0.000");
             x = x.Replace(",", ".");
-            string y = ((float)Math.Round(item.y, decimals)).ToString("0.000");
+            string y = item.y.ToString("0.000");
            y= y.Replace(",", ".");
-            string z = ((float)Math.Round(item.z, decimals)).ToString("0.000");
+            string z = item.z.ToString("0.000");
           z = z.Replace(",", ".");
             temp += "\t" + '(' + x + ',' + ' ' + y  + ',' + ' ' + z + ')';
         }

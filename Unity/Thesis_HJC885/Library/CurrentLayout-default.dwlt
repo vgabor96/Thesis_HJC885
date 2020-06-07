@@ -115,7 +115,7 @@ MonoBehaviour:
   m_MinSize: {x: 677, y: 321}
   m_MaxSize: {x: 12002, y: 8021}
   vertical: 0
-  controlID: 19378
+  controlID: 1334
 --- !u!114 &6
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -140,7 +140,7 @@ MonoBehaviour:
   m_MinSize: {x: 402, y: 321}
   m_MaxSize: {x: 8002, y: 8021}
   vertical: 1
-  controlID: 19278
+  controlID: 1335
 --- !u!114 &7
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -165,7 +165,7 @@ MonoBehaviour:
   m_MinSize: {x: 402, y: 221}
   m_MaxSize: {x: 8002, y: 4021}
   vertical: 0
-  controlID: 19279
+  controlID: 1336
 --- !u!114 &8
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -393,7 +393,7 @@ MonoBehaviour:
       scrollPos: {x: 0, y: 0}
       m_SelectedIDs: 5afbffff
       m_LastClickedID: -1190
-      m_ExpandedIDs: 42fbffff6efbffff70fbffff08370000
+      m_ExpandedIDs: 6efbffff70fbffff
       m_RenameOverlay:
         m_UserAcceptedRename: 0
         m_Name: 
@@ -453,9 +453,9 @@ MonoBehaviour:
   m_PlayAudio: 0
   m_AudioPlay: 0
   m_Position:
-    m_Target: {x: -10, y: 1.5, z: 0}
+    m_Target: {x: 8.96138, y: 1.753088, z: 0.04875177}
     speed: 2
-    m_Value: {x: -10, y: 1.5, z: 0}
+    m_Value: {x: 8.96138, y: 1.753088, z: 0.04875177}
   m_RenderMode: 0
   m_CameraMode:
     drawMode: 0
@@ -467,7 +467,7 @@ MonoBehaviour:
   m_ExposureSliderMax: 10
   m_SceneViewState:
     showFog: 1
-    showMaterialUpdate: 0
+    showMaterialUpdate: 1
     showSkybox: 1
     showFlares: 1
     showImageEffects: 1
@@ -501,13 +501,13 @@ MonoBehaviour:
     m_GridAxis: 1
     m_gridOpacity: 0.5
   m_Rotation:
-    m_Target: {x: 0.08359155, y: 0.6840705, z: -0.07933628, w: 0.72028285}
+    m_Target: {x: 0.30053088, y: 0.6251469, z: -0.2836394, w: 0.6621748}
     speed: 2
-    m_Value: {x: 0.08359155, y: 0.6840705, z: -0.07933627, w: 0.72028285}
+    m_Value: {x: 0.30053085, y: 0.62514687, z: -0.2836394, w: 0.66217476}
   m_Size:
-    m_Target: 22
+    m_Target: 4.532226
     speed: 2
-    m_Value: 22
+    m_Value: 4.532226
   m_Ortho:
     m_Target: 0
     speed: 2
@@ -610,7 +610,7 @@ MonoBehaviour:
     scrollPos: {x: 0, y: 0}
     m_SelectedIDs: 76380000
     m_LastClickedID: 14454
-    m_ExpandedIDs: 0000000076380000783800007a3800007c3800007e38000080380000823800008438000086380000883800008a380000
+    m_ExpandedIDs: 0000000070380000723800007438000076380000783800007a3800007c3800007e380000803800008238000084380000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -638,7 +638,7 @@ MonoBehaviour:
     scrollPos: {x: 0, y: 0}
     m_SelectedIDs: 
     m_LastClickedID: 0
-    m_ExpandedIDs: 0000000076380000783800007a3800007c3800007e38000080380000823800008438000086380000883800008a380000
+    m_ExpandedIDs: 0000000070380000723800007438000076380000783800007a3800007c3800007e380000803800008238000084380000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 

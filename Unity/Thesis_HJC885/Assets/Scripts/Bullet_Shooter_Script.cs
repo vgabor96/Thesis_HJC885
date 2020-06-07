@@ -110,7 +110,7 @@ public class Bullet_Shooter_Script : MonoBehaviour
             //this.Bullet.destination.z = (float)Math.Round(this.Bullet.destination.z, 1);
             this.Bullet.GetComponent<SphereCollider>().radius *= this.Bullet.transform.localScale.x;
             actualbulletsize = this.Bullet.GetComponent<SphereCollider>().radius;
-            //SetDestination(this.Bullet);
+            SetDestination(this.Bullet);
           
           
 
@@ -165,7 +165,9 @@ public class Bullet_Shooter_Script : MonoBehaviour
     {
         if (this.ShootTypeenum == ShootTypeEnum.Random)
         {
-            bullet.destination = (DestinationRandomize() - transform.position).normalized * bulletspeed;
+            Vector3 vec = (DestinationRandomize() - transform.position).normalized * bulletspeed;
+            bullet.destination = new Vector3((float)Math.Round(vec.x,1), (float)Math.Round(vec.y, 1), (float)Math.Round(vec.z, 1));
+            //bullet.destination = DestinationRandomize().normalized * bulletspeed;
         }
         else if (this.ShootTypeenum == ShootTypeEnum.LearnedBullets)
         {

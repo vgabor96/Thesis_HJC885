@@ -49,7 +49,7 @@ public class GeneticAlgorithm_ForMovement : MonoBehaviour
 	}
 
 	int populationlimit = 3000; //200
-	double achivefitness = 310;//99999;
+	double achivefitness = 320;//99999;
 	double bestfitness = double.MaxValue;
 	//double previousfitness = double.MaxValue;
 	double mutationrate = 10; //30
@@ -82,11 +82,11 @@ public class GeneticAlgorithm_ForMovement : MonoBehaviour
 	private bool AreVectorsEqual(Vector3 v1, Vector3 v2)
 	{
 		double x1 = Math.Round(v1.x,1);
-		double y1 = Math.Round(v1.y,1);
-		double z1 = Math.Round(v1.z,1);
-		double x2 = Math.Round(v2.x,1);
-		double y2 = Math.Round(v2.y,1);
-		double z2 = Math.Round(v2.z,1);
+		double y1 = Math.Round(v1.y, 1);
+		double z1 = Math.Round(v1.z, 1);
+		double x2 = Math.Round(v2.x, 1);
+		double y2 = Math.Round(v2.y, 1);
+		double z2 = Math.Round(v2.z, 1);
 		return (x1 == x2) && (y1 == y2) && (z1 == z2);
 	}
 
