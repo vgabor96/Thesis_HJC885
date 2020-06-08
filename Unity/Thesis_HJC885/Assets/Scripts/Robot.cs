@@ -207,10 +207,14 @@ public class Robot : MonoBehaviour
         //if (AcceptedMoveFullBodyVector(vector))
         //{
         //transform.Translate(vector);
-        MoveHead(vector);
-        MoveBody(vector);
-        MoveLeg(vector);
-        MovementEnergyUsed += 100;
+        if (vector != new Vector3(0,0,0))
+        {
+            MoveHead(vector);
+            MoveBody(vector);
+            MoveLeg(vector);
+            MovementEnergyUsed += 100;
+        }
+      
         //}
 
     }
