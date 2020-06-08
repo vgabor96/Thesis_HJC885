@@ -336,7 +336,7 @@ PrefabInstance:
     - target: {fileID: 1970259060286674570, guid: 185ae6ccb4fe8714cba6bca8a234ebee,
         type: 3}
       propertyPath: Wheretoshootenum
-      value: 4
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1970259060286674570, guid: 185ae6ccb4fe8714cba6bca8a234ebee,
         type: 3}
@@ -346,7 +346,7 @@ PrefabInstance:
     - target: {fileID: 1970259060286674570, guid: 185ae6ccb4fe8714cba6bca8a234ebee,
         type: 3}
       propertyPath: Fixedshootvector.y
-      value: 0
+      value: 0.2
       objectReference: {fileID: 0}
     - target: {fileID: 1970259060286674570, guid: 185ae6ccb4fe8714cba6bca8a234ebee,
         type: 3}
@@ -356,7 +356,7 @@ PrefabInstance:
     - target: {fileID: 1970259060286674570, guid: 185ae6ccb4fe8714cba6bca8a234ebee,
         type: 3}
       propertyPath: recoil
-      value: 0.75
+      value: 0.25
       objectReference: {fileID: 0}
     - target: {fileID: 1970259060286674570, guid: 185ae6ccb4fe8714cba6bca8a234ebee,
         type: 3}
@@ -417,15 +417,55 @@ PrefabInstance:
       propertyPath: m_IsTrigger
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4552539154639183278, guid: e3596bcd47336c0438a3b5dc47ad3f38,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 90
+      objectReference: {fileID: 0}
     - target: {fileID: 4703200627238019138, guid: e3596bcd47336c0438a3b5dc47ad3f38,
         type: 3}
       propertyPath: m_IsTrigger
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5568439832851189701, guid: e3596bcd47336c0438a3b5dc47ad3f38,
+        type: 3}
+      propertyPath: m_NormalizedViewPortRect.width
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5568439832851189701, guid: e3596bcd47336c0438a3b5dc47ad3f38,
+        type: 3}
+      propertyPath: m_NormalizedViewPortRect.height
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6284228736396067218, guid: e3596bcd47336c0438a3b5dc47ad3f38,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 6284228736396067218, guid: e3596bcd47336c0438a3b5dc47ad3f38,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 6284228736396067218, guid: e3596bcd47336c0438a3b5dc47ad3f38,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 90
+      objectReference: {fileID: 0}
     - target: {fileID: 6790511235177514559, guid: e3596bcd47336c0438a3b5dc47ad3f38,
         type: 3}
       propertyPath: m_Name
       value: Robot
+      objectReference: {fileID: 0}
+    - target: {fileID: 7031664378304122160, guid: e3596bcd47336c0438a3b5dc47ad3f38,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7031664378304122160, guid: e3596bcd47336c0438a3b5dc47ad3f38,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7624065230430764571, guid: e3596bcd47336c0438a3b5dc47ad3f38,
         type: 3}

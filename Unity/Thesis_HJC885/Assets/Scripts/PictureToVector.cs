@@ -99,15 +99,20 @@ public class PictureToVector : MonoBehaviour
      
 
 
-        double maxdist = 10;
+        double maxdist = 5;
         bool notgood = false;
        
         List<CircleSegment> circlesres = new List<CircleSegment>();
         if (circles.Length >= 2)
         {
-            circlesres.Add(circles[0]);
+            CircleSegment[] farawaycircles = Mostfarawaycircles(circles);
+            //circlesres.Add(circles[0]);
+            //circlesres.Add(circles[1]);
+            circlesres.Add(farawaycircles[0]);
+            circlesres.Add(farawaycircles[1]);
 
-            for (int i = 1; i < circles.Length; i++)
+
+            for (int i = 2; i < circles.Length; i++)
             {
                 bool isdistinct = false;
                 for (int j = 0; j < circlesres.Count; j++)
@@ -137,10 +142,10 @@ public class PictureToVector : MonoBehaviour
                     notgood = false;
                     continue;
                 }
-                if (isdistinct && !circlesres.Contains(circles[i]))
-                {
-                    circlesres.Add(circles[i]);
-                }
+                //if (isdistinct && !circlesres.Contains(circles[i]))
+                //{
+                //    circlesres.Add(circles[i]);
+                //}
                    
                           
             }
@@ -178,4 +183,30 @@ public class PictureToVector : MonoBehaviour
         return result;
 
     }
+
+    private CircleSegment[] Mostfarawaycircles(CircleSegment[] inputcircles) 
+    {
+        CircleSegment[] circles = new CircleSegment[2];
+        double dist = 0;
+        CircleSegment circ1 = new CircleSegment();
+        CircleSegment circ2 = new CircleSegment();
+        double temp = 0;
+        for (int i = 0; i < inputcircles.Length; i++)
+        {
+            for (int j = 0; j < inputcircles.Length; j++)
+            {
+                temp = Point2f.Distance(inputcircles[i].Center, inputcircles[j].Center);
+                if ( temp> dist)
+                {
+                    dist = temp;
+                    circ1 = inputcircles[i];
+                    circ2 = inputcircles[j];
+                }
+            }
+        }
+        circles[0] = circ1;
+        circles[1] = circ2;
+
+        return circles;
+    } 
 }

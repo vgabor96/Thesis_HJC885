@@ -19,12 +19,12 @@ public class Robot : MonoBehaviour
     public GeneticAlgorithm_ForMovement GA;
     public PictureToVector PTV;
     public Bullet_Movement_Script bullettododge;
-    private float movementcostmultiplier=120;
+    private float movementcostmultiplier=50;
     double sum = 0;
-    private float rotationcostmult = 0.3f;
-
+    private float rotationcostmult = 0.2f;
+    private bool animend = false;
     public double actmovfitness = 0;
-
+    private float distfromjointmax = 0.3f;
 
 
     private List<GameObject> ghostbodyparts = new List<GameObject>();
@@ -82,9 +82,9 @@ public class Robot : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        DoMovement |= Input.GetKeyDown(KeyCode.W);
+        //DoMovement |= Input.GetKeyDown(KeyCode.W);
 
-        DoReset |= Input.GetKeyDown(KeyCode.R);
+        //DoReset |= Input.GetKeyDown(KeyCode.R);
         if (DoReset)
         {
             //Debug.Log("RESET");
@@ -97,12 +97,13 @@ public class Robot : MonoBehaviour
             //Debug.Log("mooooooove");
 
             DoOneMovement(MovementToDodge(GameObject.Find("BulletGenerator").GetComponent<Bullet_Shooter_Script>().Bullet));
-            
-            //DoOneMovement(MovementToDodge(PTV.CalculateBulletDest()));
+
+         
 
             DoMovement = false;
-
+          
         }
+
 
 
     }
@@ -184,23 +185,28 @@ public class Robot : MonoBehaviour
 
 
             //DoOneMovement(GA.StartFindingMovement(bullet.destination, objective));
-           return GA.StartFindingMovement(bullet.destination, objective);
+            Vector3 bulletpic = new Vector3(0, 0, 0);
+            while (bulletpic == new Vector3(0,0,0))
+            {
+                bulletpic = PTV.CalculateBulletDest();
+            }
+           return GA.StartFindingMovement(bullet.destination, bulletpic, objective);
         }
         return new List<Vector3>();
     }
 
-    public List<Vector3> MovementToDodge(Vector3 vec)
-    {
-        this.bullettododge = GameObject.Find("BulletGenerator").GetComponent<Bullet_Shooter_Script>().Bullet;
-        if (IsLearning)
-        {
+    //public List<Vector3> MovementToDodge(Vector3 vec)
+    //{
+    //    this.bullettododge = GameObject.Find("BulletGenerator").GetComponent<Bullet_Shooter_Script>().Bullet;
+    //    if (IsLearning)
+    //    {
 
 
-            //DoOneMovement(GA.StartFindingMovement(bullet.destination, objective));
-            return GA.StartFindingMovement(vec, objective);
-        }
-        return new List<Vector3>();
-    }
+    //        //DoOneMovement(GA.StartFindingMovement(bullet.destination, objective));
+    //        return GA.StartFindingMovement(vec, objective);
+    //    }
+    //    return new List<Vector3>();
+    //}
 
     public void MoveFullBody(Vector3 vector)
     {
@@ -212,7 +218,7 @@ public class Robot : MonoBehaviour
             MoveHead(vector);
             MoveBody(vector);
             MoveLeg(vector);
-            MovementEnergyUsed += 100;
+            MovementEnergyUsed += Math.Abs(vector.x*500)+ Math.Abs(vector.y * 500) + Math.Abs(vector.z * 500)+movementcostmultiplier*3;
         }
       
         //}
@@ -314,9 +320,9 @@ public class Robot : MonoBehaviour
                 BoxCollider bodypartcollider = bodypart.GetComponent<BoxCollider>();
                 //penalty for intersect
                 //Collider[] collisions = Physics.OverlapSphere(bodypart.position, bodypartcollider.size.x * 0.5f);//.50f);
-                Collider[] collisions = Physics.OverlapSphere(bodypart.position, Mathf.Max(bodypartcollider.size.x, bodypartcollider.size.y, bodypartcollider.size.z)*0.5f);//.50f);
+                //Collider[] collisions = Physics.OverlapSphere(bodypart.position, Mathf.Max(bodypartcollider.gameObject.transform.lossyScale.x, bodypartcollider.gameObject.transform.lossyScale.y, bodypartcollider.gameObject.transform.lossyScale.z) *0.6f);//.50f);
+                Collider[] collisions = Physics.OverlapBox(bodypart.position, bodypart.transform.localScale / 2,bodypart.transform.rotation);//.50f);
 
-              
                 foreach (Collider C in collisions)
                 {
                     //penalty for intersect bulletcollider
@@ -338,13 +344,13 @@ public class Robot : MonoBehaviour
 
 
                 // penalty for moving to far
-                Collider[] collisions2 = Physics.OverlapSphere(bodypart.position, Mathf.Max(bodypartcollider.size.x, bodypartcollider.size.y, bodypartcollider.size.z) * 0.8f);//.50f);
+                // Collider[] collisions2 = Physics.OverlapSphere(bodypart.position, Mathf.Max(bodypartcollider.gameObject.transform.lossyScale.x, bodypartcollider.gameObject.transform.lossyScale.y, bodypartcollider.gameObject.transform.lossyScale.z) * 1f);//.50f);
+                //Collider[] collisions2 = Physics.OverlapBox(bodypart.position, bodypart.transform.localScale / 2, bodypart.transform.rotation);
+                //if (collisions2.Length < 1)
+                //{
 
-                if (collisions2.Length < 1)
-                {
-
-                    sum += 1000;
-                }
+                //    sum += 1000;
+                //}
 
 
 
@@ -352,7 +358,7 @@ public class Robot : MonoBehaviour
 
                 double dist2 = Vector3.Distance(pointonray, bodypartcollider.ClosestPoint(pointonray));
 
-                if (dist2 <= bullettododge.GetComponent<SphereCollider>().radius*2) //+ bodypart.GetComponent<BoxCollider>().size.x / 2))
+                if (dist2 <= bullettododge.GetComponent<SphereCollider>().radius*1f) //+ bodypart.GetComponent<BoxCollider>().size.x / 2))
                 {
                     sum += (1 / DistanceToRay(bullettododge.raystart, bodypartcollider.transform.position)) * 100000;
 
@@ -416,9 +422,20 @@ public class Robot : MonoBehaviour
           
         }
 
-       
+        double tempsumfromjointdistance = 0;
+        double distjoint = Vector3.Distance(childrenobjects["Head"].GetChild(1).GetChild(0).transform.position, childrenobjects["Body"].GetChild(0).GetChild(0).transform.position);
+        if ( distjoint> distfromjointmax)
+        {
+            tempsumfromjointdistance += distjoint*100000;
+        }
 
-      
+        distjoint = Vector3.Distance(childrenobjects["Body"].GetChild(0).GetChild(1).transform.position, childrenobjects["Legs"].GetChild(0).GetChild(0).transform.position);
+
+        if (distjoint > distfromjointmax)
+        {
+            tempsumfromjointdistance += distjoint * 100000;
+        }
+
         //Destroy(ghosthead);
         //Destroy(ghostbody);
         //Destroy(ghostlegs);
@@ -431,7 +448,7 @@ public class Robot : MonoBehaviour
         Reset();
         //Debug.Log("Sum: "+ sum +" Energy: "+temp+" => Fitness: "+ (sum+temp));
         //Time.timeScale = 1;
-        return sum1 + temp;
+        return sum1 + temp +tempsumfromjointdistance;
     }
 
     public static float DistanceToRay(Ray ray, Vector3 point)

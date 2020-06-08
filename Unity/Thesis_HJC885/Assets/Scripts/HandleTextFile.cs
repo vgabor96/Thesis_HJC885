@@ -66,7 +66,7 @@ public class HandleTextFile : MonoBehaviour
     }
 
     [MenuItem("Tools/Write file")]
-    public static void WriteSolution(Vector3 bulletdest, List<Vector3> movement)
+    public static void WriteSolution(Vector3 bulletdest,Vector3 bulletdestpic, List<Vector3> movement)
     {
         string path = "Assets/Resources/test.txt";
 
@@ -84,7 +84,7 @@ public class HandleTextFile : MonoBehaviour
           z = z.Replace(",", ".");
             temp += "\t" + '(' + x + ',' + ' ' + y  + ',' + ' ' + z + ')';
         }
-        writer.WriteLine(bulletdest+temp);
+        writer.WriteLine(bulletdest+"\t"+bulletdestpic+temp);
         writer.Close();
 
         //Re-import the file to update the reference in the editor
@@ -116,7 +116,7 @@ public class HandleTextFile : MonoBehaviour
             Vector3 key = StringToVector3(splittedvectors[0]);
             
                     List<Vector3> movement = new List<Vector3>();
-                    for (int i = 1; i < splittedvectors.Length; i++)
+                    for (int i = 2; i < splittedvectors.Length; i++)
                     {
                         movement.Add(StringToVector3(splittedvectors[i]));
                     }

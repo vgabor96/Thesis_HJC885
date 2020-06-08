@@ -11,8 +11,10 @@ public class GeneticAlgorithm_ForMovement : MonoBehaviour
 
 	public Dictionary<Vector3, List<Vector3>> solvedmovements;
 	private Vector3 bulletdest;
+	private Vector3 bulletdestpic;
 	public void Start()
 	{
+		bulletdestpic = new Vector3(0, 0, 0);
 		bulletdest = new Vector3(0, 0, 0);
 		solvedmovements = new Dictionary<Vector3, List<Vector3>>();
 		solvedmovements = HandleTextFile.ReadSolutions();
@@ -49,7 +51,7 @@ public class GeneticAlgorithm_ForMovement : MonoBehaviour
 	}
 
 	int populationlimit = 3000; //200
-	double achivefitness = 320;//99999;
+	double achivefitness = 420;//320;//99999;
 	double bestfitness = double.MaxValue;
 	//double previousfitness = double.MaxValue;
 	double mutationrate = 10; //30
@@ -103,7 +105,7 @@ public class GeneticAlgorithm_ForMovement : MonoBehaviour
 	
 		return solvedmovements[solvedmovements.Keys.ElementAt(i)];
 	}
-	public List<Vector3> StartFindingMovement(Vector3 bulletdest,Func<List<Vector3>, double> fitness)
+	public List<Vector3> StartFindingMovement(Vector3 bulletdest,Vector3 bulletdestpic, Func<List<Vector3>, double> fitness)
 	{
 		//List<Vector3> v = new List<Vector3>() { new Vector3(0, 0, 0), new Vector3(0, 0, 0), new Vector3(0, 0, 0), new Vector3(0, 0, 0), new Vector3(0, 0, 0), new Vector3(0, 0, 0), new Vector3(0, 0, 0) };
 		//fitness(v);
@@ -116,7 +118,9 @@ public class GeneticAlgorithm_ForMovement : MonoBehaviour
 		}
 		else
 		{
+
 			this.bulletdest = bulletdest;
+			this.bulletdestpic = bulletdestpic;
 			return Startsolve(fitness);
 		}
 	
@@ -130,7 +134,7 @@ public class GeneticAlgorithm_ForMovement : MonoBehaviour
 		if (pbestfitness < achivefitness)
 		{
 
-			return pbestfitness <= 100 || pbestfitness > prevbestfitness * 0.995;
+			return  pbestfitness <= 10 || pbestfitness > prevbestfitness * 0.995;
 		}
 		return false;
 	}
@@ -199,7 +203,7 @@ public class GeneticAlgorithm_ForMovement : MonoBehaviour
 		Debug.Log("1fitness Function:" +fitness(pbest.movement));
 		Debug.Log("2fitness:" + pbest.fitness);
 		solvedmovements.Add(bulletdest, pbest.movement);
-		HandleTextFile.WriteSolution(bulletdest,pbest.movement);
+		HandleTextFile.WriteSolution(bulletdest,bulletdestpic,pbest.movement);
 		return pbest.movement;
 	}
 
@@ -442,13 +446,20 @@ public class GeneticAlgorithm_ForMovement : MonoBehaviour
 			m2.movement = new List<Vector3>() { new Vector3(0, 0, 0), new Vector3(0, 0, 0), new Vector3(0, 0, 0), new Vector3(0, 0, 0), new Vector3(0, 0, 0), new Vector3(0, 0, 0), new Vector3(0, 0, -0.5f) }; //-0.5
 
 			m3.movement = new List<Vector3>() { new Vector3(0, 0, 0), new Vector3(0, 0, 0), new Vector3(0, 0, 0), new Vector3(0, 0, 0), new Vector3(0, 0, 0), new Vector3(0, 0, 0), new Vector3(0, 0, +0.5f) }; //+0.5
-		
+		Member m4 = new Member();
+		m4.movement = new List<Vector3>() { new Vector3(0, 0, 0), new Vector3(0, 0, 0), new Vector3(0, 0, 0), new Vector3(0, 90f, 0), new Vector3(0, 0, 0), new Vector3(0, 0, 0), new Vector3(0, 0, 0) };
+		Member m5 = new Member();
+		m5.movement = new List<Vector3>() { new Vector3(0, 0, 0), new Vector3(0, 0, 0), new Vector3(0, 0, 0), new Vector3(0, 0, 0), new Vector3(0, 0, 0), new Vector3(0, 90f, 0), new Vector3(0, 0, 0) };
 
-		
+
+
 		P.Add(m);
 		P.Add(m2);
 		P.Add(m3);
-		while (i < populationlimit-3)
+		P.Add(m4);
+		P.Add(m5);
+		int count = P.Count;
+		while (i < populationlimit-count)
 		{
 			m = S[UnityEngine.Random.Range(0, S.Count)];
 			if (!this.isMemberalreadyinPop(P, m))

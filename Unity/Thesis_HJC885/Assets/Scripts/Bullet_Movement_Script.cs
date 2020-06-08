@@ -346,7 +346,7 @@ public class Bullet_Movement_Script : MonoBehaviour
     {
         if (other.gameObject.name != "Robot_Body")
         {
-            Debug.Log($"Bullet ID: {this_ID} Vector:{destination * mSpeed} Hit => {other.gameObject.name}");
+            Debug.LogWarning($"Bullet ID: {this_ID} Vector:{destination * mSpeed} Hit => {other.gameObject.name}");
         }
               
             
