@@ -52,7 +52,8 @@ public class PictureToVector : MonoBehaviour
         Mat img = OpenCvSharp.Unity.TextureToMat(text1);
 
         Mat img2 = OpenCvSharp.Unity.TextureToMat(text2);
-
+        //Cv2.ImShow("Pic1",img);
+        //Cv2.ImShow("Pic2", img2);
         int height = img.Rows;
         int width = img.Cols;
         //convert image from CV::MAT to float*.
@@ -66,19 +67,19 @@ public class PictureToVector : MonoBehaviour
 
 
         OpenCvSharp.Cv2.Subtract(img, img2, dst);
-        //Cv2.ImShow("Subpic", dst);
+       // Cv2.ImShow("Subpic", dst);
 
         Mat dst2 = new Mat();
         OpenCvSharp.Cv2.CvtColor(dst, dst2, ColorConversionCodes.RGB2GRAY);
-        //Cv2.ImShow("Gray", dst2);
+       // Cv2.ImShow("Gray", dst2);
 
         Mat dst3 = new Mat();
         OpenCvSharp.Cv2.Threshold(dst2, dst3, v_threshold, 255, ThresholdTypes.Binary);
-        //Cv2.ImShow("Black_and_white", dst3);
+     //   Cv2.ImShow("Black_and_white", dst3);
 
         Mat dst4 = new Mat();
         OpenCvSharp.Cv2.GaussianBlur(dst3, dst4, new Size(9, 9), 2, 2);
-        //Cv2.ImShow("GaussianBlur", dst4);
+       // Cv2.ImShow("GaussianBlur", dst4);
 
         Vector3 result = new Vector3();
 
@@ -170,7 +171,7 @@ public class PictureToVector : MonoBehaviour
                 result = second - first;
                 //Cv2.NamedWindow("Circles");
                 //Cv2.ResizeWindow("Circles", 40, 40);
-                //Cv2.ImShow("Circles", dst4);
+             //   Cv2.ImShow("Circles", dst4);
             }
 
 

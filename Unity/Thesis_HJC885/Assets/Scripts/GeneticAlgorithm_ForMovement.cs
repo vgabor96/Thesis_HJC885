@@ -107,12 +107,10 @@ public class GeneticAlgorithm_ForMovement : MonoBehaviour
 	}
 	public List<Vector3> StartFindingMovement(Vector3 bulletdest,Vector3 bulletdestpic, Func<List<Vector3>, double> fitness)
 	{
-		//List<Vector3> v = new List<Vector3>() { new Vector3(0, 0, 0), new Vector3(0, 0, 0), new Vector3(0, 0, 0), new Vector3(0, 0, 0), new Vector3(0, 0, 0), new Vector3(0, 0, 0), new Vector3(0, 0, 0) };
-		//fitness(v);
+
 		if (isVectorcontained(bulletdest))
 		{
 
-			//fitness(solvedmovements[bulletdest]);
 			Debug.Log("Fitness: " + fitness(GetMovementWIthKey(bulletdest)));
 			return GetMovementWIthKey(bulletdest);
 		}
