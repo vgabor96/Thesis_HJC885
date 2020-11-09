@@ -136,6 +136,56 @@ public class HandleTextFile : MonoBehaviour
         return solutions;
     }
 
+    [MenuItem("Tools/Read file")]
+    public static List<Vector3> ReadBullets()
+    {
+      List<Vector3> bullets = new List<Vector3>();
+        string path = "Assets/Resources/bullets.txt";
+
+
+        //Read the text from directly from the test.txt file
+        StreamReader reader = new StreamReader(path);
+
+        while (!reader.EndOfStream)
+        {
+
+            bullets.Add(StringToVector3(reader.ReadLine()));
+        }
+
+        //Debug.Log(reader.ReadToEnd());
+        reader.Close();
+
+        return bullets;
+    }
+
+    [MenuItem("Tools/Write file")]
+    public static void WriteBullet(Vector3 bulletdest)
+    {
+      
+
+        //Write some text to the test.txt file
+      
+
+        if (!ReadBullets().Contains(bulletdest))
+        {
+            string path = "Assets/Resources/bullets.txt";
+            StreamWriter writer = new StreamWriter(path, true);
+            writer.WriteLine(bulletdest);
+            writer.Close();
+            AssetDatabase.ImportAsset(path);
+            TextAsset asset = (TextAsset)Resources.Load("test");
+        }
+
+     
+      
+
+        //Re-import the file to update the reference in the editor
+    
+
+        //Print the text from the file
+        // Debug.Log(asset.text);
+    }
+
     private static Vector3 StringToVector3(string sVector)
     {
         // Remove the parentheses

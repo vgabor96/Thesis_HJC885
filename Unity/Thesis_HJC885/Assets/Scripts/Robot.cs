@@ -94,6 +94,7 @@ public class Robot : MonoBehaviour
         }
         if (DoMovement)
         {
+           
             //Debug.Log("mooooooove");
             //MoveFullBody(new Vector3(0, 0, 0.75f));
             //MoveFullBody(new Vector3(0, 0, 0.25f));

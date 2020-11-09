@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Net.Http.Headers;
 using UnityEngine;
@@ -21,7 +22,12 @@ public class Bullet_Shooter_Script : MonoBehaviour
     private int Learnedbulletcountact = 0;
     private int Learnedbulletcountsmax = 0;
 
+    private int RandomTextbulletcountact = 0;
+    private int RandomTextbulletcountmax = 0;
+
     private List<Vector3> learnedbulletvectors;
+
+    private List<Vector3> randomtextbulletvectors;
 
     public Vector3 Fixedshootvector= new Vector3(0,0,0);
 
@@ -45,6 +51,7 @@ public class Bullet_Shooter_Script : MonoBehaviour
     { 
         FixedBullet,
         Random,
+        FromRandomTextBullets,
         LearnedBullets
        
     }
@@ -55,11 +62,22 @@ public class Bullet_Shooter_Script : MonoBehaviour
     {
         Learnedbulletcountact = 0;
         learnedbulletvectors = new List<Vector3>();
+        randomtextbulletvectors = new List<Vector3>();
         usedvectors = new List<Vector3>();
         //Move the object to the same position as the parent:
         robot = robotobject.transform.Find("Robot_Body").GetComponent<Robot>();
 
-        if (this.ShootTypeenum == ShootTypeEnum.LearnedBullets)
+
+        if (this.ShootTypeenum == ShootTypeEnum.FromRandomTextBullets)
+        {
+            foreach (Vector3 item in HandleTextFile.ReadBullets())
+            {
+                randomtextbulletvectors.Add(item);
+            }
+            RandomTextbulletcountmax = randomtextbulletvectors.Count;
+        }
+
+        else if (this.ShootTypeenum == ShootTypeEnum.LearnedBullets)
         {
             foreach (Vector3 item in HandleTextFile.ReadSolutions().Keys)
             {
@@ -110,7 +128,7 @@ public class Bullet_Shooter_Script : MonoBehaviour
             //this.Bullet.destination.z = (float)Math.Round(this.Bullet.destination.z, 1);
             this.Bullet.GetComponent<SphereCollider>().radius *= this.Bullet.transform.localScale.x;
             actualbulletsize = this.Bullet.GetComponent<SphereCollider>().radius;
-            SetDestination(this.Bullet);
+            //SetDestination(this.Bullet);
           
           
 
@@ -163,22 +181,57 @@ public class Bullet_Shooter_Script : MonoBehaviour
 
     private void SetDestination(Bullet_Movement_Script bullet)
     {
-        if (this.ShootTypeenum == ShootTypeEnum.Random)
-        {
-            Vector3 vec = (DestinationRandomize() - transform.position).normalized * bulletspeed;
-            bullet.destination = new Vector3((float)Math.Round(vec.x,1), (float)Math.Round(vec.y, 1), (float)Math.Round(vec.z, 1));
-            //bullet.destination = DestinationRandomize().normalized * bulletspeed;
-        }
-        else if (this.ShootTypeenum == ShootTypeEnum.LearnedBullets)
-        {
-            if (Learnedbulletcountact>= Learnedbulletcountsmax)
-            {
-                Learnedbulletcountact = 0;
 
-            }
-            bullet.destination = learnedbulletvectors[Learnedbulletcountact] * bulletspeed;
-            Learnedbulletcountact++;
+
+        switch (this.ShootTypeenum)
+        {
+            case ShootTypeEnum.FixedBullet:
+                break;
+            case ShootTypeEnum.Random:
+                Vector3 vec = (DestinationRandomize() - transform.position).normalized * bulletspeed;
+                Vector3 randvec = new Vector3((float)Math.Round(vec.x, 1), (float)Math.Round(vec.y, 1), (float)Math.Round(vec.z, 1));
+                bullet.destination = randvec;
+                //bullet.destination = DestinationRandomize().normalized * bulletspeed;
+                break;
+            case ShootTypeEnum.FromRandomTextBullets:
+                if (RandomTextbulletcountact >= RandomTextbulletcountmax)
+                {
+                    //Application.Quit();
+                    UnityEditor.EditorApplication.isPlaying = false;
+                }
+                bullet.destination = randomtextbulletvectors[RandomTextbulletcountact] * bulletspeed;
+                RandomTextbulletcountact++;
+                break;
+            case ShootTypeEnum.LearnedBullets:
+                if (Learnedbulletcountact >= Learnedbulletcountsmax)
+                {
+                    Learnedbulletcountact = 0;
+
+                }
+                bullet.destination = learnedbulletvectors[Learnedbulletcountact] * bulletspeed;
+                Learnedbulletcountact++;
+                break;
+            default:
+                break;
         }
+        //if (this.ShootTypeenum == ShootTypeEnum.Random)
+        //{
+        //    Vector3 vec = (DestinationRandomize() - transform.position).normalized * bulletspeed;
+        //    Vector3 randvec = new Vector3((float)Math.Round(vec.x, 1), (float)Math.Round(vec.y, 1), (float)Math.Round(vec.z, 1));
+        //    bullet.destination = randvec;
+        //    //bullet.destination = DestinationRandomize().normalized * bulletspeed;
+        //}
+        //else if (this.ShootTypeenum == ShootTypeEnum.LearnedBullets)
+        //{
+        //    if (Learnedbulletcountact >= Learnedbulletcountsmax)
+        //    {
+        //        Learnedbulletcountact = 0;
+
+        //    }
+        //    bullet.destination = learnedbulletvectors[Learnedbulletcountact] * bulletspeed;
+        //    Learnedbulletcountact++;
+
+        //}
       
      
     }

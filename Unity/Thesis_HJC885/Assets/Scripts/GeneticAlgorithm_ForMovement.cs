@@ -10,8 +10,10 @@ public class GeneticAlgorithm_ForMovement : MonoBehaviour
 {
 
 	public Dictionary<Vector3, List<Vector3>> solvedmovements;
+	public bool isUsingRobotMemory;
 	private Vector3 bulletdest;
 	private Vector3 bulletdestpic;
+	private bool isstartinit = true;
 	public void Start()
 	{
 		bulletdestpic = new Vector3(0, 0, 0);
@@ -63,8 +65,8 @@ public class GeneticAlgorithm_ForMovement : MonoBehaviour
 	int actiteration = 0;
 	int N = 20; //30
 	int bodyparts = 3;
-	 float from = -2f;
-	 float to = 2f;
+	float from = -2f;
+	float to = 2f;
 
 	private int decimals = 3;
 	List<Member> M = new List<Member>();
@@ -107,7 +109,7 @@ public class GeneticAlgorithm_ForMovement : MonoBehaviour
 	}
 	public List<Vector3> StartFindingMovement(Vector3 bulletdest,Vector3 bulletdestpic, Func<List<Vector3>, double> fitness)
 	{
-
+		HandleTextFile.WriteBullet(bulletdest);
 		if (isVectorcontained(bulletdest))
 		{
 
@@ -139,6 +141,7 @@ public class GeneticAlgorithm_ForMovement : MonoBehaviour
 	public List<Vector3> Startsolve(Func<List<Vector3>,double> fitness)
 	{
 		List<Member> P = INITIALIZEPOPULATION();
+	
 		EVALUATION(P, fitness);
 		Member Pbest = Selectbest(P);
 		//while (fitness(Pbest.movement)>achivefitness)
@@ -439,11 +442,16 @@ public class GeneticAlgorithm_ForMovement : MonoBehaviour
 
 		List<Member> P = new List<Member>();
 
-		populationlimit += solvedmovements.Count;
+        if (isUsingRobotMemory && isstartinit)
+        {
+			populationlimit += solvedmovements.Count;
 
-		foreach (var item in solvedmovements.Values)
-		{
-			P.Add(new Member(item));
+			foreach (var item in solvedmovements.Values)
+			{
+				P.Add(new Member(item));
+			}
+			isstartinit = false;
+
 		}
 
 		int i = 0;
