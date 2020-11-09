@@ -250,46 +250,63 @@ public class Bullet_Shooter_Script : MonoBehaviour
     //                HandleTextFile.WriteBullet(vec);
     //            }
     //        }
-          
-           
+
+
     //        //Vector3 final = randvec * bulletspeed * 5;
 
-          
+
     //    }
-      
+
+
+    //}
+
+    //public void Generate1000_RandomToTextRandom()
+    //{
+    //    for (int i = -200; i <200; i++)
+    //    {
+    //        for (int j = -200; j < 200; j++)
+    //        {
+    //            for (int l = -200; l < 200; l++)
+    //            {
+    //                Vector3 vec = Coil_Shootaround(GameObject.Find("Head").GetComponent<BoxCollider>(),(float)i / 100, (float)j / 100, (float)l / 100);
+    //                Vector3 vec2 = Coil_Shootaround(GameObject.Find("Body").GetComponent<BoxCollider>(), (float)i / 100, (float)j / 100, (float)l / 100);
+    //                Vector3 vec3 = Coil_Shootaround(GameObject.Find("Legs").GetComponent<BoxCollider>(), (float)i / 100, (float)j / 100, (float)l / 100);
+
+    //                if (usedvectors.Count>1000)
+    //                {
+    //                    break;
+    //                }
+    //            }
+    //            if (usedvectors.Count > 1000)
+    //            {
+    //                break;
+    //            }
+    //        }
+    //        if (usedvectors.Count > 1000)
+    //        {
+    //            break;
+    //        }
+
+    //        //Vector3 final = randvec * bulletspeed * 5;
+
+
+    //    }
+
+    //    HandleTextFile.WriteBullets(usedvectors);
 
     //}
 
     public void Generate1000_RandomToTextRandom()
     {
-        for (int i = 500; i <501; i++)
+        for (int i = 500; i < 520; i++)
         {
-
-            for (int j = -50; j < 50; j++)
+            for (int j = -40; j < 40; j++)
             {
-                for (int l = -20; l < 20; l++)
+                for (int l = -10; l < 10; l++)
                 {
-                    Vector3 vec = Coil_Shootaround(GameObject.Find("Head").GetComponent<BoxCollider>(),(float)i / 100, (float)j / 100, (float)l / 100)/3;
-                    Vector3 vec2 = Coil_Shootaround(GameObject.Find("Body").GetComponent<BoxCollider>(), (float)i / 100, (float)j / 100, (float)l / 100)/3;
-                    Vector3 vec3 = Coil_Shootaround(GameObject.Find("Legs").GetComponent<BoxCollider>(), (float)i / 100, (float)j / 100, (float)l / 100)/3;
+                    usedvectors.Add(new Vector3((float)i/100,(float)j/100,(float)l/100));
 
-                    if (!usedvectors.Contains(vec))
-                    {
-                        HandleTextFile.WriteBullet(vec);
-                    }
-
-                    if (!usedvectors.Contains(vec2))
-                    {
-                        HandleTextFile.WriteBullet(vec2);
-                    }
-                    if (!usedvectors.Contains(vec3))
-                    {
-                        HandleTextFile.WriteBullet(vec3);
-                    }
-
-
-
-                    if (usedvectors.Count>1000)
+                    if (usedvectors.Count > 1000)
                     {
                         break;
                     }
@@ -309,6 +326,7 @@ public class Bullet_Shooter_Script : MonoBehaviour
 
         }
 
+        HandleTextFile.WriteBullets(usedvectors);
 
     }
 
@@ -358,23 +376,45 @@ public class Bullet_Shooter_Script : MonoBehaviour
         return vector;
     }
 
-    private Vector3 Coil_Shootaround(BoxCollider bodypart,float x, float y, float z) 
+    //private Vector3 Coil_Shootaround(BoxCollider bodypart,float x, float y, float z) 
+    //{
+    //        x = bodypart.transform.position.x + bodypart.transform.localScale.x* x;
+    //        y = bodypart.transform.position.y + bodypart.transform.localScale.y* y ;
+    //        z = bodypart.transform.position.z +  bodypart.transform.localScale.z * z;
+
+    //        x = (float)Math.Round(x, 3);
+    //        y = (float)Math.Round(y, 3);
+    //        z = (float)Math.Round(z, 3);
+
+    //      Vector3  vector = new Vector3(x, y, z).normalized*bulletspeed;
+
+    //    if (!usedvectors.Contains(vector))
+    //    {
+    //        usedvectors.Add(vector);
+    //    }
+
+
+    //    return vector;
+    //}
+
+    private Vector3 Coil_Shootaround(BoxCollider bodypart, float x, float y, float z)
     {
-            x = bodypart.transform.position.x + x;
-            y = bodypart.transform.position.y + y;
-            z = bodypart.transform.position.z + z;
+        x = bodypart.transform.position.x + bodypart.transform.localScale.x * x;
+        y = bodypart.transform.position.y + bodypart.transform.localScale.y * y;
+        z = bodypart.transform.position.z + bodypart.transform.localScale.z * z;
 
-            x = (float)Math.Round(x, 3);
-            y = (float)Math.Round(y, 3);
-            z = (float)Math.Round(z, 3);
+        x = (float)Math.Round(x, 3);
+        y = (float)Math.Round(y, 3);
+        z = (float)Math.Round(z, 3);
 
-          Vector3  vector = new Vector3(x, y, z);
+        Vector3 vector = new Vector3(x, y, z).normalized * bulletspeed;
+
         if (!usedvectors.Contains(vector))
         {
             usedvectors.Add(vector);
         }
 
-      
+
         return vector;
     }
 
