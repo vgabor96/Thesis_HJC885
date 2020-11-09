@@ -38,6 +38,7 @@ public class Robot : MonoBehaviour
     public bool DoResetAfter { get; set; }
 
     public bool IsLearning;
+    public bool isUsingRobotMemory;
 
     //How much energy the movements cost
     public float MovementEnergyUsed { get; set; }
@@ -94,14 +95,14 @@ public class Robot : MonoBehaviour
         }
         if (DoMovement)
         {
-           
+        
             //Debug.Log("mooooooove");
             //MoveFullBody(new Vector3(0, 0, 0.75f));
             //MoveFullBody(new Vector3(0, 0, 0.25f));
             //MoveHead(new Vector3(0, 0, 0.1f));
             DoOneMovement(MovementToDodge(GameObject.Find("BulletGenerator").GetComponent<Bullet_Shooter_Script>().Bullet));
 
-
+            //GameObject.Find("BulletGenerator").GetComponent<Bullet_Shooter_Script>().Generate1000_RandomToTextRandom();
 
             DoMovement = false;
           

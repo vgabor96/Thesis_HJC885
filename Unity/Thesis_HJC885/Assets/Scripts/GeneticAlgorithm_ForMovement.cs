@@ -1,25 +1,37 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Security.Cryptography;
+using System.Threading;
 using UnityEngine;
+using Debug = UnityEngine.Debug;
 using Random = UnityEngine.Random;
 
 public class GeneticAlgorithm_ForMovement : MonoBehaviour
 {
 
 	public Dictionary<Vector3, List<Vector3>> solvedmovements;
-	public bool isUsingRobotMemory;
+	public bool isRobotusingMemory;
 	private Vector3 bulletdest;
 	private Vector3 bulletdestpic;
 	private bool isstartinit = true;
+
+	private float timelimit = 0; //in milisecs
+	private bool timeisup = false;
+
+	private static Stopwatch timer;
+
+
 	public void Start()
 	{
 		bulletdestpic = new Vector3(0, 0, 0);
 		bulletdest = new Vector3(0, 0, 0);
 		solvedmovements = new Dictionary<Vector3, List<Vector3>>();
-		solvedmovements = HandleTextFile.ReadSolutions();
+	
+		timer = new Stopwatch();
+
 	}
 
 	List<Vector3> movements;
@@ -53,7 +65,7 @@ public class GeneticAlgorithm_ForMovement : MonoBehaviour
 	}
 
 	int populationlimit = 3000; //200
-	double achivefitness = 420;//320;//99999;
+	public const double achivefitness = 420;//320;//99999;
 	double bestfitness = double.MaxValue;
 	//double previousfitness = double.MaxValue;
 	double mutationrate = 10; //30
@@ -110,17 +122,34 @@ public class GeneticAlgorithm_ForMovement : MonoBehaviour
 	public List<Vector3> StartFindingMovement(Vector3 bulletdest,Vector3 bulletdestpic, Func<List<Vector3>, double> fitness)
 	{
 		HandleTextFile.WriteBullet(bulletdest);
+		solvedmovements = HandleTextFile.ReadSolutions();
+		timer.Start();
+		if (timelimit != 0)
+		{
+			Thread t1 = new Thread(() => {
+				while (timer.Elapsed.TotalMilliseconds < timelimit)
+				{
+					
+				}
+				timeisup = true;
+			});
+			t1.Start();
+		}
+
 		if (isVectorcontained(bulletdest))
 		{
 
 			Debug.Log("Fitness: " + fitness(GetMovementWIthKey(bulletdest)));
+
+			timer.Stop();
+			float time = timer.ElapsedMilliseconds;
+			HandleTextFile.WriteString(time);
 			return GetMovementWIthKey(bulletdest);
 		}
 		else
 		{
-
 			this.bulletdest = bulletdest;
-			this.bulletdestpic = bulletdestpic;
+			this.bulletdestpic = bulletdestpic;		
 			return Startsolve(fitness);
 		}
 	
@@ -140,6 +169,8 @@ public class GeneticAlgorithm_ForMovement : MonoBehaviour
 	}
 	public List<Vector3> Startsolve(Func<List<Vector3>,double> fitness)
 	{
+	
+
 		List<Member> P = INITIALIZEPOPULATION();
 	
 		EVALUATION(P, fitness);
@@ -183,6 +214,8 @@ public class GeneticAlgorithm_ForMovement : MonoBehaviour
 			//fitness(Pbest.movement);
 		
 		}
+
+	
 		return GPM(Pbest,fitness);
 	}
 
@@ -201,8 +234,12 @@ public class GeneticAlgorithm_ForMovement : MonoBehaviour
 	{
 
 		//log.log_file.Close();
-		Debug.Log("1fitness Function:" +fitness(pbest.movement));
-		Debug.Log("2fitness:" + pbest.fitness);
+
+		//Debug.Log("1fitness Function:" +fitness(pbest.movement));
+		//Debug.Log("2fitness:" + pbest.fitness);
+
+		timer.Stop();
+		float time = timer.ElapsedMilliseconds;
 		solvedmovements.Add(bulletdest, pbest.movement);
 		HandleTextFile.WriteSolution(bulletdest,bulletdestpic,pbest.movement);
 		return pbest.movement;
@@ -405,7 +442,7 @@ public class GeneticAlgorithm_ForMovement : MonoBehaviour
 		}
 
 		//
-		return iteration < actiteration || bestfitness <= achivefitness || iterationneedstochangesignificantly > iterationneedstochangesignificantlymax;
+		return timeisup || iteration < actiteration || bestfitness <= achivefitness || iterationneedstochangesignificantly > iterationneedstochangesignificantlymax;
 	}
 
 	private Member Selectbest(List<Member> P)
@@ -442,8 +479,9 @@ public class GeneticAlgorithm_ForMovement : MonoBehaviour
 
 		List<Member> P = new List<Member>();
 
-        if (isUsingRobotMemory && isstartinit)
+        if (isRobotusingMemory && isstartinit)
         {
+
 			populationlimit += solvedmovements.Count;
 
 			foreach (var item in solvedmovements.Values)

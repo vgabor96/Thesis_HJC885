@@ -188,9 +188,9 @@ public class Bullet_Shooter_Script : MonoBehaviour
             case ShootTypeEnum.FixedBullet:
                 break;
             case ShootTypeEnum.Random:
-                Vector3 vec = (DestinationRandomize() - transform.position).normalized * bulletspeed;
-                Vector3 randvec = new Vector3((float)Math.Round(vec.x, 1), (float)Math.Round(vec.y, 1), (float)Math.Round(vec.z, 1));
-                bullet.destination = randvec;
+                Vector3 vec = (DestinationRandomize() - transform.position).normalized;
+                Vector3 randvec = new Vector3((float)Math.Round(vec.x, 3), (float)Math.Round(vec.y, 3), (float)Math.Round(vec.z, 3));
+                bullet.destination = randvec * bulletspeed;
                 //bullet.destination = DestinationRandomize().normalized * bulletspeed;
                 break;
             case ShootTypeEnum.FromRandomTextBullets:
@@ -199,7 +199,7 @@ public class Bullet_Shooter_Script : MonoBehaviour
                     //Application.Quit();
                     UnityEditor.EditorApplication.isPlaying = false;
                 }
-                bullet.destination = randomtextbulletvectors[RandomTextbulletcountact] * bulletspeed;
+                bullet.destination = randomtextbulletvectors[RandomTextbulletcountact];
                 RandomTextbulletcountact++;
                 break;
             case ShootTypeEnum.LearnedBullets:
@@ -208,7 +208,7 @@ public class Bullet_Shooter_Script : MonoBehaviour
                     Learnedbulletcountact = 0;
 
                 }
-                bullet.destination = learnedbulletvectors[Learnedbulletcountact] * bulletspeed;
+                bullet.destination = learnedbulletvectors[Learnedbulletcountact];
                 Learnedbulletcountact++;
                 break;
             default:
@@ -236,7 +236,31 @@ public class Bullet_Shooter_Script : MonoBehaviour
      
     }
 
-   
+
+    public void Generate1000_RandomToTextRandom()
+    {
+        for (int i = 500; i < 700; i++)
+        {
+
+            for (int j = -50; j < 50; j++)
+            {
+                for (int l = -50; l < 50; l++)
+                {
+                    Vector3 vec = new Vector3((float)i/100, (float)j/100, (float)l/100);
+                    HandleTextFile.WriteBullet(vec);
+                }
+            }
+          
+           
+            //Vector3 final = randvec * bulletspeed * 5;
+
+          
+        }
+      
+
+    }
+
+
 
     private Vector3 DestinationRandomize()
     {

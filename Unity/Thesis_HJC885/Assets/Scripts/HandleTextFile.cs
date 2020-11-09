@@ -9,21 +9,21 @@ public class HandleTextFile : MonoBehaviour
 {
    const int decimals = 3;
     [MenuItem("Tools/Write file")]
-    public static void WriteString()
+    public static void WriteString(float time)
     {
-        string path = "Assets/Resources/test.txt";
+        string path = "Assets/Resources/times.txt";
 
         //Write some text to the test.txt file
         StreamWriter writer = new StreamWriter(path, true);
-        writer.WriteLine("Test");
+        writer.WriteLine(time);
         writer.Close();
 
         //Re-import the file to update the reference in the editor
         AssetDatabase.ImportAsset(path);
-        TextAsset asset = (TextAsset)Resources.Load("test");
+        TextAsset asset = (TextAsset)Resources.Load("times");
 
         //Print the text from the file
-        Debug.Log(asset.text);
+        //Debug.Log(asset.text);
     }
 
     [MenuItem("Tools/Read file")]
@@ -84,7 +84,16 @@ public class HandleTextFile : MonoBehaviour
           z = z.Replace(",", ".");
             temp += "\t" + '(' + x + ',' + ' ' + y  + ',' + ' ' + z + ')';
         }
-        writer.WriteLine(bulletdest+"\t"+bulletdestpic+temp);
+
+        string xb = bulletdest.x.ToString("0.000");
+        xb = xb.Replace(",", ".");
+        string yb = bulletdest.y.ToString("0.000");
+        yb = yb.Replace(",", ".");
+        string zb = bulletdest.z.ToString("0.000");
+        zb = zb.Replace(",", ".");
+       string  tempbullet = '(' + xb + ',' + ' ' + yb + ',' + ' ' + zb + ')';
+
+        writer.WriteLine(tempbullet + "\t"+bulletdestpic+temp);
         writer.Close();
 
         //Re-import the file to update the reference in the editor
@@ -113,7 +122,7 @@ public class HandleTextFile : MonoBehaviour
             {
 
         
-            Vector3 key = StringToVector3(splittedvectors[0]);
+                Vector3 key = StringToVector3(splittedvectors[0]);
             
                     List<Vector3> movement = new List<Vector3>();
                     for (int i = 2; i < splittedvectors.Length; i++)
@@ -170,10 +179,22 @@ public class HandleTextFile : MonoBehaviour
         {
             string path = "Assets/Resources/bullets.txt";
             StreamWriter writer = new StreamWriter(path, true);
-            writer.WriteLine(bulletdest);
+
+            string x = bulletdest.x.ToString("0.000");
+            x = x.Replace(",", ".");
+            string y = bulletdest.y.ToString("0.000");
+            y = y.Replace(",", ".");
+            string z = bulletdest.z.ToString("0.000");
+            z = z.Replace(",", ".");
+            string temp = '(' + x + ',' + ' ' + y + ',' + ' ' + z + ')';
+
+            writer.WriteLine(temp);
             writer.Close();
+
+            Debug.Log(bulletdest);
+
             AssetDatabase.ImportAsset(path);
-            TextAsset asset = (TextAsset)Resources.Load("test");
+            TextAsset asset = (TextAsset)Resources.Load("bullets");
         }
 
      
