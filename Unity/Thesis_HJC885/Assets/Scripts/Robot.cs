@@ -100,9 +100,9 @@ public class Robot : MonoBehaviour
             //MoveFullBody(new Vector3(0, 0, 0.75f));
             //MoveFullBody(new Vector3(0, 0, 0.25f));
             //MoveHead(new Vector3(0, 0, 0.1f));
-            DoOneMovement(MovementToDodge(GameObject.Find("BulletGenerator").GetComponent<Bullet_Shooter_Script>().Bullet));
+            //DoOneMovement(MovementToDodge(GameObject.Find("BulletGenerator").GetComponent<Bullet_Shooter_Script>().Bullet));
 
-            //GameObject.Find("BulletGenerator").GetComponent<Bullet_Shooter_Script>().Generate1000_RandomToTextRandom();
+            GameObject.Find("BulletGenerator").GetComponent<Bullet_Shooter_Script>().Generate1000_RandomToTextRandom();
 
             DoMovement = false;
           

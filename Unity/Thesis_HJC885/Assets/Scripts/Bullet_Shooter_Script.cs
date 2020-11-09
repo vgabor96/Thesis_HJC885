@@ -237,26 +237,78 @@ public class Bullet_Shooter_Script : MonoBehaviour
     }
 
 
+    //public void Generate1000_RandomToTextRandom()
+    //{
+    //    for (int i = 500; i < 700; i++)
+    //    {
+
+    //        for (int j = -50; j < 50; j++)
+    //        {
+    //            for (int l = -50; l < 50; l++)
+    //            {
+    //                Vector3 vec = new Vector3((float)i/100, (float)j/100, (float)l/100);
+    //                HandleTextFile.WriteBullet(vec);
+    //            }
+    //        }
+          
+           
+    //        //Vector3 final = randvec * bulletspeed * 5;
+
+          
+    //    }
+      
+
+    //}
+
     public void Generate1000_RandomToTextRandom()
     {
-        for (int i = 500; i < 700; i++)
+        for (int i = 500; i <501; i++)
         {
 
             for (int j = -50; j < 50; j++)
             {
-                for (int l = -50; l < 50; l++)
+                for (int l = -20; l < 20; l++)
                 {
-                    Vector3 vec = new Vector3((float)i/100, (float)j/100, (float)l/100);
-                    HandleTextFile.WriteBullet(vec);
+                    Vector3 vec = Coil_Shootaround(GameObject.Find("Head").GetComponent<BoxCollider>(),(float)i / 100, (float)j / 100, (float)l / 100)/3;
+                    Vector3 vec2 = Coil_Shootaround(GameObject.Find("Body").GetComponent<BoxCollider>(), (float)i / 100, (float)j / 100, (float)l / 100)/3;
+                    Vector3 vec3 = Coil_Shootaround(GameObject.Find("Legs").GetComponent<BoxCollider>(), (float)i / 100, (float)j / 100, (float)l / 100)/3;
+
+                    if (!usedvectors.Contains(vec))
+                    {
+                        HandleTextFile.WriteBullet(vec);
+                    }
+
+                    if (!usedvectors.Contains(vec2))
+                    {
+                        HandleTextFile.WriteBullet(vec2);
+                    }
+                    if (!usedvectors.Contains(vec3))
+                    {
+                        HandleTextFile.WriteBullet(vec3);
+                    }
+
+
+
+                    if (usedvectors.Count>1000)
+                    {
+                        break;
+                    }
+                }
+                if (usedvectors.Count > 1000)
+                {
+                    break;
                 }
             }
-          
-           
+            if (usedvectors.Count > 1000)
+            {
+                break;
+            }
+
             //Vector3 final = randvec * bulletspeed * 5;
 
-          
+
         }
-      
+
 
     }
 
@@ -294,15 +346,35 @@ public class Bullet_Shooter_Script : MonoBehaviour
             y = bodypart.transform.position.y + Random.Range(-bodypart.size.y * recoil, bodypart.size.y * recoil);
             z = bodypart.transform.position.z + Random.Range(-bodypart.size.z * recoil, bodypart.size.z * recoil);
 
-            x = (float)Math.Round(x, 1);
-            y = (float)Math.Round(y, 1);
-            z = (float)Math.Round(z, 1);
+            x = (float)Math.Round(x, 3);
+            y = (float)Math.Round(y, 3);
+            z = (float)Math.Round(z, 3);
 
             vector = new Vector3(x, y, z);
        
         } while (usedvectors.Contains(vector));
 
         usedvectors.Add(vector);
+        return vector;
+    }
+
+    private Vector3 Coil_Shootaround(BoxCollider bodypart,float x, float y, float z) 
+    {
+            x = bodypart.transform.position.x + x;
+            y = bodypart.transform.position.y + y;
+            z = bodypart.transform.position.z + z;
+
+            x = (float)Math.Round(x, 3);
+            y = (float)Math.Round(y, 3);
+            z = (float)Math.Round(z, 3);
+
+          Vector3  vector = new Vector3(x, y, z);
+        if (!usedvectors.Contains(vector))
+        {
+            usedvectors.Add(vector);
+        }
+
+      
         return vector;
     }
 
