@@ -82,7 +82,7 @@ public class Robot : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //DoMovement |= Input.GetKeyDown(KeyCode.W);
+        DoMovement |= Input.GetKeyDown(KeyCode.W);
 
         //DoReset |= Input.GetKeyDown(KeyCode.R);
         if (DoReset)
@@ -95,10 +95,12 @@ public class Robot : MonoBehaviour
         if (DoMovement)
         {
             //Debug.Log("mooooooove");
-
+            //MoveFullBody(new Vector3(0, 0, 0.75f));
+            //MoveFullBody(new Vector3(0, 0, 0.25f));
+            //MoveHead(new Vector3(0, 0, 0.1f));
             DoOneMovement(MovementToDodge(GameObject.Find("BulletGenerator").GetComponent<Bullet_Shooter_Script>().Bullet));
 
-         
+
 
             DoMovement = false;
           

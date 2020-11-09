@@ -176,7 +176,7 @@ public class Bullet_Shooter_Script : MonoBehaviour
                 Learnedbulletcountact = 0;
 
             }
-            bullet.destination = learnedbulletvectors[Learnedbulletcountact];
+            bullet.destination = learnedbulletvectors[Learnedbulletcountact] * bulletspeed;
             Learnedbulletcountact++;
         }
       

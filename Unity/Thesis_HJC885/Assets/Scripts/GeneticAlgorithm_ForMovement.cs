@@ -430,12 +430,22 @@ public class GeneticAlgorithm_ForMovement : MonoBehaviour
 
 	private List<Member> INITIALIZEPOPULATION()
 	{
+		
+
 		bestfitness = double.MaxValue;
 		actiteration = 0;
 		List<Member> S = generateRandomMembers();
 
 
 		List<Member> P = new List<Member>();
+
+		populationlimit += solvedmovements.Count;
+
+		foreach (var item in solvedmovements.Values)
+		{
+			P.Add(new Member(item));
+		}
+
 		int i = 0;
 		Member m = new Member() { movement=new List<Vector3>() {new Vector3(0,0,0), new Vector3(0, 0, 0), new Vector3(0, 0, 0), new Vector3(0, 0, 0), new Vector3(0, 0, 0), new Vector3(0, 0, 0), new Vector3(0, 0, 0) } };
 		Member m2 = new Member();

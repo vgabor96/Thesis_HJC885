@@ -111,7 +111,7 @@ public class HiResScreenShots : MonoBehaviour
         capturedelay = 0.2f;//alltime / (alltime*5);//alltime / 3;
         //secondcapturedelay = alltime / 2 -capturedelay;
 
-        secondcapturedelay = 2f - capturedelay;
+        secondcapturedelay = alltime/10 - capturedelay;//2f - capturedelay;
     }
 
     void Update()
