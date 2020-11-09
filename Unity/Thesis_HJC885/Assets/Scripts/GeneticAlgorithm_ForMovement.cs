@@ -21,7 +21,7 @@ public class GeneticAlgorithm_ForMovement : MonoBehaviour
 	private float timelimit = 0; //in milisecs
 	private bool timeisup = false;
 
-	private static Stopwatch timer;
+	private static Stopwatch timer = new Stopwatch();
 
 
 	public void Start()
@@ -30,7 +30,7 @@ public class GeneticAlgorithm_ForMovement : MonoBehaviour
 		bulletdest = new Vector3(0, 0, 0);
 		solvedmovements = new Dictionary<Vector3, List<Vector3>>();
 	
-		timer = new Stopwatch();
+		
 
 	}
 
@@ -97,12 +97,12 @@ public class GeneticAlgorithm_ForMovement : MonoBehaviour
 
 	private bool AreVectorsEqual(Vector3 v1, Vector3 v2)
 	{
-		double x1 = Math.Round(v1.x,1);
-		double y1 = Math.Round(v1.y, 1);
-		double z1 = Math.Round(v1.z, 1);
-		double x2 = Math.Round(v2.x, 1);
-		double y2 = Math.Round(v2.y, 1);
-		double z2 = Math.Round(v2.z, 1);
+		double x1 = Math.Round(v1.x,3);
+		double y1 = Math.Round(v1.y, 3);
+		double z1 = Math.Round(v1.z, 3);
+		double x2 = Math.Round(v2.x, 3);
+		double y2 = Math.Round(v2.y, 3);
+		double z2 = Math.Round(v2.z, 3);
 		return (x1 == x2) && (y1 == y2) && (z1 == z2);
 	}
 
@@ -124,27 +124,31 @@ public class GeneticAlgorithm_ForMovement : MonoBehaviour
 		HandleTextFile.WriteBullet(bulletdest);
 		solvedmovements = HandleTextFile.ReadSolutions();
 		timer.Start();
-		if (timelimit != 0)
-		{
-			Thread t1 = new Thread(() => {
-				while (timer.Elapsed.TotalMilliseconds < timelimit)
-				{
+		//if (timelimit != 0)
+		//{
+		//	Thread t1 = new Thread(() => {
+		//		while (timer.Elapsed.TotalMilliseconds < timelimit)
+		//		{
 					
-				}
-				timeisup = true;
-			});
-			t1.Start();
-		}
+		//		}
+		//		timeisup = true;
+		//	});
+		//	t1.Start();
+		//}
 
 		if (isVectorcontained(bulletdest))
 		{
 
-			Debug.Log("Fitness: " + fitness(GetMovementWIthKey(bulletdest)));
+			//Debug.Log("Fitness: " + fitness(GetMovementWIthKey(bulletdest)));
 
 			timer.Stop();
 			float time = timer.ElapsedMilliseconds;
 			HandleTextFile.WriteString(time);
-			return GetMovementWIthKey(bulletdest);
+			timer.Reset();
+
+			List<Vector3> result = GetMovementWIthKey(bulletdest);
+			HandleTextFile.WriteFitness(fitness(result));
+			return result;
 		}
 		else
 		{
@@ -242,6 +246,9 @@ public class GeneticAlgorithm_ForMovement : MonoBehaviour
 		float time = timer.ElapsedMilliseconds;
 		solvedmovements.Add(bulletdest, pbest.movement);
 		HandleTextFile.WriteSolution(bulletdest,bulletdestpic,pbest.movement);
+		HandleTextFile.WriteString(time);
+		HandleTextFile.WriteFitness(fitness(pbest.movement));
+		timer.Reset();
 		return pbest.movement;
 	}
 

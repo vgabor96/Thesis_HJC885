@@ -194,7 +194,7 @@ public class HandleTextFile : MonoBehaviour
             Debug.Log(bulletdest);
 
             AssetDatabase.ImportAsset(path);
-            TextAsset asset = (TextAsset)Resources.Load("bullets");
+            TextAsset asset = (TextAsset)Resources.Load("bullet");
         }
 
      
@@ -206,6 +206,68 @@ public class HandleTextFile : MonoBehaviour
         //Print the text from the file
         // Debug.Log(asset.text);
     }
+
+    [MenuItem("Tools/Write file")]
+    public static void WriteBullets(List<Vector3> bulletdests)
+    {
+
+
+        //Write some text to the test.txt file
+        string path = "Assets/Resources/bullets.txt";
+        StreamWriter writer = new StreamWriter(path, true);
+        foreach (Vector3 bulletdest in bulletdests)
+        {
+
+                string x = bulletdest.x.ToString("0.000");
+                x = x.Replace(",", ".");
+                string y = bulletdest.y.ToString("0.000");
+                y = y.Replace(",", ".");
+                string z = bulletdest.z.ToString("0.000");
+                z = z.Replace(",", ".");
+                string temp = '(' + x + ',' + ' ' + y + ',' + ' ' + z + ')';
+
+                writer.WriteLine(temp);
+                           
+        }
+
+        AssetDatabase.ImportAsset(path);
+        TextAsset asset = (TextAsset)Resources.Load("bullets");
+        writer.Close();
+
+        //Re-import the file to update the reference in the editor
+
+        //Print the text from the file
+        // Debug.Log(asset.text);
+    }
+
+    [MenuItem("Tools/Write file")]
+    public static void WriteFitness(double fitness)
+    {
+
+
+        //Write some text to the test.txt file
+
+
+            string path = "Assets/Resources/fitnesses.txt";
+            StreamWriter writer = new StreamWriter(path, true);
+
+            writer.WriteLine(fitness);
+            writer.Close();
+
+            AssetDatabase.ImportAsset(path);
+            TextAsset asset = (TextAsset)Resources.Load("fitness");
+ 
+
+
+
+
+        //Re-import the file to update the reference in the editor
+
+
+        //Print the text from the file
+        // Debug.Log(asset.text);
+    }
+
 
     private static Vector3 StringToVector3(string sVector)
     {
