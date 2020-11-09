@@ -1,6 +1,10 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
+using System.Net.Http.Headers;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class Bullet_Shooter_Script : MonoBehaviour
 {
@@ -11,11 +15,19 @@ public class Bullet_Shooter_Script : MonoBehaviour
     private int currentBullets = 0;
     public int numberOfBullets = 8;
     private Vector3 gen_robot_vector;
-    public float mSpeed = 0.1f;
-    private float ResetDistance = 100f;
+    public float bulletspeed =0f;
+    private float ResetDistance = 1000f;
+
+    private int Learnedbulletcountact = 0;
+    private int Learnedbulletcountsmax = 0;
+
+    private List<Vector3> learnedbulletvectors;
+
+    public Vector3 Fixedshootvector= new Vector3(0,0,0);
 
     public Bullet_Movement_Script Bullet;
-   
+
+    List<Vector3> usedvectors;
 
     public GameObject robotobject;
     Robot robot;
@@ -31,36 +43,38 @@ public class Bullet_Shooter_Script : MonoBehaviour
 }
     public enum ShootTypeEnum
     { 
-        Continous,
-        Afterpreviousregenerated,
-        AllAtOnce,
-        OnlyOnewithDelay
-
-
+        FixedBullet,
+        Random,
+        LearnedBullets
+       
     }
     public WhereToShootEnum Wheretoshootenum = WhereToShootEnum.random;
-    public ShootTypeEnum ShootTypeenum = ShootTypeEnum.Continous;
-
-
-    private List<Bullet_Movement_Script> Bullets;
-
-
-    
+    public ShootTypeEnum ShootTypeenum = ShootTypeEnum.Random;
+ 
     void Start()
     {
-
+        Learnedbulletcountact = 0;
+        learnedbulletvectors = new List<Vector3>();
+        usedvectors = new List<Vector3>();
         //Move the object to the same position as the parent:
-        //robot = robotobject.GetComponent<Robot>();
         robot = robotobject.transform.Find("Robot_Body").GetComponent<Robot>();
-        //robot.DoMovement = true;
-        
+
+        if (this.ShootTypeenum == ShootTypeEnum.LearnedBullets)
+        {
+            foreach (Vector3 item in HandleTextFile.ReadSolutions().Keys)
+            {
+                learnedbulletvectors.Add(item);
+            }
+            Learnedbulletcountsmax = learnedbulletvectors.Count;
+        }
+       // robot = gameObject.GetComponent<Robot>();
+
         transform.rotation = Quaternion.Euler(new Vector3(0, 0, 0));
-        this.ResetDistance = Vector3.Distance(this.robotobject.transform.position, this.transform.position)+10f;
+        this.ResetDistance = Vector3.Distance(this.robotobject.transform.position, this.transform.position)+5f;//+10f;
         this.gen_robot_vector = robotobject.transform.position - this.transform.position;
-        this.Bullets = new List<Bullet_Movement_Script>();
         Debug.DrawLine(transform.localPosition, robotobject.transform.localPosition);
 
-        GenerateBullets();
+        InstianteBullet();
       
 
     }
@@ -68,26 +82,17 @@ public class Bullet_Shooter_Script : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
-
-        foreach (Bullet_Movement_Script item in this.Bullets)
-        {
-            if (item != null && Vector3.Distance(item.startingPos, item.mPrevPos) >= ResetDistance)
+       
+            if (this.Bullet != null && Vector3.Distance(this.Bullet.startingPos, this.Bullet.mPrevPos) >= ResetDistance)
             {
-                ReGenerate(item, false);
-
+                ReGenerate(this.Bullet);
+            Debug.Log("StartPos: "+this.Bullet.transform.position);
             }
 
             //if (item.isfired)
             //{
             //    GameObject.Find("Robot_Body").GetComponent<Robot>().DoMovement = true;
             //}
-
-
-
-
-        }
-
     }
 
     private void InstianteBullet()
@@ -97,200 +102,88 @@ public class Bullet_Shooter_Script : MonoBehaviour
         if (currentBullets < numberOfBullets)
         {
          
-            this.Bullets.Add(Instantiate(Bullet, transform.position,this.transform.rotation));
-            SetDestination(Bullets[currentBullets]);
-     
-            Bullets[currentBullets].transform.position = this.transform.position;
-            var body = GameObject.Find("Robot_Body").transform;
-
-            //Setting Bullet Size, Rotation, MSpeed,ResetDistance,Destination
-            Bullets[currentBullets].transform.localScale = body.GetChild(0).GetComponent<BoxCollider>().size*actualbulletsize;
-            Bullets[currentBullets].transform.rotation = this.transform.rotation;
+            this.Bullet= Instantiate(Bullet, transform.position,this.transform.rotation);
+            //setting the bullet's length to fix mSpeed
+            this.Bullet.destination = Fixedshootvector.normalized* bulletspeed;
+            //this.Bullet.destination.x = (float)Math.Round(this.Bullet.destination.x, 1);
+            //this.Bullet.destination.y = (float)Math.Round(this.Bullet.destination.y, 1);
+            //this.Bullet.destination.z = (float)Math.Round(this.Bullet.destination.z, 1);
+            this.Bullet.GetComponent<SphereCollider>().radius *= this.Bullet.transform.localScale.x;
+            actualbulletsize = this.Bullet.GetComponent<SphereCollider>().radius;
+            SetDestination(this.Bullet);
           
-            ReGenerate(Bullets[currentBullets],false);
-            Bullets[currentBullets].mSpeed = mSpeed;
-            Bullets[currentBullets].ResetDistance = ResetDistance;
+          
 
-            currentBullets++;
-        }
-
-
-    }
-
-    private void InstantiateBulletAfterPreviousDone()
-    {
-        if (currentBullets < numberOfBullets)
-        {
-
-            this.Bullets.Add(Instantiate(Bullet, transform.position, this.transform.rotation));
-            SetDestination(Bullets[currentBullets]);
-
-            Bullets[currentBullets].transform.position = this.transform.position;
+            this.Bullet.transform.position = this.transform.position;
             var body = GameObject.Find("Robot_Body").transform;
 
             //Setting Bullet Size, Rotation, MSpeed,ResetDistance,Destination
-            Bullets[currentBullets].transform.localScale = body.GetChild(0).GetComponent<BoxCollider>().size*actualbulletsize;
-            Bullets[currentBullets].transform.rotation = this.transform.rotation;
-
-            ReGenerate(Bullets[currentBullets], true);
-            Bullets[currentBullets].mSpeed = mSpeed;
-            Bullets[currentBullets].ResetDistance = ResetDistance;
-
-            currentBullets++;
-        }
-    }
-
-    private void InstantiateBulletAllatOnce()
-    {
-        if (currentBullets < numberOfBullets)
-        {
-
-            this.Bullets.Add(Instantiate(Bullet, transform.position, this.transform.rotation));
-            SetDestination(Bullets[currentBullets]);
-
-            Bullets[currentBullets].transform.position = this.transform.position;
-            var body = GameObject.Find("Robot_Body").transform;
-
-            //Setting Bullet Size, Rotation, MSpeed,ResetDistance,Destination
-            Bullets[currentBullets].transform.localScale = body.GetChild(0).GetComponent<BoxCollider>().size *actualbulletsize;
-            Bullets[currentBullets].transform.rotation = this.transform.rotation;
-
-            ReGenerate(Bullets[currentBullets], true);
-            Bullets[currentBullets].mSpeed = mSpeed;
-            Bullets[currentBullets].ResetDistance = ResetDistance;
-
-            currentBullets++;
-        }
-    }
-
-    private void InstantiateBulletOnlyOncewithDelay()
-    {
-
-        //GameObject.Find("Robot_Body").GetComponent<Robot>().DoMovement = true;
-
-
-
-        if (currentBullets < numberOfBullets)
-        {
-            var body = GameObject.Find("Robot_Body").transform;
-
-
-            this.Bullets.Add(Instantiate(Bullet, transform.position, this.transform.rotation));
-            SetDestination(Bullets[currentBullets]);
-
-            Bullets[currentBullets].transform.position = this.transform.position;
-            //robotobject.transform;
-
-            //Setting Bullet Size, Rotation, MSpeed,ResetDistance,Destination
-            Bullets[currentBullets].transform.localScale = body.GetChild(0).GetComponent<BoxCollider>().size * actualbulletsize;
-            Bullets[currentBullets].transform.rotation = this.transform.rotation;
+           // this.Bullet.transform.localScale = body.GetChild(0).GetComponent<BoxCollider>().size*actualbulletsize;
+            this.Bullet.transform.rotation = this.transform.rotation;
+          
+            ReGenerate(this.Bullet);
+            //this.Bullet.mSpeed = this.mSpeed;
+            this.Bullet.ResetDistance = this.ResetDistance;
 
            
-
             currentBullets++;
         }
 
-      
-        ReGenerate(Bullets[0], false);
-        Bullets[0].mSpeed = mSpeed;
-        Bullets[0].ResetDistance = ResetDistance;
-
-      
-  
-    }
-
-    private void GenerateBullets()
-    { 
-        switch (ShootTypeenum)
-        {
-            case ShootTypeEnum.Continous:
-                SpawnBulletsContinous();
-                break;
-            case ShootTypeEnum.Afterpreviousregenerated:
-                SpawnBulletsAfterPreviousDone();
-                break;
-            case ShootTypeEnum.AllAtOnce:
-                SpawnBulletsAllAtOnce();
-                break;
-            case ShootTypeEnum.OnlyOnewithDelay:
-                numberOfBullets = 1;
-                SpawnOnlyOneBulletWithDelay();
-                break;
-            default:
-                break;
-        }
-       
-               
-       
-    }
-
-    private void SpawnBulletsAllAtOnce()
-    {
-        InvokeRepeating(nameof(InstantiateBulletAllatOnce), 0, 0.0001f);
-      
-    }
-
-    private void SpawnOnlyOneBulletWithDelay()
-    {
-       
-        InvokeRepeating(nameof(InstantiateBulletOnlyOncewithDelay), 0, delay);
-    }
-
-    private void SpawnBulletsContinous()
-    {
-        InvokeRepeating(nameof(InstianteBullet), 0, delay);
-    }
-
-    private void SpawnBulletsAfterPreviousDone()
-    {
-        InstantiateBulletAfterPreviousDone();
-    }
-
-    private void ReGenerate(Bullet_Movement_Script bullet, bool waitforall)
-    {
-    
-            //Debug.Log($"BUllet ID: {bullet.this_ID} Vector:{bullet.destination} Hit => NONE");
-        
-
-        GameObject.Find("Robot_Body").GetComponent<Robot>().Reset();
-        bullet.isfired = true;
-        bullet.isrobothitted = false;
-
-        //Debug.Log(bullet.this_ID.ToString()+robot + " MOOOOVE");
-
-        if (waitforall)
-        {
-            if (this.Bullets.FindAll(x => x.ishit == false).Count == 0) 
-             {
-                bullet.transform.position = this.transform.position;
-                bullet.ishit = true;
-                SetDestination(bullet);
-              
-             
-            }
-        }
-        else
-        {
-            ReGenerate(bullet);
-        
-           
-        }
-        GameObject.Find("RobotCamera").GetComponent<HiResScreenShots>().TakeHiResShot(bullet);
 
     }
-
+ 
     private void ReGenerate(Bullet_Movement_Script bullet)
     {
+        GameObject.Find("Robot_Body").GetComponent<Robot>().DoReset = true;
+        // GameObject.Find("Robot_Body").GetComponent<Robot>().Reset();
+        //this.Bullet.gameObject.transform.GetChild(0).transform.position = new Vector3(bullet.resetx, this.Bullet.gameObject.transform.GetChild(0).transform.position.y, this.Bullet.gameObject.transform.GetChild(0).transform.position.z);
+        bullet.israydone = false;
+        bullet.this_ID++;
+        //bullet.isfired = true;
+        if (!bullet.ishittedrobot)
+        {
+            Debug.Log($"Bullet ID: {bullet.this_ID} Vector:{bullet.destination} Length: {bullet.destination.magnitude} Hit => NONE");
+        }
+        bullet.ishittedrobot = false;
+        //bullet.isrobothitted = false;
         bullet.transform.position = this.transform.position;
-                bullet.ishit = true;
-                SetDestination(bullet);
+        bullet.ishit = true;
+
+     
+        SetDestination(this.Bullet);
+        
+
+        //GameObject.Find("Robot_Body").GetComponent<Robot>().actbulletthits = bullet.hits;
+     
+       
+        GameObject.Find("RobotCamera").GetComponent<HiResScreenShots>().TakeHiResShot(bullet);
+
 
     }
 
     private void SetDestination(Bullet_Movement_Script bullet)
     {
-        bullet.destination = (DestinationRandomize() - transform.position).normalized;
+        if (this.ShootTypeenum == ShootTypeEnum.Random)
+        {
+            Vector3 vec = (DestinationRandomize() - transform.position).normalized * bulletspeed;
+            bullet.destination = new Vector3((float)Math.Round(vec.x,1), (float)Math.Round(vec.y, 1), (float)Math.Round(vec.z, 1));
+            //bullet.destination = DestinationRandomize().normalized * bulletspeed;
+        }
+        else if (this.ShootTypeenum == ShootTypeEnum.LearnedBullets)
+        {
+            if (Learnedbulletcountact>= Learnedbulletcountsmax)
+            {
+                Learnedbulletcountact = 0;
+
+            }
+            bullet.destination = learnedbulletvectors[Learnedbulletcountact] * bulletspeed;
+            Learnedbulletcountact++;
+        }
+      
+     
     }
+
+   
 
     private Vector3 DestinationRandomize()
     {
@@ -313,12 +206,32 @@ public class Bullet_Shooter_Script : MonoBehaviour
     }
     private Vector3 Random_Shootaround(BoxCollider bodypart)
     {
-        
-        float x = bodypart.transform.position.x + Random.Range(-bodypart.size.x*recoil, bodypart.size.x*recoil);
-        float y = bodypart.transform.position.y + Random.Range(-bodypart.size.y * recoil, bodypart.size.y * recoil);
-        float z = bodypart.transform.position.z + Random.Range(-bodypart.size.z * recoil, bodypart.size.z * recoil);
+        Vector3 vector;
+        float x;
+        float y;
+        float z;
 
-        return new Vector3(x, y, z);
+        do
+        {
+            x = bodypart.transform.position.x + Random.Range(-bodypart.size.x * recoil, bodypart.size.x * recoil);
+            y = bodypart.transform.position.y + Random.Range(-bodypart.size.y * recoil, bodypart.size.y * recoil);
+            z = bodypart.transform.position.z + Random.Range(-bodypart.size.z * recoil, bodypart.size.z * recoil);
+
+            x = (float)Math.Round(x, 1);
+            y = (float)Math.Round(y, 1);
+            z = (float)Math.Round(z, 1);
+
+            vector = new Vector3(x, y, z);
+       
+        } while (usedvectors.Contains(vector));
+
+        usedvectors.Add(vector);
+        return vector;
+    }
+
+    public void RayCastBullet()
+    {
+        this.Bullet.RAYCAST();
     }
 
 }
