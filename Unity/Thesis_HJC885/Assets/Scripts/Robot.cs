@@ -39,6 +39,10 @@ public class Robot : MonoBehaviour
 
     public bool IsLearning;
     public bool isUsingRobotMemory;
+    public bool isReTraining;
+
+    public static bool isUsingRobotMemory_GA;
+    public static bool isReTraining_GA;
 
     //How much energy the movements cost
     public float MovementEnergyUsed { get; set; }
@@ -51,7 +55,8 @@ public class Robot : MonoBehaviour
         MovementEnergyUsed = 0;
         childrenstartpos = new Dictionary<string, Vector3>();
         childrenobjects = new Dictionary<string, Transform>();
-
+        isUsingRobotMemory_GA = isUsingRobotMemory;
+        isReTraining_GA = isReTraining;
          sum = 0;
         // ghostbodyparts = new Dictionary<string, BoxCollider>();
 
@@ -95,14 +100,14 @@ public class Robot : MonoBehaviour
         }
         if (DoMovement)
         {
-        
+
             //Debug.Log("mooooooove");
             //MoveFullBody(new Vector3(0, 0, 0.75f));
-            //MoveFullBody(new Vector3(0, 0, 0.25f));
+            MoveFullBody(new Vector3(0, 0, 0.25f));
             //MoveHead(new Vector3(0, 0, 0.1f));
-            DoOneMovement(MovementToDodge(GameObject.Find("BulletGenerator").GetComponent<Bullet_Shooter_Script>().Bullet));
-
-           //GameObject.Find("BulletGenerator").GetComponent<Bullet_Shooter_Script>().Generate1000_RandomToTextRandom();
+            //DoOneMovement(MovementToDodge(GameObject.Find("BulletGenerator").GetComponent<Bullet_Shooter_Script>().Bullet));
+            //double a = objective(new List<Vector3>() { new Vector3(0, 0, 0), new Vector3(0, 0, 0), new Vector3(0, 0, 0), new Vector3(0, 0, 0), new Vector3(0, 0, 0), new Vector3(0, 0, 0), new Vector3(0, 0.5f, 0) });
+           //GameObject.Find("BulletGenerator").GetComponent<Bullet_Shooter_Script>().Select_N_Unique_Bulletdest(1000);
 
             DoMovement = false;
           

@@ -8,6 +8,11 @@ using System;
 public class HandleTextFile : MonoBehaviour
 {
    const int decimals = 3;
+
+    static List<Utils.solutions_texthandler> solutions = new List<Utils.solutions_texthandler>();
+
+
+    //private static Dictionary<Vector3, List<Vector3>> solutions_texthandler = new Dictionary<Vector3, List<Vector3>>();
     [MenuItem("Tools/Write file")]
     public static void WriteString(float time)
     {
@@ -66,35 +71,86 @@ public class HandleTextFile : MonoBehaviour
     }
 
     [MenuItem("Tools/Write file")]
-    public static void WriteSolution(Vector3 bulletdest,Vector3 bulletdestpic, List<Vector3> movement)
+    public static void WriteSolution(Vector3 bulletdest,Vector3 bulletdestpic, List<Vector3> movement, string filename)
     {
-        string path = "Assets/Resources/test.txt";
-
-        //Write some text to the test.txt file
-        StreamWriter writer = new StreamWriter(path, true);
-        //writer.WriteLine("Test");
-        string temp = string.Empty;
-        foreach (Vector3 item in movement)
+        string path = "Assets/Resources/" + filename;
+        int i = Utils.GetIndexOfStructKey(solutions, bulletdest);
+      
+        if (i != -1)
         {
-            string x = item.x.ToString("0.000");
-            x = x.Replace(",", ".");
-            string y = item.y.ToString("0.000");
-           y= y.Replace(",", ".");
-            string z = item.z.ToString("0.000");
-          z = z.Replace(",", ".");
-            temp += "\t" + '(' + x + ',' + ' ' + y  + ',' + ' ' + z + ')';
+            solutions[i].bulletdestpic = bulletdestpic;
+            solutions[i].movement = movement;
+            string x;
+            string y;
+            string z;
+            string xb;
+            string yb;
+            string zb;
+            string tempbullet;
+           StreamWriter writer = new StreamWriter(path, false);
+
+            foreach (Utils.solutions_texthandler item in solutions)
+            {
+
+                string temp = string.Empty;
+                foreach (Vector3 mov in item.movement)
+                {
+                    x = mov.x.ToString("0.000");
+                    x = x.Replace(",", ".");
+                    y = mov.y.ToString("0.000");
+                    y = y.Replace(",", ".");
+                    z = mov.z.ToString("0.000");
+                    z = z.Replace(",", ".");
+                    temp += "\t" + '(' + x + ',' + ' ' + y + ',' + ' ' + z + ')';
+                }
+
+                xb = item.bulletdest.x.ToString("0.000");
+                xb = xb.Replace(",", ".");
+                yb = item.bulletdest.y.ToString("0.000");
+                yb = yb.Replace(",", ".");
+                zb = item.bulletdest.z.ToString("0.000");
+                zb = zb.Replace(",", ".");
+                tempbullet = '(' + xb + ',' + ' ' + yb + ',' + ' ' + zb + ')';
+
+                writer.WriteLine(tempbullet + "\t" + item.bulletdestpic + temp);
+
+
+            }
+            writer.Close();
+
+        }
+        else
+        {
+            StreamWriter writer = new StreamWriter(path, true);
+            string temp = string.Empty;
+            foreach (Vector3 item in movement)
+            {
+                string x = item.x.ToString("0.000");
+                x = x.Replace(",", ".");
+                string y = item.y.ToString("0.000");
+                y = y.Replace(",", ".");
+                string z = item.z.ToString("0.000");
+                z = z.Replace(",", ".");
+                temp += "\t" + '(' + x + ',' + ' ' + y + ',' + ' ' + z + ')';
+            }
+
+            string xb = bulletdest.x.ToString("0.000");
+            xb = xb.Replace(",", ".");
+            string yb = bulletdest.y.ToString("0.000");
+            yb = yb.Replace(",", ".");
+            string zb = bulletdest.z.ToString("0.000");
+            zb = zb.Replace(",", ".");
+            string tempbullet = '(' + xb + ',' + ' ' + yb + ',' + ' ' + zb + ')';
+
+            writer.WriteLine(tempbullet + "\t" + bulletdestpic + temp);
+
+            writer.Close();
         }
 
-        string xb = bulletdest.x.ToString("0.000");
-        xb = xb.Replace(",", ".");
-        string yb = bulletdest.y.ToString("0.000");
-        yb = yb.Replace(",", ".");
-        string zb = bulletdest.z.ToString("0.000");
-        zb = zb.Replace(",", ".");
-       string  tempbullet = '(' + xb + ',' + ' ' + yb + ',' + ' ' + zb + ')';
+        //Write some text to the test.txt file
 
-        writer.WriteLine(tempbullet + "\t"+bulletdestpic+temp);
-        writer.Close();
+        //writer.WriteLine("Test");
+
 
         //Re-import the file to update the reference in the editor
         AssetDatabase.ImportAsset(path);
@@ -105,12 +161,12 @@ public class HandleTextFile : MonoBehaviour
     }
 
     [MenuItem("Tools/Read file")]
-    public static Dictionary<Vector3,List<Vector3>> ReadSolutions()
+    public static Dictionary<Vector3,List<Vector3>> ReadSolutions(string filename)
     {
-        Dictionary<Vector3, List<Vector3>> solutions = new Dictionary<Vector3, List<Vector3>>();
-        string path = "Assets/Resources/test.txt";
+        solutions = new List<Utils.solutions_texthandler>();
+        string path = "Assets/Resources/"+filename;
 
-
+        Dictionary<Vector3, List<Vector3>> retsol = new Dictionary<Vector3, List<Vector3>>();
         //Read the text from directly from the test.txt file
         StreamReader reader = new StreamReader(path);
       
@@ -123,14 +179,16 @@ public class HandleTextFile : MonoBehaviour
 
         
                 Vector3 key = StringToVector3(splittedvectors[0]);
-            
+                Vector3 bulletdest = StringToVector3(splittedvectors[1]);
+
+
                     List<Vector3> movement = new List<Vector3>();
                     for (int i = 2; i < splittedvectors.Length; i++)
                     {
                         movement.Add(StringToVector3(splittedvectors[i]));
                     }
-                    solutions.Add(key, movement);
-            
+                solutions.Add(new Utils.solutions_texthandler(key, bulletdest,movement));
+                retsol.Add(key, movement);
          
             }
             else
@@ -139,10 +197,10 @@ public class HandleTextFile : MonoBehaviour
             }
         }
 
-        Debug.Log(reader.ReadToEnd());
+       // Debug.Log(reader.ReadToEnd());
         reader.Close();
 
-        return solutions;
+        return retsol;
     }
 
     [MenuItem("Tools/Read file")]
@@ -232,6 +290,39 @@ public class HandleTextFile : MonoBehaviour
 
         AssetDatabase.ImportAsset(path);
         TextAsset asset = (TextAsset)Resources.Load("bullets");
+        writer.Close();
+
+        //Re-import the file to update the reference in the editor
+
+        //Print the text from the file
+        // Debug.Log(asset.text);
+    }
+
+    [MenuItem("Tools/Write file")]
+    public static void Write_RandBullets(List<Vector3> bulletdests)
+    {
+
+
+        //Write some text to the test.txt file
+        string path = "Assets/Resources/rand_bullets.txt";
+        StreamWriter writer = new StreamWriter(path, true);
+        foreach (Vector3 bulletdest in bulletdests)
+        {
+
+            string x = bulletdest.x.ToString("0.000");
+            x = x.Replace(",", ".");
+            string y = bulletdest.y.ToString("0.000");
+            y = y.Replace(",", ".");
+            string z = bulletdest.z.ToString("0.000");
+            z = z.Replace(",", ".");
+            string temp = '(' + x + ',' + ' ' + y + ',' + ' ' + z + ')';
+
+            writer.WriteLine(temp);
+
+        }
+
+        AssetDatabase.ImportAsset(path);
+        TextAsset asset = (TextAsset)Resources.Load("Write_RandBullets");
         writer.Close();
 
         //Re-import the file to update the reference in the editor

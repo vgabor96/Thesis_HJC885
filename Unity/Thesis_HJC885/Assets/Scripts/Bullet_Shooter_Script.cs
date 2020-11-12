@@ -79,7 +79,7 @@ public class Bullet_Shooter_Script : MonoBehaviour
 
         else if (this.ShootTypeenum == ShootTypeEnum.LearnedBullets)
         {
-            foreach (Vector3 item in HandleTextFile.ReadSolutions().Keys)
+            foreach (Vector3 item in HandleTextFile.ReadSolutions("test.txt").Keys)
             {
                 learnedbulletvectors.Add(item);
             }
@@ -296,7 +296,7 @@ public class Bullet_Shooter_Script : MonoBehaviour
 
     //}
 
-    public void Generate1000_RandomToTextRandom()
+    public void GenerateN_RandomToTextRandom()
     {
         for (int i = 500; i < 520; i++)
         {
@@ -306,20 +306,20 @@ public class Bullet_Shooter_Script : MonoBehaviour
                 {
                     usedvectors.Add(new Vector3((float)i/100,(float)j/100,(float)l/100));
 
-                    if (usedvectors.Count > 1000)
-                    {
-                        break;
-                    }
+                    //if (usedvectors.Count > 1000)
+                    //{
+                    //    break;
+                    //}
                 }
-                if (usedvectors.Count > 1000)
-                {
-                    break;
-                }
+                //if (usedvectors.Count > 1000)
+                //{
+                //    break;
+                //}
             }
-            if (usedvectors.Count > 1000)
-            {
-                break;
-            }
+            //if (usedvectors.Count > 1000)
+            //{
+            //    break;
+            //}
 
             //Vector3 final = randvec * bulletspeed * 5;
 
@@ -330,7 +330,32 @@ public class Bullet_Shooter_Script : MonoBehaviour
 
     }
 
+    public void Select_N_Unique_Bulletdest(int n)
+    {
+        List<Vector3> vecs = HandleTextFile.ReadBullets();
 
+        int count = 0;
+        int rani = 0;
+        Vector3 vec;
+        while (count<n)
+        {
+            rani = Utils.random.Next(vecs.Count);
+            vec = vecs[rani];
+
+            if (!usedvectors.Contains(vec))
+            {
+                usedvectors.Add(vec);
+                count++;
+            }
+
+
+          
+        }
+
+
+        HandleTextFile.Write_RandBullets(usedvectors);
+        
+    }
 
     private Vector3 DestinationRandomize()
     {

@@ -13,10 +13,12 @@ public class GeneticAlgorithm_ForMovement : MonoBehaviour
 {
 
 	public Dictionary<Vector3, List<Vector3>> solvedmovements;
-	public bool isRobotusingMemory;
+	//public bool isRobotusingMemory;
 	private Vector3 bulletdest;
 	private Vector3 bulletdestpic;
 	private bool isstartinit = true;
+
+	private double changepercentage = 0.995;
 
 	private float timelimit = 0; //in milisecs
 	private bool timeisup = false;
@@ -29,8 +31,8 @@ public class GeneticAlgorithm_ForMovement : MonoBehaviour
 		bulletdestpic = new Vector3(0, 0, 0);
 		bulletdest = new Vector3(0, 0, 0);
 		solvedmovements = new Dictionary<Vector3, List<Vector3>>();
-	
-		
+
+      
 
 	}
 
@@ -121,8 +123,16 @@ public class GeneticAlgorithm_ForMovement : MonoBehaviour
 	}
 	public List<Vector3> StartFindingMovement(Vector3 bulletdest,Vector3 bulletdestpic, Func<List<Vector3>, double> fitness)
 	{
+		//INIT
+		if (Robot.isUsingRobotMemory_GA)
+		{
+			changepercentage = 0.995;
+			N = 100;
+		}
+
+
 		HandleTextFile.WriteBullet(bulletdest);
-		solvedmovements = HandleTextFile.ReadSolutions();
+		solvedmovements = HandleTextFile.ReadSolutions("test.txt");
 		timer.Start();
 		//if (timelimit != 0)
 		//{
@@ -136,7 +146,7 @@ public class GeneticAlgorithm_ForMovement : MonoBehaviour
 		//	t1.Start();
 		//}
 
-		if (isVectorcontained(bulletdest))
+		if (isVectorcontained(bulletdest) && !Robot.isReTraining_GA)
 		{
 
 			//Debug.Log("Fitness: " + fitness(GetMovementWIthKey(bulletdest)));
@@ -167,7 +177,7 @@ public class GeneticAlgorithm_ForMovement : MonoBehaviour
 		if (pbestfitness < achivefitness)
 		{
 
-			return  pbestfitness <= 10 || pbestfitness > prevbestfitness * 0.995;
+			return  !isstartinit && (pbestfitness <= 10 || pbestfitness > prevbestfitness * changepercentage);
 		}
 		return false;
 	}
@@ -208,7 +218,7 @@ public class GeneticAlgorithm_ForMovement : MonoBehaviour
 
 				ModifyOldPopulation(P, Pnew);
 				P = Pnew;
-				noduplicatecheck(P);
+				//noduplicatecheck(P);
 				EVALUATION(P, fitness);
 				Pbest = Selectbest(P);
 				//appendFileLog(Pbest, iteration);
@@ -228,8 +238,12 @@ public class GeneticAlgorithm_ForMovement : MonoBehaviour
 		p.OrderByDescending(x => x.fitness).ToList().RemoveRange(0, pnew.Count);
 		foreach (Member item in pnew)
 		{
-			p.Add(item);
-			noduplicatecheck(p);
+            if (!isMemberalreadyinPop(p,item))
+            {
+				p.Add(item);
+			}
+			
+			//noduplicatecheck(p);
 		}
 
 	}
@@ -244,8 +258,16 @@ public class GeneticAlgorithm_ForMovement : MonoBehaviour
 
 		timer.Stop();
 		float time = timer.ElapsedMilliseconds;
-		solvedmovements.Add(bulletdest, pbest.movement);
-		HandleTextFile.WriteSolution(bulletdest,bulletdestpic,pbest.movement);
+        if (solvedmovements.ContainsKey(bulletdest))
+        {
+			solvedmovements[bulletdest] = pbest.movement;
+        }
+        else
+        {
+			solvedmovements.Add(bulletdest, pbest.movement);
+		}
+	
+		HandleTextFile.WriteSolution(bulletdest,bulletdestpic,pbest.movement,"test.txt");
 		HandleTextFile.WriteString(time);
 		HandleTextFile.WriteFitness(fitness(pbest.movement));
 		timer.Reset();
@@ -477,40 +499,29 @@ public class GeneticAlgorithm_ForMovement : MonoBehaviour
 
 	private List<Member> INITIALIZEPOPULATION()
 	{
-		
 
+		isstartinit = false;
 		bestfitness = double.MaxValue;
 		actiteration = 0;
-		List<Member> S = generateRandomMembers();
-
 
 		List<Member> P = new List<Member>();
 
-        if (isRobotusingMemory && isstartinit)
-        {
 
-			populationlimit += solvedmovements.Count;
-
-			foreach (var item in solvedmovements.Values)
-			{
-				P.Add(new Member(item));
-			}
-			isstartinit = false;
-
-		}
-
+		
 		int i = 0;
-		Member m = new Member() { movement=new List<Vector3>() {new Vector3(0,0,0), new Vector3(0, 0, 0), new Vector3(0, 0, 0), new Vector3(0, 0, 0), new Vector3(0, 0, 0), new Vector3(0, 0, 0), new Vector3(0, 0, 0) } };
+		Member m = new Member() { movement = new List<Vector3>() { new Vector3(0, 0, 0), new Vector3(0, 0, 0), new Vector3(0, 0, 0), new Vector3(0, 0, 0), new Vector3(0, 0, 0), new Vector3(0, 0, 0), new Vector3(0, 0, 0) } };
 		Member m2 = new Member();
 		Member m3 = new Member();
 
-			m2.movement = new List<Vector3>() { new Vector3(0, 0, 0), new Vector3(0, 0, 0), new Vector3(0, 0, 0), new Vector3(0, 0, 0), new Vector3(0, 0, 0), new Vector3(0, 0, 0), new Vector3(0, 0, -0.5f) }; //-0.5
+		m2.movement = new List<Vector3>() { new Vector3(0, 0, 0), new Vector3(0, 0, 0), new Vector3(0, 0, 0), new Vector3(0, 0, 0), new Vector3(0, 0, 0), new Vector3(0, 0, 0), new Vector3(0, 0, -0.5f) }; //-0.5
 
-			m3.movement = new List<Vector3>() { new Vector3(0, 0, 0), new Vector3(0, 0, 0), new Vector3(0, 0, 0), new Vector3(0, 0, 0), new Vector3(0, 0, 0), new Vector3(0, 0, 0), new Vector3(0, 0, +0.5f) }; //+0.5
+		m3.movement = new List<Vector3>() { new Vector3(0, 0, 0), new Vector3(0, 0, 0), new Vector3(0, 0, 0), new Vector3(0, 0, 0), new Vector3(0, 0, 0), new Vector3(0, 0, 0), new Vector3(0, 0, +0.5f) }; //+0.5
 		Member m4 = new Member();
 		m4.movement = new List<Vector3>() { new Vector3(0, 0, 0), new Vector3(0, 0, 0), new Vector3(0, 0, 0), new Vector3(0, 90f, 0), new Vector3(0, 0, 0), new Vector3(0, 0, 0), new Vector3(0, 0, 0) };
 		Member m5 = new Member();
 		m5.movement = new List<Vector3>() { new Vector3(0, 0, 0), new Vector3(0, 0, 0), new Vector3(0, 0, 0), new Vector3(0, 0, 0), new Vector3(0, 0, 0), new Vector3(0, 90f, 0), new Vector3(0, 0, 0) };
+
+
 
 
 
@@ -519,6 +530,31 @@ public class GeneticAlgorithm_ForMovement : MonoBehaviour
 		P.Add(m3);
 		P.Add(m4);
 		P.Add(m5);
+
+
+        if (Robot.isUsingRobotMemory_GA)
+        {
+			
+			populationlimit -= solvedmovements.Count;
+
+			foreach (var item in solvedmovements.Values)
+			{
+				Member me = new Member(item);
+
+					P.Add(me);
+					//populationlimit++;
+				
+			}
+		
+
+		
+
+		}
+
+
+		List<Member> S = generateRandomMembers();
+
+
 		int count = P.Count;
 		while (i < populationlimit-count)
 		{

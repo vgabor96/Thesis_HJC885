@@ -113,43 +113,43 @@ public class PictureToVector : MonoBehaviour
             circlesres.Add(farawaycircles[1]);
 
 
-            for (int i = 2; i < circles.Length; i++)
-            {
-                bool isdistinct = false;
-                for (int j = 0; j < circlesres.Count; j++)
-                {
+            //for (int i = 2; i < circles.Length; i++)
+            //{
+            //    bool isdistinct = false;
+            //    for (int j = 0; j < circlesres.Count; j++)
+            //    {
 
-                    double dist = Vector2.Distance(new Vector2(circles[i].Center.X, circles[i].Center.Y), new Vector2(circlesres[j].Center.X, circlesres[j].Center.Y));
-                    if (dist < maxdist)
-                    {
-                        if (circles[i].Radius > circlesres[j].Radius)
-                        {
-                            circlesres[j] = circles[i];
-                        }
-                        else
-                        {
-                            isdistinct = false;
-                            notgood = true;
-                        }
+            //        double dist = Vector2.Distance(new Vector2(circles[i].Center.X, circles[i].Center.Y), new Vector2(circlesres[j].Center.X, circlesres[j].Center.Y));
+            //        if (dist < maxdist)
+            //        {
+            //            if (circles[i].Radius > circlesres[j].Radius)
+            //            {
+            //                circlesres[j] = circles[i];
+            //            }
+            //            else
+            //            {
+            //                isdistinct = false;
+            //                notgood = true;
+            //            }
                       
-                    }
-                    if (dist > maxdist)
-                    {
-                            isdistinct = true;   
-                    }
-                }
-                if (notgood)
-                {
-                    notgood = false;
-                    continue;
-                }
-                //if (isdistinct && !circlesres.Contains(circles[i]))
-                //{
-                //    circlesres.Add(circles[i]);
-                //}
+            //        }
+            //        if (dist > maxdist)
+            //        {
+            //                isdistinct = true;   
+            //        }
+            //    }
+            //    if (notgood)
+            //    {
+            //        notgood = false;
+            //        continue;
+            //    }
+            //    //if (isdistinct && !circlesres.Contains(circles[i]))
+            //    //{
+            //    //    circlesres.Add(circles[i]);
+            //    //}
                    
                           
-            }
+            //}
 
            
              
